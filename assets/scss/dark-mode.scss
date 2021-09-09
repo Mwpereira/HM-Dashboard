@@ -1,0 +1,211 @@
+html {
+  &.is-dark-mode-active {
+    background-color: $dark-mode-background-color;
+
+    h2 {
+      color: #2d3140 !important;
+    }
+
+    .box {
+      background-color: $dark-mode-background-color;
+      box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%), 0 0 0 1px rgb(10 10 10 / 2%);
+    }
+
+    p {
+      color: $dark-mode-color;
+    }
+
+    .vertical {
+      border-color: $dark-mode-color;
+    }
+
+    .card {
+      background-color: $dark-mode-background-color;
+      box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%), 0 0 0 1px rgb(10 10 10 / 2%);
+    }
+
+    .button {
+      background-color: transparent;
+      border-color: $dark-mode-button-color !important;
+      color: $dark-mode-button-color !important;
+
+      &:hover:not([disabled]):not(.is-dark) {
+        background-color: $dark-mode-button-color;
+        color: $dark-mode-button-hover-color !important;
+      }
+
+      @each $state-class, $state-color, $state-text in $state-colors {
+        &.is-#{$state-class} {
+          border-color: $state-color !important;
+          color: $state-color !important;
+
+          &:hover {
+            background-color: $state-color;
+            color: $state-text;
+          }
+        }
+      }
+    }
+
+
+    button.is-dark {
+      background-color: white !important;
+      font-weight: bold;
+
+      &:hover {
+        background-color: transparent !important;
+        border-color: white !important;
+        color: white !important;
+      }
+    }
+
+    .label {
+      color: $grey-lighter;
+    }
+
+    .input, .textarea, .select select {
+      color: $dark-mode-color;
+      background-color: transparent;
+
+      &::placeholder {
+        color: $grey-light;
+      }
+    }
+
+    .help.counter {
+      color: $dark-mode-color;
+    }
+
+    .title {
+      color: $grey-lighter;
+    }
+
+    .subtitle {
+      color: $grey-lighter;
+    }
+
+    body {
+      color: $grey-lighter;
+    }
+
+    strong {
+      color: $dark-mode-color;
+    }
+
+    hr {
+      background-color: $dark-mode-light-border-color;
+    }
+    //
+    //a {
+    //  color: $dark-mode-link-color;
+    //}
+
+    .media {
+      border-color: $dark-mode-light-border-color;
+    }
+
+    nav.navbar {
+      background-color: $dark-mode-navbar-background-color;
+
+      .navbar-item {
+        color: $dark-mode-link-color;
+
+        .navbar-link {
+          color: $dark-mode-link-color;
+        }
+
+        .input {
+          color: $dark-mode-color;
+
+          &::placeholder {
+            color: $grey-light;
+          }
+        }
+
+        &.has-divider {
+          border-color: $dark-mode-light-border-color;
+        }
+      }
+    }
+
+    .navbar-menu {
+      background-color: $dark-mode-navbar-hover-color;
+    }
+
+    .navbar-menu.is-active .navbar-item:hover {
+      border-color: transparent !important;
+      color: $dark-mode-color;
+    }
+
+    .navbar-item:hover {
+      background-color: $dark-mode-navbar-hover-color;
+      border-color: white;
+    }
+
+    .navbar-dropdown {
+      background-color: $dark-mode-navbar-hover-color;
+
+      .navbar-item:hover {
+        color: $dark-mode-color;
+      }
+    }
+
+    .dropdown-menu, .dropdown-content, .dropdown-item {
+      background-color: $dark-mode-background-color;
+      color: $dark-mode-color;
+    }
+
+    .dropdown-item.is-hovered {
+      background-color: $dark-mode-dropdown-hovered-background;
+      color: $dark-mode-color;
+    }
+
+    .card {
+      border-color: $dark-mode-light-border-color;
+      color: $grey-lighter;
+
+      .card-header {
+        border-color: $dark-mode-light-border-color;
+      }
+
+      .card-header-title {
+        color: $grey-lighter;
+      }
+
+      .card-footer {
+        border-color: $dark-mode-light-border-color;
+      }
+
+      .is-widget-label {
+        .subtitle {
+          color: $grey-light;
+        }
+      }
+    }
+
+    section {
+      &.section.is-title-bar, &.hero.is-hero-bar {
+        border-color: $dark-mode-light-border-color;
+      }
+
+      &.section.is-title-bar {
+        ul li {
+          color: $grey-light;
+
+          &:last-child {
+            color: $grey-lighter;
+          }
+        }
+      }
+    }
+
+    footer.footer {
+      background-color: $dark-mode-footer-background-color;
+      border-color: $dark-mode-light-border-color;
+
+      .logo svg path {
+        fill: $dark-mode-color;
+      }
+    }
+  }
+}
