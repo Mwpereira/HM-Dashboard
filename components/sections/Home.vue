@@ -109,10 +109,6 @@ export default class Home extends Vue {
 </script>
 
 <style scoped>
-html, body {
-  overflow: hidden;
-}
-
 .hero {
   min-height: 80vh;
 }
@@ -129,7 +125,7 @@ html, body {
 
 @media screen and (max-width: 824px) {
   .title {
-    font-size: 36px;
+    font-size: 42px;
   }
 }
 </style>

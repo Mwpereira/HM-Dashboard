@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import { successResponse } from '~/utilities/response-utilities'
+import { successResponse } from '~/utils/response-utils'
 import KyService from '~/services/ky-service'
 import BuefyService from '~/services/buefy-service'
 import MessageConstants from '~/constants/message-constants'

@@ -194,22 +194,4 @@ export default class Hotspot extends Vue {
 .hero-section {
   padding-top: 60px;
 }
-
-@media screen and (max-width: 1500px) {
-  .hero-section {
-    padding-top: 55px;
-  }
-}
-
-@media screen and (max-width: 1500px) {
-  .hero-section {
-    padding-top: 60px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .hero-section {
-    padding-top: 0px;
-  }
-}
 </style>

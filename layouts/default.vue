@@ -24,3 +24,9 @@ import NavBar from '~/components/general/NavBar.vue'
 export default class Default extends Vue {
 }
 </script>
+
+<style>
+html, body {
+  overflow: hidden;
+}
+</style>
