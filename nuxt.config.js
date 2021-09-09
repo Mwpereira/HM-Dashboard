@@ -59,6 +59,7 @@ export default {
     }
   },
   build: {},
+  generate: { fallback: true },
   env: {
     heliumAPI: process.env.HELIUM_API || 'https://api.helium.io/v1/'
   }
