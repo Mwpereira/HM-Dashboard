@@ -98,10 +98,13 @@ import { Makers } from '~/enums/Makers'
 
     const minerName = params.hotspot
 
-    let miner: Miner = await store.dispatch('loadMiner', minerName);
-    if (await store.dispatch('checkForOutdatedData', minerName)) {
+    let miner: Miner = await store.dispatch('loadMiner', minerName)
+
+    if (!miner) {
       miner = await store.dispatch('fetchMiner', minerName)
-    }
+    } else if (await store.dispatch('checkForOutdatedData', minerName)) {
+        miner = await store.dispatch('fetchMiner', minerName)
+      }
 
     if (!miner) {
       await redirect('/')

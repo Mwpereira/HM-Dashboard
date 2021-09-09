@@ -172,7 +172,7 @@ export const actions = {
 
       await ctx.commit('setDailyRewards', rewards.toFixed(2))
     } else {
-      BuefyService.dangerToast('Error getting rewards')
+      BuefyService.dangerToast(MessageConstants.ERROR_GETTING_REWARDS)
     }
   },
   async loadMiner(ctx: any, minerName: string): Promise<Miner> {
