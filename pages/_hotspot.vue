@@ -31,7 +31,7 @@
           </b-tooltip>
         </div>
         <p class='title mb-6 my-6'>Summary</p>
-        <div class='columns is-centered has-text-centered is-size-5' id="2R">
+        <div class='columns is-centered has-text-centered is-size-5' id="sR">
           <div class='column box m-4'>
             <b-tooltip
               label='Hotspot rewards from the past 24 hours' type='is-dark'>
@@ -200,7 +200,7 @@ export default class Hotspot extends Vue {
     padding-top: 55px;
   }
 
-  #2R {
+  #sR {
     margin-top: 1rem;
   }
 }
