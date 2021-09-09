@@ -187,7 +187,7 @@ export default class Hotspot extends Vue {
 }
 
 .favourite:hover {
-  color: orange;
+  color: gold !important;
   cursor: pointer;
 }
 

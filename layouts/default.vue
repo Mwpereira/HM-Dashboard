@@ -27,6 +27,6 @@ export default class Default extends Vue {
 
 <style>
 html, body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 </style>
