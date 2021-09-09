@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="HM Dashboard Logo" src="/static/logo.png" width="100" />
+  <img alt="HM Dashboard Logo" src="/static/logo.png" width="200" />
 </p>
 <h1 align="center">
   HM Dashboard for HNT Miners
