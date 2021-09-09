@@ -38,11 +38,10 @@ export default {
   css: [
     'assets/scss/main.scss'
   ],
-  plugins: [
-  ],
+  plugins: [],
   components: true,
   buildModules: [
-    '@nuxt/typescript-build',
+    '@nuxt/typescript-build'
   ],
   modules: [
     'nuxt-buefy',
@@ -50,7 +49,7 @@ export default {
     '@nuxtjs/style-resources'
   ],
   'google-gtag': {
-    id: 'G-DV6R9X8V7F',
+    id: 'G-REEZCVN09K',
     config: {
       anonymize_ip: true,
       send_page_view: false,
@@ -59,9 +58,8 @@ export default {
       }
     }
   },
-  build: {
-  },
+  build: {},
   env: {
-    heliumAPI: process.env.HELIUM_API || "https://api.helium.io/v1/",
+    heliumAPI: process.env.HELIUM_API || 'https://api.helium.io/v1/'
   }
 }
