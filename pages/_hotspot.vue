@@ -2,33 +2,37 @@
   <div class='hero is-fullheight'>
     <div class='hero-head section mt-6 pt-6'>
       <div class='hero-section'>
-        <h1 class='title is-size-2 has-text-centered'>{{ miner.informal_name }}</h1>
-        <div class='is-flex is-justify-content-center'>
-          <b-tooltip
-            label="Hotspot's Address" type='is-dark' position='is-bottom'>
-            <p class='copyText mx-2' @click="copyText(miner.address, 'address')"><i
-              class='fas fa-at mx-1'></i>{{ miner.address
-              }}</p>
-          </b-tooltip>
-          <b-tooltip
-            label="Owner's address" type='is-dark' position='is-bottom'>
-            <p class='copyText mx-2' @click="copyText(miner.owner, 'owner')"><i
-              class='fas fa-user mx-1'></i>{{ miner.owner }}
-            </p>
-          </b-tooltip>
-          <b-tooltip
-            label='View on Helium Explorer' type='is-dark' position='is-bottom'>
-            <a :href='`https://explorer.helium.com/hotspots/${miner.address}`' rel='noopener' target='_blank'
-               class='heliumExplorer'
-            >
-              <i class='fas fa-globe mx-3'></i>
-            </a>
-          </b-tooltip>
-          <b-tooltip
-            label='Favourite Hotspot' type='is-dark' position='is-bottom'>
-            <p class='favourite mx-3' :style='{ color: favouriteColor}' @click='favouriteHotspot()'><i
-              class='fas fa-star'></i></p>
-          </b-tooltip>
+        <h1 class='title is-size-2 has-text-centered mb-5'>{{ miner.informal_name }}</h1>
+        <div class='has-text-centered'>
+          <div class="is-grouped">
+            <b-tooltip
+              label="Hotspot's Address" type='is-dark' position='is-bottom'>
+              <p class='copyText m-2' @click="copyText(miner.address, 'address')"><i
+                class='fas fa-at m-1'></i>{{ miner.address
+                }}</p>
+            </b-tooltip>
+            <b-tooltip
+              label="Owner's address" type='is-dark' position='is-bottom'>
+              <p class='copyText m-2' @click="copyText(miner.owner, 'owner')"><i
+                class='fas fa-user m-1'></i>{{ miner.owner }}
+              </p>
+            </b-tooltip>
+          </div>
+          <div class="is-grouped">
+            <b-tooltip
+              label='View on Helium Explorer' type='is-dark' position='is-bottom'>
+              <a :href='`https://explorer.helium.com/hotspots/${miner.address}`' rel='noopener' target='_blank'
+                 class='heliumExplorer'
+              >
+                <i class='fas fa-globe m-3'></i>
+              </a>
+            </b-tooltip>
+            <b-tooltip
+              label='Favourite Hotspot' type='is-dark' position='is-bottom'>
+              <p class='favourite m-3' :style='{ color: favouriteColor}' @click='favouriteHotspot()'><i
+                class='fas fa-star'></i></p>
+            </b-tooltip>
+          </div>
         </div>
         <p class='title mb-6 my-6'>Summary</p>
         <div class='columns is-centered has-text-centered is-size-5' id="sR">
