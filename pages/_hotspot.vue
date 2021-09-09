@@ -134,7 +134,7 @@ export default class Hotspot extends Vue {
   }
 
   get maker(): string {
-    return Makers[this.miner.payer]
+    return (<any>Makers)[this.miner.payer]
   }
 
   get minerStatusColor(): string {

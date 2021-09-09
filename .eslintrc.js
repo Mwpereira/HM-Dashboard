@@ -14,5 +14,11 @@ module.exports = {
   // add your custom rules here
   rules: {
     // "@typescript-eslint/no-unsafe-argument": "off",
-  }
+  },
+  parserOptions: {
+    parser: "@typescript-eslint/parser",
+    ecmaFeatures : {
+      jsx : false
+    }
+  },
 }
