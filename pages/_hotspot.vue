@@ -2,40 +2,37 @@
   <div class='hero is-fullheight'>
     <div class='hero-head section mt-6 pt-6'>
       <div class='hero-section'>
-        <h1 class='title is-size-2 has-text-centered mb-5'>{{ miner.informal_name }}</h1>
-        <div class='has-text-centered'>
-          <div class="is-grouped">
-            <b-tooltip
-              label="Hotspot's Address" type='is-dark' position='is-bottom'>
-              <p class='copyText m-2' @click="copyText(miner.address, 'address')"><i
-                class='fas fa-at m-1'></i>{{ miner.address
-                }}</p>
-            </b-tooltip>
-            <b-tooltip
-              label="Owner's address" type='is-dark' position='is-bottom'>
-              <p class='copyText m-2' @click="copyText(miner.owner, 'owner')"><i
-                class='fas fa-user m-1'></i>{{ miner.owner }}
-              </p>
-            </b-tooltip>
-          </div>
-          <div class="is-grouped">
-            <b-tooltip
-              label='View on Helium Explorer' type='is-dark' position='is-bottom'>
-              <a :href='`https://explorer.helium.com/hotspots/${miner.address}`' rel='noopener' target='_blank'
-                 class='heliumExplorer'
-              >
-                <i class='fas fa-globe m-3'></i>
-              </a>
-            </b-tooltip>
-            <b-tooltip
-              label='Favourite Hotspot' type='is-dark' position='is-bottom'>
-              <p class='favourite m-3' :style='{ color: favouriteColor}' @click='favouriteHotspot()'><i
-                class='fas fa-star'></i></p>
-            </b-tooltip>
-          </div>
+        <h1 class='title is-size-2 has-text-centered mb-2'>{{ miner.informal_name }}</h1>
+        <div class='has-text-centered pt-0'>
+          <b-tooltip
+            label="Hotspot's Address" type='is-dark' position='is-bottom'>
+            <p class='copyText m-2' @click="copyText(miner.address, 'address')"><i
+              class='fas fa-at m-1'></i>{{
+                miner.address
+              }}</p>
+          </b-tooltip>
+          <b-tooltip
+            label="Owner's address" type='is-dark' position='is-bottom'>
+            <p class='copyText m-2' @click="copyText(miner.owner, 'owner')"><i
+              class='fas fa-user m-1'></i>{{ miner.owner }}
+            </p>
+          </b-tooltip>
+          <b-tooltip
+            label='View on Helium Explorer' type='is-dark' position='is-bottom'>
+            <a :href='`https://explorer.helium.com/hotspots/${miner.address}`' rel='noopener' target='_blank'
+               class='heliumExplorer'
+            >
+              <i class='fas fa-globe m-3'></i>
+            </a>
+          </b-tooltip>
+          <b-tooltip
+            label='Favourite Hotspot' type='is-dark' position='is-bottom' class='groupA'>
+            <p class='favourite m-3' :style='{ color: favouriteColor}' @click='favouriteHotspot()'><i
+              class='fas fa-star'></i></p>
+          </b-tooltip>
         </div>
         <p class='title mb-6 my-6'>Summary</p>
-        <div class='columns is-centered has-text-centered is-size-5' id="sR">
+        <div id="sR" class='columns is-centered has-text-centered is-size-5'>
           <div class='column box m-4'>
             <b-tooltip
               label='Hotspot rewards from the past 24 hours' type='is-dark'>
@@ -54,7 +51,8 @@
             <b-tooltip
               label='Current status of Hotspot miner' type='is-dark'>
               <p class='is-size-3 m-4'>
-                {{ (miner.status.online === 'online' && (miner.block - miner.last_change_block < 500)) ? 'Synced' : 'Not Synced'
+                {{
+                  (miner.status.online === 'online' && (miner.block - miner.last_change_block < 500)) ? 'Synced' : 'Not Synced'
                 }}</p>
               <p><i class='fas fa-power-off my-4 mr-4' :style='{ color: minerStatusColor }'></i>Sync Status</p>
             </b-tooltip>
@@ -90,14 +88,14 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import {Component, Vue} from 'nuxt-property-decorator'
 import moment from 'moment'
-import { Miner } from '~/interfaces/Miner'
+import {Miner} from '~/interfaces/Miner'
 import BuefyService from '~/services/buefy-service'
-import { Makers } from '~/enums/Makers'
+import {Makers} from '~/enums/Makers'
 
 @Component({
-  async asyncData({ params, store, redirect }) {
+  async asyncData({params, store, redirect}) {
     await store.dispatch('startup', false)
 
     const minerName = params.hotspot
@@ -107,14 +105,14 @@ import { Makers } from '~/enums/Makers'
     if (!miner) {
       miner = await store.dispatch('fetchMiner', minerName)
     } else if (await store.dispatch('checkForOutdatedData', minerName)) {
-        miner = await store.dispatch('fetchMiner', minerName)
-      }
+      miner = await store.dispatch('fetchMiner', minerName)
+    }
 
     if (!miner) {
       await redirect('/')
     }
 
-    return { minerName }
+    return {minerName}
   }
 })
 export default class Hotspot extends Vue {
@@ -158,7 +156,7 @@ export default class Hotspot extends Vue {
       this.$store.commit('removeFavourite', this.minerName)
       BuefyService.warningToast(`Removed Hotspot from Favourites`)
     } else {
-      this.$store.commit('addFavourite', { minerName: this.minerName, informalName: this.miner.informal_name })
+      this.$store.commit('addFavourite', {minerName: this.minerName, informalName: this.miner.informal_name})
       BuefyService.warningToast(`Added Hotspot to Favourites`)
     }
   }
@@ -202,6 +200,10 @@ export default class Hotspot extends Vue {
 @media screen and (max-width: 768px) {
   .hero-section {
     padding-top: 55px;
+  }
+
+  #margin {
+    margin: 0px 25px 0px 25px;
   }
 
   #sR {
