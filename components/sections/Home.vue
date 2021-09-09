@@ -125,7 +125,7 @@ export default class Home extends Vue {
 
 @media screen and (max-width: 824px) {
   .title {
-    font-size: 42px;
+    font-size: 3rem;
   }
 }
 </style>

@@ -31,7 +31,7 @@
           </b-tooltip>
         </div>
         <p class='title mb-6 my-6'>Summary</p>
-        <div class='columns is-centered has-text-centered is-size-5'>
+        <div class='columns is-centered has-text-centered is-size-5' id="2R">
           <div class='column box m-4'>
             <b-tooltip
               label='Hotspot rewards from the past 24 hours' type='is-dark'>
@@ -193,5 +193,15 @@ export default class Hotspot extends Vue {
 
 .hero-section {
   padding-top: 60px;
+}
+
+@media screen and (max-width: 768px) {
+  .hero-section {
+    padding-top: 55px;
+  }
+
+  #2R {
+    margin-top: 1rem;
+  }
 }
 </style>
