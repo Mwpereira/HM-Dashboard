@@ -1,7 +1,7 @@
 <template>
   <div id="rewards">
     <p class='title mb-6 my-6'>Rewards</p>
-    <div class='columns is-centered has-text-centered is-size-5'>
+    <div class='columns is-centered has-text-centered is-multiline is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
           label='Hotspot rewards from the past 24 hours' type='is-dark'>
