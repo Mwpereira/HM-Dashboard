@@ -57,11 +57,3 @@ export default class Rewards extends Vue {
   }
 }
 </script>
-
-<style scoped>
-@media screen and (max-width: 768px) {
-  #sR {
-    margin-top: 1rem;
-  }
-}
-</style>

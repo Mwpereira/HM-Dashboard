@@ -138,6 +138,12 @@ $colors: mergeColorMaps(
 );
 $toast-border-radius: 0em;
 
+@media screen and (max-width: 768px) {
+  .toast {
+    margin: 1em 0;
+  }
+}
+
 .toast.is-success div {
   color: rgb(70, 201, 58);
 }
