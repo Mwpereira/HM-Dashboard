@@ -36,6 +36,9 @@ feel free to open a pull request or create an issue 🙂
 ### v2
 
 - Fix any bugs/errors
+- Add Settings
+- Add Witnesses section
+- Add Rewards section
 - Add CI with Github
 - Add Cypress testing for the UI
 - Add Jest testing for the API calls
