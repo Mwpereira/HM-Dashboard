@@ -28,6 +28,7 @@ export default class Default extends Vue {
 <style>
 html, body {
   overflow-x: hidden;
+  scroll-padding: 12vh;
 }
 
 @media screen and (max-width: 768px) {

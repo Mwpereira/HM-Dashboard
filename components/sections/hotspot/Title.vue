@@ -50,7 +50,6 @@ export default class Title extends Vue {
     return this.$store.getters.miners[this.minerName]
   }
 
-
   get favouriteColor(): string {
     return this.$store.getters.favourites[this.minerName] !== undefined ? 'gold' : '#e6e6e6'
   }
@@ -111,17 +110,8 @@ h1 {
 }
 
 @media screen and (max-width: 768px) {
-  .hero-section {
-    padding-top: 50px;
-  }
-
   .is-flex {
     flex-direction: column;
-    justify-items: center;
-    justify-self: center;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
   }
 }
 </style>

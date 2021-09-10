@@ -4,7 +4,7 @@
       <div class='hero-section'>
         <h1 class='title has-text-centered mb-6'><span id='hm'>HM</span> Dashboard</h1>
         <div class='columns is-centered'>
-          <form class='form column is-7' @submit.prevent='addMiner()'>
+          <form class='form column' @submit.prevent='addMiner()'>
             <b-field>
               <b-autocomplete
                 v-model='userInput'
@@ -46,7 +46,7 @@
 
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import {Component, Vue} from 'nuxt-property-decorator'
 
 @Component
 export default class Home extends Vue {
@@ -54,6 +54,7 @@ export default class Home extends Vue {
 
   mounted() {
     this.$store.dispatch('startup', true)
+    document.title = `HM Dashboard`
   }
 
   get hasVisitedMiners() {
@@ -113,6 +114,10 @@ export default class Home extends Vue {
   min-height: 80vh;
 }
 
+.form {
+  max-width: 615px;
+}
+
 .title {
   font-size: 96px;
 }
@@ -121,11 +126,19 @@ export default class Home extends Vue {
   .title {
     font-size: 72px;
   }
+
+  .form {
+    max-width: 465px;
+  }
 }
 
-@media screen and (max-width: 824px) {
+@media screen and (max-width: 768px) {
   .title {
     font-size: 3rem;
+  }
+
+  .form {
+    max-width: unset;
   }
 }
 </style>

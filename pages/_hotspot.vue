@@ -4,6 +4,9 @@
       <div class='hero-section'>
         <Title :miner-name='minerName'/>
         <Summary :miner-name='minerName'/>
+        <Rewards :miner-name='minerName'/>
+        <Witnesses :miner-name='minerName'/>
+        <Location :miner-name='minerName'/>
       </div>
       <p class='has-text-left my-6 py-6'>Last Updated: {{ lastUpdated }}</p>
     </div>
@@ -16,6 +19,9 @@ import moment from "moment";
 import {Miner} from '~/interfaces/Miner'
 import Summary from "~/components/sections/hotspot/Summary.vue";
 import Title from "~/components/sections/hotspot/Title.vue";
+import Witnesses from "~/components/sections/hotspot/Witnesses.vue";
+import Rewards from "~/components/sections/hotspot/Rewards.vue";
+import Location from "~/components/sections/hotspot/Location.vue";
 
 @Component({
   async asyncData({params, store, redirect}) {
@@ -35,11 +41,16 @@ import Title from "~/components/sections/hotspot/Title.vue";
       await redirect('/')
     }
 
+    document.title = `${miner.informal_name} - HM Dashboard`
+
     return {minerName}
   },
   components: {
+    Location,
+    Rewards,
     Summary,
-    Title
+    Title,
+    Witnesses
   }
 })
 export default class Hotspot extends Vue {
@@ -49,8 +60,12 @@ export default class Hotspot extends Vue {
     return this.$store.getters.miners[this.minerName]
   }
 
-  get lastUpdated() {
-    return moment.utc(this.$store.getters.miners[this.minerName].last_updated * 1000).local().toString().split(' GMT')[0]
+  get lastUpdated(): string {
+    if (this.$store.getters.miners[this.minerName]) {
+      return moment.utc(this.$store.getters.miners[this.minerName].last_updated * 1000).local().toString().split(' GMT')[0]
+    } else {
+      return 'N/A'
+    }
   }
 }
 </script>
@@ -63,6 +78,24 @@ export default class Hotspot extends Vue {
 @media screen and (max-width: 768px) {
   .hero-section {
     padding-top: 55px;
+  }
+}
+</style>
+
+<style>
+.box p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 769px) {
+  .hero-section {
+    padding-top: 55px;
+  }
+
+  .column.box {
+    min-width: 300px;
   }
 }
 </style>

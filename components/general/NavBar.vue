@@ -30,10 +30,25 @@
       </b-navbar-item>
     </template>
     <template #end>
-<!--      <b-navbar-item class='mr-4'>-->
-<!--        <i class='fas fa-cog'></i>-->
-<!--      </b-navbar-item>-->
-      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6' title='Dark Mode'
+      <b-navbar-item class='mr-4 navOptions' href="#summary">
+        Summary
+      </b-navbar-item>
+      <b-navbar-item class='mr-4 navOptions' href="#rewards">
+        Rewards
+      </b-navbar-item>
+      <b-navbar-item class='mr-4 navOptions' href="#witnesses">
+        Witnesses
+      </b-navbar-item>
+      <b-navbar-item class='mr-4 navOptions' href="#nearby">
+        Nearby
+      </b-navbar-item>
+      <b-navbar-item class='mr-4 navOptions' href="#location">
+        Location
+      </b-navbar-item>
+      <b-navbar-item class='mr-4 navOptions' @click="cardModal">
+        <i class='fas fa-cog'></i>
+      </b-navbar-item>
+      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions' title='Dark Mode'
          @click='darkModeToggle'>
         <div v-if='!isDarkModeActive'>
           <i class='far fa-moon'></i>
@@ -47,7 +62,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import {Component, Vue} from 'nuxt-property-decorator'
 import Settings from '~/components/general/Settings.vue'
 
 @Component
@@ -115,13 +130,9 @@ export default class NavBar extends Vue {
   border-bottom: none;
 }
 
-#sun {
-  color: white;
-}
-
-#darkModeToggle:hover {
+.navOptions:hover {
   border-bottom: none;
-  color: #7499F2;
+  color: #7499F2 !important;
 }
 
 @media screen and (max-width: 768px) {

@@ -100,8 +100,13 @@ html {
       border-color: $dark-mode-light-border-color;
     }
 
+
     nav.navbar {
       background-color: $dark-mode-navbar-background-color;
+
+      .navbar-menu {
+        background-color: $dark-mode-navbar-background-color;
+      }
 
       .navbar-item {
         color: $dark-mode-link-color;
@@ -124,18 +129,13 @@ html {
       }
     }
 
-    .navbar-menu {
-      background-color: $dark-mode-navbar-hover-color;
+    .modal-card, .modal-card-head, .modal-card-body {
+      background-color: $dark-mode-model-card-background-color;
     }
 
     .navbar-menu.is-active .navbar-item:hover {
       border-color: transparent !important;
       color: $dark-mode-color;
-    }
-
-    .navbar-item:hover {
-      background-color: $dark-mode-navbar-hover-color;
-      border-color: white;
     }
 
     .navbar-dropdown {

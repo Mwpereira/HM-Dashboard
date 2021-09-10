@@ -16,4 +16,5 @@ export default class MessageConstants {
    */
   public static readonly ERROR_ADDING_MINER = 'Hotspot not found :('
   public static readonly ERROR_GETTING_REWARDS = 'Error getting rewards'
+  public static readonly ERROR_GETTING_WITNESSES = 'Error getting witnesses'
 }

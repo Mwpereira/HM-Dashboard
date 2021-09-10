@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="summary">
     <p class='title mb-6 my-6'>Summary</p>
-    <div class='columns is-centered has-text-centered is-size-5'>
+    <div class='columns is-centered has-text-centered is-multiline is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
           label='Hotspot rewards from the past 24 hours' type='is-dark'>
@@ -26,8 +26,6 @@
           <p><i class='fas fa-power-off my-4 mr-4' :style='{ color: minerStatusColor }'></i>Sync Status</p>
         </b-tooltip>
       </div>
-    </div>
-    <div id="sR" class='columns is-centered has-text-centered is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
           label='Hotspot manufacturer' type='is-dark' position='is-bottom'>
@@ -75,15 +73,7 @@ export default class Summary extends Vue {
   }
 
   get rewards() {
-    return this.$store.getters.rewards
+    return this.miner.rewards
   }
 }
 </script>
-
-<style scoped>
-@media screen and (max-width: 768px) {
-  #sR {
-    margin-top: 1rem;
-  }
-}
-</style>
