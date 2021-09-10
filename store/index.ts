@@ -196,13 +196,16 @@ export const actions = {
         // @ts-ignore
         sum += value.total
         counter++
+
+        // 24 === 1 day
         if (counter <= 24) {
           dailyRewards = sum
         }
+        // 168 === 1 week
         if (counter <= 168) {
           weeklyRewards = sum
         }
-
+        // 5208 === 1 month
         if (counter <= 5208) {
           monthlyRewards = sum
         }

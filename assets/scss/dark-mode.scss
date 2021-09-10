@@ -203,5 +203,9 @@ html {
         fill: $dark-mode-color;
       }
     }
+
+    .loading-background {
+      background-color: rgba(34, 36, 54, 0.5)
+    }
   }
 }

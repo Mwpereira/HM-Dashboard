@@ -11,14 +11,14 @@
       </div>
       <div class='column box m-4'>
         <b-tooltip
-          label='Hotspot reward scale' type='is-dark'>
+          label='Hotspot rewards from this past week' type='is-dark'>
           <p class='is-size-3 m-4'>{{  rewards.weeklyRewards ? `${rewards.weeklyRewards} HNT` : '0.0 HNT' }}</p>
           <p><i class='fas fa-coins my-4 mr-4' style='color: rgb(223,163,1);'></i>Weekly</p>
         </b-tooltip>
       </div>
       <div class='column box m-4'>
         <b-tooltip
-          label='Current status of Hotspot miner' type='is-dark'>
+          label='Hotspot rewards from this past month' type='is-dark'>
           <p class='is-size-3 m-4'>
             {{
               rewards.monthlyRewards ? `${rewards.monthlyRewards} HNT` : '0.0 HNT'
