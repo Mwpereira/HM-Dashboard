@@ -52,4 +52,10 @@ html, body {
     background-color: rgb(59, 222, 200) !important;
   }
 }
+
+@media screen and (max-width: 768px) {
+  html, body {
+    scroll-padding: 18vh;
+  }
+}
 </style>
