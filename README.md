@@ -8,11 +8,10 @@
   Minimalistic and modern user interface to display your HNT miner's data.
 <br/>
 <br/>
-  [![Netlify Status](https://api.netlify.com/api/v1/badges/11dd0dda-9bf5-41b4-b925-bb8679908173/deploy-status)](https://app.netlify.com/sites/hmdashboard/deploys)
 </p>
-
-
 <hr/>
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/11dd0dda-9bf5-41b4-b925-bb8679908173/deploy-status)](https://app.netlify.com/sites/hmdashboard/deploys)
+
 
 HM Dashboard is a low resource and bandwidth alternative to [Helium Explorer](https://explorer.helium.com/).
 
