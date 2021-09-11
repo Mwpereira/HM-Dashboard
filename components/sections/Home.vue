@@ -58,7 +58,7 @@ export default class Home extends Vue {
     document.title = `HM Dashboard`
   }
 
-  get filteredDataArray(): Array<{ type: string; items: any; }> {
+  get filteredDataArray(): ({ type: string; items: string[]; }[] | { type: string; items: any; })[] {
     if (this.userInput === '' && this.$store.getters.favourites && this.$store.getters.recentlyViewed.length === 0) {
       return [{
         type: 'Suggested Hotspots', items: hotspots.miners
