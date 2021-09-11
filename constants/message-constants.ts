@@ -6,6 +6,7 @@ export default class MessageConstants {
    * SUCCESS MESSAGES
    */
   public static readonly SUCCESS_ADDING_MINER = 'Hotspot found'
+  public static readonly SUCCESS_DELETING_CACHE = 'Successfully Deleted'
   /**
    * WARNING MESSAGES
    */
@@ -16,4 +17,6 @@ export default class MessageConstants {
    */
   public static readonly ERROR_ADDING_MINER = 'Hotspot not found :('
   public static readonly ERROR_GETTING_REWARDS = 'Error getting rewards'
+  public static readonly ERROR_GETTING_WITNESSES = 'Error getting witnesses'
+  public static readonly ERROR_DELETING_CACHE = 'Error deleting cache'
 }

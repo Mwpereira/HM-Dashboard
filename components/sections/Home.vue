@@ -4,7 +4,7 @@
       <div class='hero-section'>
         <h1 class='title has-text-centered mb-6'><span id='hm'>HM</span> Dashboard</h1>
         <div class='columns is-centered'>
-          <form class='form column is-7' @submit.prevent='addMiner()'>
+          <form class='form column' @submit.prevent='addMiner()'>
             <b-field>
               <b-autocomplete
                 v-model='userInput'
@@ -46,27 +46,33 @@
 
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import {Component, Vue} from 'nuxt-property-decorator'
+import hotspots from '@/assets/json/hotspots.json'
 
 @Component
 export default class Home extends Vue {
   private userInput = ''
 
-  mounted() {
+  mounted(): void {
     this.$store.dispatch('startup', true)
+    document.title = `HM Dashboard`
   }
 
-  get hasVisitedMiners() {
-    return Object.keys(this.$store.getters.miners).length > 0
-  }
+  get filteredDataArray(): ({ type: string; items: string[]; }[] | { type: string; items: any; })[] {
+    if (this.userInput === '' && this.$store.getters.favourites && this.$store.getters.recentlyViewed.length === 0) {
+      return [{
+        type: 'Suggested Hotspots', items: hotspots.miners
+      }]
+    }
 
-  get hasFavourites() {
-    return Object.keys(this.$store.getters.favourites).length > 0
-  }
-
-  get filteredDataArray() {
     if (this.userInput === '') {
       const results = []
+
+      if (Object.keys(this.$store.getters.recentlyViewed.favourites).length === 0) {
+        results.push([{
+          type: 'Suggested Hotspots', items: hotspots.miners
+        }])
+      }
 
       if (Object.keys(this.$store.getters.favourites).length > 0) {
         results.push({
@@ -99,9 +105,10 @@ export default class Home extends Vue {
     }
   }
 
-  private async addMiner() {
+  private async addMiner(): Promise<void> {
     const miner = await this.$store.dispatch('addMiner', this.userInput)
-    if (miner !== null) {
+    if (miner !== null
+    ) {
       await this.$router.push(`/${miner}`)
     }
   }
@@ -113,6 +120,10 @@ export default class Home extends Vue {
   min-height: 80vh;
 }
 
+.form {
+  max-width: 615px;
+}
+
 .title {
   font-size: 96px;
 }
@@ -121,11 +132,19 @@ export default class Home extends Vue {
   .title {
     font-size: 72px;
   }
+
+  .form {
+    max-width: 465px;
+  }
 }
 
-@media screen and (max-width: 824px) {
+@media screen and (max-width: 768px) {
   .title {
     font-size: 3rem;
+  }
+
+  .form {
+    max-width: unset;
   }
 }
 </style>

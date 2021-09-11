@@ -55,7 +55,7 @@ $state-colors: ('primary', $white, $white),
 $dark-mode-color: #e5e5e5;
 $dark-mode-background-color: #222436;
 $dark-mode-navbar-background-color: #1C1E33;
-$dark-mode-navbar-hover-color: transparent;
+$dark-mode-navbar-hover-color: #7499F2;
 $dark-mode-lighter-background-color: $grey-darker;
 $dark-mode-border-color: $white-ter;
 $dark-mode-border: 1px solid $dark-mode-border-color;
@@ -65,12 +65,12 @@ $dark-mode-link-color: $white;
 $dark-mode-overlay-background-color: rgba($black, .85);
 $dark-mode-button-color: $white-ter;
 $dark-mode-button-hover-color: $black-ter;
+$dark-mode-model-card-background-color: $dark-mode-background-color;
 $dark-mode-card-header-button-color: $grey;
 $dark-mode-card-header-button-hover-color: $black-ter;
 $dark-mode-dropdown-background-color: #1E2033;
 $dark-mode-dropdown-hovered-background: #1D1F33;
 $dark-mode-footer-background-color: #202235;
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -138,6 +138,12 @@ $colors: mergeColorMaps(
 );
 $toast-border-radius: 0em;
 
+@media screen and (max-width: 768px) {
+  .toast {
+    margin: 1em 1em;
+  }
+}
+
 .toast.is-success div {
   color: rgb(70, 201, 58);
 }
@@ -152,6 +158,16 @@ $toast-border-radius: 0em;
 
 .toast.is-info div {
   color: rgb(59, 222, 200)
+}
+
+.settings-button {
+  background-color: rgb(255, 71, 87) !important;
+  border-color: rgb(255, 71, 87) !important;
+  color: $dark-mode-color !important;
+}
+
+.settings-button:hover {
+  color: #2d3140 !important;
 }
 
 #hm {

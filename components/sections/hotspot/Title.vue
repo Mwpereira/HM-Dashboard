@@ -45,11 +45,7 @@ import BuefyService from "~/services/buefy-service";
 @Component
 export default class Title extends Vue {
   @Prop() private minerName!: string
-
-  get miner(): Miner {
-    return this.$store.getters.miners[this.minerName]
-  }
-
+  @Prop() private miner!: Miner
 
   get favouriteColor(): string {
     return this.$store.getters.favourites[this.minerName] !== undefined ? 'gold' : '#e6e6e6'
@@ -59,12 +55,12 @@ export default class Title extends Vue {
     return this.$store.getters.favourites[this.minerName] !== undefined
   }
 
-  private copyText(value: string, key: string) {
+  private copyText(value: string, key: string): void {
     navigator.clipboard.writeText(value)
     BuefyService.infoToast(`Copied ${key} to clipboard`)
   }
 
-  private favouriteHotspot() {
+  private favouriteHotspot(): void {
     if (this.favourite) {
       this.$store.commit('removeFavourite', this.minerName)
       BuefyService.warningToast(`Removed Hotspot from Favourites`)
@@ -111,17 +107,8 @@ h1 {
 }
 
 @media screen and (max-width: 768px) {
-  .hero-section {
-    padding-top: 50px;
-  }
-
   .is-flex {
     flex-direction: column;
-    justify-items: center;
-    justify-self: center;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
   }
 }
 </style>

@@ -9,6 +9,7 @@
       "DOM"
     ],
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
@@ -31,6 +32,6 @@
   "exclude": [
     "node_modules",
     ".nuxt",
-    "dist"
+    "dist",
   ]
 }

@@ -28,9 +28,14 @@ export default class Default extends Vue {
 <style>
 html, body {
   overflow-x: hidden;
+  scroll-padding: 12vh;
 }
 
 @media screen and (max-width: 768px) {
+  html, body {
+    scroll-padding: 18vh;
+  }
+
   .toast.is-success {
     background-color: rgb(70, 201, 58) !important;
   }

@@ -7,8 +7,8 @@
 <p align="center">
   Minimalistic and modern user interface to display your HNT miner's data.
 </p>
-
 <hr/>
+
 
 HM Dashboard is a low resource and bandwidth alternative to [Helium Explorer](https://explorer.helium.com/).
 
@@ -18,9 +18,8 @@ HM Dashboard currently uses [Helium APIs](https://docs.helium.com/api/).
 
 ## 💥 Community Contribution
 
-This project is intended to receive community participation, if there's an optimizations, features, or fixes you have or can think of,
-feel free to open a pull request or create an issue 🙂
-
+This project is intended to receive community participation, if there's an optimizations, features, or fixes you have or
+can think of, feel free to open a pull request or create an issue 🙂
 
 ## 🗺 Roadmap
 
@@ -30,21 +29,25 @@ feel free to open a pull request or create an issue 🙂
 
 ### v1
 
+Release Date: September 9th, 2021
+
 - Initial release with Miner summary
 - Receive feedback from community and users
 
 ### v2
 
+Release Date: September 12th, 2021
+
 - Fix any bugs/errors
 - Add Settings
 - Add Witnesses section
 - Add Rewards section
-- Add CI with Github
-- Add Cypress testing for the UI
-- Add Jest testing for the API calls
 
 ### v3
 
+Release Date: TBA
+
+- Receive feedback from community and users
 - TBA
 
 ## 🛠 Build Setup

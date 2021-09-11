@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="summary">
     <p class='title mb-6 my-6'>Summary</p>
-    <div class='columns is-centered has-text-centered is-size-5'>
+    <div class='columns is-centered has-text-centered is-multiline is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
           label='Hotspot rewards from the past 24 hours' type='is-dark'>
@@ -26,8 +26,6 @@
           <p><i class='fas fa-power-off my-4 mr-4' :style='{ color: minerStatusColor }'></i>Sync Status</p>
         </b-tooltip>
       </div>
-    </div>
-    <div id="sR" class='columns is-centered has-text-centered is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
           label='Hotspot manufacturer' type='is-dark' position='is-bottom'>
@@ -57,14 +55,12 @@
 import {Component, Prop, Vue} from "nuxt-property-decorator";
 import {Makers} from "~/enums/Makers";
 import {Miner} from "~/interfaces/Miner";
+import {Rewards} from "~/interfaces/Rewards";
 
 @Component
 export default class Summary extends Vue {
   @Prop() private minerName!: string
-
-  get miner(): Miner {
-    return this.$store.getters.miners[this.minerName]
-  }
+  @Prop() private miner!: Miner
 
   get maker(): string {
     return (<any>Makers)[this.miner.payer]
@@ -74,16 +70,8 @@ export default class Summary extends Vue {
     return this.$store.getters.miners[this.minerName].status.online === 'online' && (this.$store.getters.miners[this.minerName].block - this.$store.getters.miners[this.minerName].last_change_block < 500) ? 'rgb(70, 201, 58)' : 'rgb(255, 71, 87)'
   }
 
-  get rewards() {
-    return this.$store.getters.rewards
+  get rewards(): Rewards | undefined {
+    return this.miner.rewards
   }
 }
 </script>
-
-<style scoped>
-@media screen and (max-width: 768px) {
-  #sR {
-    margin-top: 1rem;
-  }
-}
-</style>

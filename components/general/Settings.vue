@@ -6,16 +6,23 @@
         <button
           type='button'
           class='delete'
-          @click="$emit('close')" />
+          @click="$emit('close')"/>
       </header>
       <section class='modal-card-body'>
-        <b-button class='is-dark'>Delete Miner History</b-button>
-        <b-button class='is-dark'>Delete Cache</b-button>
-        <a href='https://ko-fi.com/michaelpereira' rel='noopener' target='_blank'>
-          <b-button class='is-success'>
-            <i class='fas fa-coffee'>Buy me a coffee</i>
-          </b-button>
-        </a>
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <b-button class='settings-button is-fullwidth' @click="removeMinerHistory">Delete Miner History</b-button>
+          </div>
+          <div class="column is-12">
+            <b-button class='settings-button is-fullwidth' @click="removeFavourites">Delete Favourites</b-button>
+          </div>
+          <div class="column is-12">
+            <b-button class='settings-button is-fullwidth' @click="removeRecentlyViewed">Delete Recently Viewed</b-button>
+          </div>
+          <div class="column is-12">
+            <b-button class='settings-button is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
+          </div>
+        </div>
       </section>
     </div>
   </form>
@@ -23,23 +30,50 @@
 
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import {Component, Vue} from 'nuxt-property-decorator'
+import BuefyService from "~/services/buefy-service";
+import MessageConstants from "~/constants/message-constants";
 
 @Component
 export default class Settings extends Vue {
-  launchDeleteMinerHistoryConfirmation() {
-
+  removeAllData(): void {
+    this.redirectToHomePage('removeAllData');
   }
 
-  deleteMinerHistory() {
+  removeFavourites(): void {
+    this.redirectToHomePage('removeFavourites');
+  }
 
+  removeMinerHistory(): void {
+    this.redirectToHomePage('removeMinerHistory');
+  }
+
+  removeRecentlyViewed(): void {
+    this.redirectToHomePage('removeRecentlyViewed');
+  }
+
+  redirectToHomePage(action: string): void {
+    try {
+      this.$store.commit(action)
+      this.$router.push('/');
+      BuefyService.successToast(MessageConstants.SUCCESS_DELETING_CACHE);
+      this.$emit('close')
+    } catch {
+      BuefyService.successToast(MessageConstants.ERROR_DELETING_CACHE);
+    }
   }
 }
 </script>
 
 <style scoped>
 .modal-card {
-  min-width: 300px;
-  min-height: 300px;
+  max-width: 300px;
+}
+
+@media screen and (max-width: 768px) {
+  .modal-card {
+    max-width: unset;
+    margin: 30px !important;
+  }
 }
 </style>

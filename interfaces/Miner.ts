@@ -1,3 +1,6 @@
+import {Rewards} from "~/interfaces/Rewards";
+import {Witnesses} from "~/interfaces/Witnesses";
+
 export interface Miner {
   'address': string
   'block': number,
@@ -27,9 +30,11 @@ export interface Miner {
   'nonce': number,
   'owner': string,
   'payer': string,
+  'rewards'?: Rewards,
   'status': {
     'height': number,
     'online': string
   },
   'timestamp_added': string
+  'witnesses': Witnesses
 }

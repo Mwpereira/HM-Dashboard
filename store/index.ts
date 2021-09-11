@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import { successResponse } from '~/utils/response-utils'
+import {successResponse} from '~/utils/response-utils'
 import KyService from '~/services/ky-service'
 import BuefyService from '~/services/buefy-service'
 import MessageConstants from '~/constants/message-constants'
-import { Miners } from '~/interfaces/Miners'
-import { Miner } from '~/interfaces/Miner'
-import { Rewards } from '~/interfaces/Rewards'
-import { Favourites } from '~/interfaces/Favourites'
-import { RecentlyViewed } from '~/interfaces/RecentlyViewed'
+import {Miners} from '~/interfaces/Miners'
+import {Miner} from '~/interfaces/Miner'
+import {Rewards} from '~/interfaces/Rewards'
+import {Favourites} from '~/interfaces/Favourites'
+import {RecentlyViewed} from '~/interfaces/RecentlyViewed'
+import {State} from "~/interfaces/State";
+import {Witnesses} from "~/interfaces/Witnesses";
 
 Vue.use(Vuex)
 
-export const plugins = [createPersistedState({ storage: window.localStorage })]
+export const plugins = [createPersistedState({storage: window.localStorage})]
 
 export const state = () => {
   return {
@@ -21,17 +23,14 @@ export const state = () => {
     isDarkModeActive: false,
     isHomePage: true,
     miners: {},
-    rewards: {
-      dailyRewards: 0,
-      data: {}
-    },
+    minerName: '',
     recentlyViewed: []
   }
 }
 
 export const mutations = {
   addFavourite(state: { favourites: Favourites }, data: { minerName: string, informalName: string }) {
-    state.favourites = { ...state.favourites, [`${data.minerName}`]: data.informalName }
+    state.favourites = {...state.favourites, [`${data.minerName}`]: data.informalName}
   },
   addRecentlyViewed(state: { recentlyViewed: RecentlyViewed }, minerName: string) {
     let minerExists = false
@@ -68,14 +67,34 @@ export const mutations = {
   loadTheme(state: { isDarkModeActive: boolean }) {
     mutations.updateTheme(state)
   },
+  removeAllData(state: State) {
+    state.favourites = {};
+    state.isDarkModeActive = false;
+    state.miners = {};
+    state.recentlyViewed = []
+  },
   removeFavourite(state: { favourites: Favourites }, minerName: string) {
     const favourites = state.favourites
     delete favourites[minerName]
-    state.favourites = { ...favourites }
+    state.favourites = {...favourites}
   },
-  async setDailyRewards(state: { rewards: Rewards }, dailyRewards: number) {
+  removeFavourites(state: { favourites: Favourites }) {
+    state.favourites = {}
+  },
+  removeMinerHistory(state: { miners: Miners }) {
+    state.miners = {};
+  },
+  removeRecentlyVisited(state: { recentlyVisited: RecentlyViewed }) {
+    state.recentlyVisited = []
+  },
+  async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
     return await new Promise((resolve) => {
-      resolve(state.rewards.dailyRewards = dailyRewards)
+      resolve(state.miners[data.minerName].rewards = data.rewards)
+    })
+  },
+  async setWitnesses(state: { miners: Miners }, data: { minerName: string, witnesses: Witnesses }) {
+    return await new Promise((resolve) => {
+      resolve(state.miners[data.minerName].witnesses! = data.witnesses)
     })
   },
   setPage(state: { isHomePage: boolean }, isHomePage: boolean) {
@@ -119,9 +138,7 @@ export const actions = {
     try {
       BuefyService.startLoading()
 
-      let response = await KyService.getHotspotForName(userInput)
-
-      BuefyService.stopLoading()
+      let response = await KyService.getHotspotFromName(userInput)
 
       if (successResponse(response)) {
         response = await response.json()
@@ -140,14 +157,19 @@ export const actions = {
           // Add Miner to state
           await ctx.commit('addMiner', miner)
           await ctx.commit('addRecentlyViewed', miner.informal_name)
-          await ctx.dispatch('getDailyRewards', { minerName: miner.name, minerAddress: miner.address })
+          await ctx.dispatch('getRewards', {minerName: miner.name, minerAddress: miner.address})
+          await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address})
+
+          BuefyService.stopLoading()
 
           return miner.name
         } else {
+          BuefyService.stopLoading()
           BuefyService.dangerToast(MessageConstants.ERROR_ADDING_MINER)
           return null
         }
       } else {
+        BuefyService.stopLoading()
         BuefyService.dangerToast(MessageConstants.ERROR_ADDING_MINER)
         return null
       }
@@ -158,21 +180,72 @@ export const actions = {
       return null
     }
   },
-  async getDailyRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
-    let response = await KyService.getLast24HrRewards(data.minerAddress)
+  async getRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
+    let response = await KyService.getRewards(data.minerAddress)
 
     if (successResponse(response)) {
       response = await response.json()
 
-      let rewards = 0
+      let sum = 0;
+      let counter = 0;
+      let dailyRewards = 0;
+      let weeklyRewards = 0;
+      let monthlyRewards = 0;
+
       for (const value of Object.values(response.data)) {
         // @ts-ignore
-        rewards += value.total
+        sum += value.total
+        counter++
+
+        // 24 === 1 day
+        if (counter <= 24) {
+          dailyRewards = sum
+        }
+        // 168 === 1 week
+        if (counter <= 168) {
+          weeklyRewards = sum
+        }
+        // 5208 === 1 month
+        if (counter <= 5208) {
+          monthlyRewards = sum
+        }
       }
 
-      await ctx.commit('setDailyRewards', rewards.toFixed(2))
+      const rewards: Rewards = {
+        dailyRewards: dailyRewards.toFixed(2),
+        weeklyRewards: weeklyRewards.toFixed(2),
+        monthlyRewards: monthlyRewards.toFixed(2),
+        data: response.data
+      }
+
+      await ctx.commit('setRewards', {minerName: data.minerName, rewards})
     } else {
       BuefyService.dangerToast(MessageConstants.ERROR_GETTING_REWARDS)
+    }
+  },
+  async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string }) {
+    let response = await KyService.getWitnesses(data.minerAddress)
+
+    if (successResponse(response)) {
+      response = await response.json()
+
+      let sum = 0
+      const dataArr = Object.values(response.data)
+      for (const value of dataArr) {
+        // @ts-ignore
+        sum += value.reward_scale
+      }
+      sum /= dataArr.length;
+
+      const witnesses = {
+        count: dataArr.length,
+        avgRewardScale: sum.toFixed(2),
+        data: response.data
+      }
+
+      await ctx.commit('setWitnesses', {minerName: data.minerName, witnesses})
+    } else {
+      BuefyService.dangerToast(MessageConstants.ERROR_GETTING_WITNESSES)
     }
   },
   async loadMiner(ctx: any, minerName: string): Promise<Miner> {

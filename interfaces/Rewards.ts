@@ -1,4 +1,6 @@
 export interface Rewards {
-  dailyRewards: number,
+  dailyRewards: string,
+  weeklyRewards: string,
+  monthlyRewards: string,
   data: object,
 }
