@@ -68,7 +68,7 @@ export default class Home extends Vue {
     if (this.userInput === '') {
       const results = []
 
-      if (this.userInput === '' && this.$store.getters.recentlyViewed.favourites === 0) {
+      if (Object.keys(this.$store.getters.recentlyViewed.favourites).length === 0) {
         results.push([{
           type: 'Suggested Hotspots', items: hotspots.miners
         }])
