@@ -47,19 +47,32 @@
 
 <script lang='ts'>
 import {Component, Vue} from 'nuxt-property-decorator'
+import hotspots from '@/assets/json/hotspots.json'
 
 @Component
 export default class Home extends Vue {
   private userInput = ''
 
-  mounted() {
+  mounted(): void {
     this.$store.dispatch('startup', true)
     document.title = `HM Dashboard`
   }
 
   get filteredDataArray(): Array<{ type: string; items: any; }> {
+    if (this.userInput === '' && this.$store.getters.favourites && this.$store.getters.recentlyViewed.length === 0) {
+      return [{
+        type: 'Suggested Hotspots', items: hotspots.miners
+      }]
+    }
+
     if (this.userInput === '') {
       const results = []
+
+      if (this.userInput === '' && this.$store.getters.recentlyViewed.favourites === 0) {
+        results.push([{
+          type: 'Suggested Hotspots', items: hotspots.miners
+        }])
+      }
 
       if (Object.keys(this.$store.getters.favourites).length > 0) {
         results.push({
@@ -94,7 +107,8 @@ export default class Home extends Vue {
 
   private async addMiner(): Promise<void> {
     const miner = await this.$store.dispatch('addMiner', this.userInput)
-    if (miner !== null) {
+    if (miner !== null
+    ) {
       await this.$router.push(`/${miner}`)
     }
   }

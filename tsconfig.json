@@ -9,6 +9,7 @@
       "DOM"
     ],
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
@@ -25,7 +26,7 @@
     },
     "types": [
       "@nuxt/types",
-      "@types/node",
+      "@types/node"
     ]
   },
   "exclude": [

@@ -26,8 +26,8 @@ html {
 
     .button {
       background-color: transparent;
-      border-color: $dark-mode-button-color !important;
-      color: $dark-mode-button-color !important;
+      border-color: $dark-mode-button-color;
+      color: $dark-mode-button-color;
 
       &:hover:not([disabled]):not(.is-dark) {
         background-color: $dark-mode-button-color;
