@@ -61,6 +61,7 @@
 <script lang='ts'>
 import {Component, Vue} from 'nuxt-property-decorator'
 import Settings from '~/components/general/Settings.vue'
+import {Miners} from "~/interfaces/Miners";
 
 @Component
 export default class NavBar extends Vue {
@@ -68,7 +69,7 @@ export default class NavBar extends Vue {
     return this.$store.getters.isHomePage
   }
 
-  get miners() {
+  get miners(): Miners {
     return this.$store.getters.miners
   }
 

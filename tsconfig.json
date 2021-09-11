@@ -25,12 +25,12 @@
     },
     "types": [
       "@nuxt/types",
-      "@types/node"
+      "@types/node",
     ]
   },
   "exclude": [
     "node_modules",
     ".nuxt",
-    "dist"
+    "dist",
   ]
 }

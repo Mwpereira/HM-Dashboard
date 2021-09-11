@@ -57,15 +57,7 @@ export default class Home extends Vue {
     document.title = `HM Dashboard`
   }
 
-  get hasVisitedMiners() {
-    return Object.keys(this.$store.getters.miners).length > 0
-  }
-
-  get hasFavourites() {
-    return Object.keys(this.$store.getters.favourites).length > 0
-  }
-
-  get filteredDataArray() {
+  get filteredDataArray(): Array<{ type: string; items: any; }> {
     if (this.userInput === '') {
       const results = []
 
@@ -100,7 +92,7 @@ export default class Home extends Vue {
     }
   }
 
-  private async addMiner() {
+  private async addMiner(): Promise<void> {
     const miner = await this.$store.dispatch('addMiner', this.userInput)
     if (miner !== null) {
       await this.$router.push(`/${miner}`)

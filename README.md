@@ -42,9 +42,6 @@ Release Date: September 12th, 2021
 - Add Settings
 - Add Witnesses section
 - Add Rewards section
-- Add CI with Github
-- Add Cypress testing for the UI
-- Add Jest testing for the API calls
 
 ### v3
 

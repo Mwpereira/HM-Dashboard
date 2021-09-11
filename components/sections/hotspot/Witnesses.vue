@@ -22,35 +22,15 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "nuxt-property-decorator";
-import {Makers} from "~/enums/Makers";
 import {Miner} from "~/interfaces/Miner";
 
 @Component
 export default class Witnesses extends Vue {
   @Prop() private minerName!: string
-
-  get miner(): Miner {
-    return this.$store.getters.miners[this.minerName]
-  }
-
-  get maker(): string {
-    return (<any>Makers)[this.miner.payer]
-  }
-
-  get minerStatusColor(): string {
-    return this.$store.getters.miners[this.minerName].status.online === 'online' && (this.$store.getters.miners[this.minerName].block - this.$store.getters.miners[this.minerName].last_change_block < 500) ? 'rgb(70, 201, 58)' : 'rgb(255, 71, 87)'
-  }
+  @Prop() private miner!: Miner
 
   get witnesses() {
     return this.miner.witnesses
   }
 }
 </script>
-
-<style scoped>
-@media screen and (max-width: 768px) {
-  #sR {
-    margin-top: 1rem;
-  }
-}
-</style>

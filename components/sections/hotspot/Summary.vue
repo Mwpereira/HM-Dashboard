@@ -55,14 +55,12 @@
 import {Component, Prop, Vue} from "nuxt-property-decorator";
 import {Makers} from "~/enums/Makers";
 import {Miner} from "~/interfaces/Miner";
+import {Rewards} from "~/interfaces/Rewards";
 
 @Component
 export default class Summary extends Vue {
   @Prop() private minerName!: string
-
-  get miner(): Miner {
-    return this.$store.getters.miners[this.minerName]
-  }
+  @Prop() private miner!: Miner
 
   get maker(): string {
     return (<any>Makers)[this.miner.payer]
@@ -72,7 +70,7 @@ export default class Summary extends Vue {
     return this.$store.getters.miners[this.minerName].status.online === 'online' && (this.$store.getters.miners[this.minerName].block - this.$store.getters.miners[this.minerName].last_change_block < 500) ? 'rgb(70, 201, 58)' : 'rgb(255, 71, 87)'
   }
 
-  get rewards() {
+  get rewards(): Rewards | undefined {
     return this.miner.rewards
   }
 }

@@ -24,25 +24,19 @@
     "vuex-persistedstate": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.14.7",
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/eslint-config-typescript": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/style-resources": "^1.2.1",
-    "@vue/test-utils": "^1.2.1",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^27.0.5",
-    "cypress": "^8.3.1",
+    "@types/node": "^16.9.1",
+    "@vue/test-utils": "^1.2.2",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",
-    "jest": "^27.0.5",
     "prettier": "^2.3.2",
     "sass": "^1.38.0",
-    "sass-loader": "10.2.0",
-    "ts-jest": "^27.0.3",
-    "vue-jest": "^3.0.4"
+    "sass-loader": "10.2.0"
   }
 }

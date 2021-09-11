@@ -138,7 +138,7 @@ export const actions = {
     try {
       BuefyService.startLoading()
 
-      let response = await KyService.getHotspotForName(userInput)
+      let response = await KyService.getHotspotFromName(userInput)
 
       if (successResponse(response)) {
         response = await response.json()

@@ -11,16 +11,16 @@
       <section class='modal-card-body'>
         <div class="columns is-multiline">
           <div class="column is-12">
-            <b-button class='is-danger-mc is-fullwidth' @click="removeMinerHistory">Delete Miner History</b-button>
+            <b-button class='settings-button is-fullwidth' @click="removeMinerHistory">Delete Miner History</b-button>
           </div>
           <div class="column is-12">
-            <b-button class='is-danger-mc is-fullwidth' @click="removeFavourites">Delete Favourites</b-button>
+            <b-button class='settings-button is-fullwidth' @click="removeFavourites">Delete Favourites</b-button>
           </div>
           <div class="column is-12">
-            <b-button class='is-danger-mc is-fullwidth' @click="removeRecentlyViewed">Delete Recently Viewed</b-button>
+            <b-button class='settings-button is-fullwidth' @click="removeRecentlyViewed">Delete Recently Viewed</b-button>
           </div>
           <div class="column is-12">
-            <b-button class='is-danger-mc is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
+            <b-button class='settings-button is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
           </div>
         </div>
       </section>
@@ -36,23 +36,23 @@ import MessageConstants from "~/constants/message-constants";
 
 @Component
 export default class Settings extends Vue {
-  removeAllData() {
+  removeAllData(): void {
     this.redirectToHomePage('removeAllData');
   }
 
-  removeFavourites() {
+  removeFavourites(): void {
     this.redirectToHomePage('removeFavourites');
   }
 
-  removeMinerHistory() {
+  removeMinerHistory(): void {
     this.redirectToHomePage('removeMinerHistory');
   }
 
-  removeRecentlyViewed() {
+  removeRecentlyViewed(): void {
     this.redirectToHomePage('removeRecentlyViewed');
   }
 
-  redirectToHomePage(action: string) {
+  redirectToHomePage(action: string): void {
     try {
       this.$store.commit(action)
       this.$router.push('/');

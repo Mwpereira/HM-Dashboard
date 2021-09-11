@@ -14,7 +14,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class Footer extends Vue {
-  get isHomePage() {
+  get isHomePage(): boolean {
     return this.$store.getters.isHomePage
   }
 }

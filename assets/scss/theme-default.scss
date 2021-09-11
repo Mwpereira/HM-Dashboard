@@ -160,6 +160,12 @@ $toast-border-radius: 0em;
   color: rgb(59, 222, 200)
 }
 
+.settings-button {
+  background-color: rgb(255, 71, 87) !important;
+  border-color: rgb(255, 71, 87) !important;
+  color: $dark-mode-color !important;
+}
+
 #hm {
   color: rgba(26, 92, 255, 0.7)
 }
