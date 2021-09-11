@@ -83,10 +83,6 @@ export default class Hotspot extends Vue {
 </style>
 
 <style>
-#rewards {
-  padding-top: 100px;
-}
-
 .box p {
   white-space: nowrap;
   overflow: hidden;
@@ -100,6 +96,12 @@ export default class Hotspot extends Vue {
 
   .column.box {
     min-width: 300px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #summary, #rewards, #witnesses, #location {
+    padding-top: 12vh;
   }
 }
 </style>
