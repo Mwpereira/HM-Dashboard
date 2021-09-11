@@ -101,7 +101,7 @@ export default class Hotspot extends Vue {
 
 @media screen and (max-width: 768px) {
   #summary, #rewards, #witnesses, #location {
-    padding-top: 12vh;
+    padding-top: 10vh;
   }
 }
 </style>
