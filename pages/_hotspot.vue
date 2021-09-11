@@ -83,6 +83,13 @@ export default class Hotspot extends Vue {
 </style>
 
 <style>
+#sumary, #rewards, #witnesses, #location {
+  display: block;
+  position: relative;
+  top: -250px;
+  visibility: hidden;
+}
+
 .box p {
   white-space: nowrap;
   overflow: hidden;
