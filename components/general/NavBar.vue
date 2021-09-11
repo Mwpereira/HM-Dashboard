@@ -39,9 +39,6 @@
       <b-navbar-item class='mr-4 navOptions' href="#witnesses">
         Witnesses
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' href="#nearby">
-        Nearby
-      </b-navbar-item>
       <b-navbar-item class='mr-4 navOptions' href="#location">
         Location
       </b-navbar-item>

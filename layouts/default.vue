@@ -32,6 +32,10 @@ html, body {
 }
 
 @media screen and (max-width: 768px) {
+  html, body {
+    scroll-padding: 18vh;
+  }
+
   .toast.is-success {
     background-color: rgb(70, 201, 58) !important;
   }
@@ -50,12 +54,6 @@ html, body {
 
   .toast.is-info {
     background-color: rgb(59, 222, 200) !important;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  html, body {
-    scroll-padding: 18vh;
   }
 }
 </style>
