@@ -31,7 +31,7 @@ html {
 
       &:hover:not([disabled]):not(.is-dark) {
         background-color: $dark-mode-button-color;
-        color: $dark-mode-button-hover-color !important;
+        color: $dark-mode-button-hover-color;
       }
 
       @each $state-class, $state-color, $state-text in $state-colors {
@@ -49,13 +49,13 @@ html {
 
 
     button.is-dark {
-      background-color: white !important;
+      background-color: white;
       font-weight: bold;
 
       &:hover {
-        background-color: transparent !important;
-        border-color: white !important;
-        color: white !important;
+        background-color: transparent;
+        border-color: white;
+        color: white;
       }
     }
 
