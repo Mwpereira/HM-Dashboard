@@ -17,7 +17,9 @@
                 group-options='items'
                 :open-on-focus='true'
                 @keydown.native.enter='addMiner'
+                @select="option => addMiner(option)"
               >
+                <template></template>
                 <template #empty>No hotspots found</template>
               </b-autocomplete>
             </b-field>
@@ -48,6 +50,8 @@
 <script lang='ts'>
 import {Component, Vue} from 'nuxt-property-decorator'
 import hotspots from '@/assets/json/hotspots.json'
+import BuefyService from "~/services/buefy-service";
+import MessageConstants from "~/constants/message-constants";
 
 @Component
 export default class Home extends Vue {
@@ -102,11 +106,18 @@ export default class Home extends Vue {
     }
   }
 
-  private async addMiner(): Promise<void> {
-    const miner = await this.$store.dispatch('addMiner', this.userInput)
-    if (miner !== null
-    ) {
-      await this.$router.push(`/${miner}`)
+  private async addMiner(selected?: string): Promise<void> {
+    this.userInput = (typeof selected === 'object') ? this.userInput : selected || ''
+    if (this.userInput !== '') {
+      if ((this.userInput.match(/(\s|-)/g) || []).length === 2) {
+        const miner = await this.$store.dispatch('addMiner', this.userInput.trim())
+        if (miner !== null
+        ) {
+          await this.$router.push(`/${miner}`)
+        }
+      } else {
+        BuefyService.dangerToast(MessageConstants.ERROR_INCORRECT_SYNTAX);
+      }
     }
   }
 }
