@@ -167,7 +167,9 @@ $toast-border-radius: 0em;
 }
 
 .settings-button:hover {
-  color: #2d3140 !important;
+  background-color: rgb(252, 93, 105) !important;
+  border-color: rgb(252, 93, 105)!important;
+  color: $dark-mode-color !important;
 }
 
 #hm {
