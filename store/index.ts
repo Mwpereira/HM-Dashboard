@@ -180,71 +180,79 @@ export const actions = {
     }
   },
   async getRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
-    let response = await KyService.getRewards(data.minerAddress)
+    try {
+      let response = await KyService.getRewards(data.minerAddress)
 
-    if (successResponse(response)) {
-      response = await response.json()
+      if (successResponse(response)) {
+        response = await response.json()
 
-      let sum = 0;
-      let counter = 0;
-      let dailyRewards = 0;
-      let weeklyRewards = 0;
-      let monthlyRewards = 0;
+        let sum = 0;
+        let counter = 0;
+        let dailyRewards = 0;
+        let weeklyRewards = 0;
+        let monthlyRewards = 0;
 
-      for (const value of Object.values(response.data)) {
-        // @ts-ignore
-        sum += value.total
-        counter++
+        for (const value of Object.values(response.data)) {
+          // @ts-ignore
+          sum += value.total
+          counter++
 
-        // 24 === 1 day
-        if (counter <= 24) {
-          dailyRewards = sum
+          // 24 === 1 day
+          if (counter <= 24) {
+            dailyRewards = sum
+          }
+          // 168 === 1 week
+          if (counter <= 168) {
+            weeklyRewards = sum
+          }
+          // 5208 === 1 month
+          if (counter <= 5208) {
+            monthlyRewards = sum
+          }
         }
-        // 168 === 1 week
-        if (counter <= 168) {
-          weeklyRewards = sum
+
+        const rewards: Rewards = {
+          dailyRewards: dailyRewards.toFixed(2),
+          weeklyRewards: weeklyRewards.toFixed(2),
+          monthlyRewards: monthlyRewards.toFixed(2),
+          data: response.data
         }
-        // 5208 === 1 month
-        if (counter <= 5208) {
-          monthlyRewards = sum
-        }
+
+        await ctx.commit('setRewards', {minerName: data.minerName, rewards})
+      } else {
+        BuefyService.dangerToast(MessageConstants.ERROR_GETTING_REWARDS)
       }
-
-      const rewards: Rewards = {
-        dailyRewards: dailyRewards.toFixed(2),
-        weeklyRewards: weeklyRewards.toFixed(2),
-        monthlyRewards: monthlyRewards.toFixed(2),
-        data: response.data
-      }
-
-      await ctx.commit('setRewards', {minerName: data.minerName, rewards})
-    } else {
-      BuefyService.dangerToast(MessageConstants.ERROR_GETTING_REWARDS)
+    } catch {
+      BuefyService.dangerToast(MessageConstants.ERROR_HELIUM)
     }
   },
   async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string }) {
-    let response = await KyService.getWitnesses(data.minerAddress)
+    try {
+      let response = await KyService.getWitnesses(data.minerAddress)
 
-    if (successResponse(response)) {
-      response = await response.json()
+      if (successResponse(response)) {
+        response = await response.json()
 
-      let sum = 0
-      const dataArr = Object.values(response.data)
-      for (const value of dataArr) {
-        // @ts-ignore
-        sum += value.reward_scale
+        let sum = 0
+        const dataArr = Object.values(response.data)
+        for (const value of dataArr) {
+          // @ts-ignore
+          sum += value.reward_scale
+        }
+        sum /= dataArr.length;
+
+        const witnesses = {
+          count: dataArr.length,
+          avgRewardScale: sum.toFixed(2),
+          data: response.data
+        }
+
+        await ctx.commit('setWitnesses', {minerName: data.minerName, witnesses})
+      } else {
+        BuefyService.dangerToast(MessageConstants.ERROR_GETTING_WITNESSES)
       }
-      sum /= dataArr.length;
-
-      const witnesses = {
-        count: dataArr.length,
-        avgRewardScale: sum.toFixed(2),
-        data: response.data
-      }
-
-      await ctx.commit('setWitnesses', {minerName: data.minerName, witnesses})
-    } else {
-      BuefyService.dangerToast(MessageConstants.ERROR_GETTING_WITNESSES)
+    } catch {
+      BuefyService.dangerToast(MessageConstants.ERROR_HELIUM)
     }
   },
   async loadMiner(ctx: any, minerName: string): Promise<Miner> {

@@ -20,4 +20,5 @@ export default class MessageConstants {
   public static readonly ERROR_GETTING_WITNESSES = 'Error getting witnesses'
   public static readonly ERROR_DELETING_CACHE = 'Error deleting cache'
   public static readonly ERROR_INCORRECT_SYNTAX = 'Incorrect Syntax'
+  public static readonly ERROR_HELIUM = 'Helium API error'
 }
