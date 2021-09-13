@@ -32,7 +32,6 @@
             class='fas fa-star'></i></p>
         </b-tooltip>
       </div>
-
     </div>
   </div>
 </template>
