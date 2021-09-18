@@ -83,8 +83,8 @@ export const mutations = {
   removeMinerHistory(state: { miners: Miners }) {
     state.miners = {};
   },
-  removeRecentlyVisited(state: { recentlyVisited: RecentlyViewed }) {
-    state.recentlyVisited = []
+  removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
+    state.recentlyViewed = []
   },
   async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
     return await new Promise((resolve) => {
