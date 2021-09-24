@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@nuxtjs/google-gtag": "^1.0.4",
-    "@vue/cli-plugin-vuex": "^4.5.13",
     "core-js": "^3.15.1",
     "ky": "^0.28.5",
     "moment": "^2.29.1",
