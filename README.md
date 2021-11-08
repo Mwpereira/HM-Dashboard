@@ -42,6 +42,7 @@ Release Date: September 12th, 2021
 - Add Settings
 - Add Witnesses section
 - Add Rewards section
+- Add Location section
 
 ### v3
 

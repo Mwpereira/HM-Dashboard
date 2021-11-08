@@ -83,8 +83,8 @@ export const mutations = {
   removeMinerHistory(state: { miners: Miners }) {
     state.miners = {};
   },
-  removeRecentlyVisited(state: { recentlyVisited: RecentlyViewed }) {
-    state.recentlyVisited = []
+  removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
+    state.recentlyViewed = []
   },
   async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
     return await new Promise((resolve) => {
@@ -205,8 +205,8 @@ export const actions = {
           if (counter <= 168) {
             weeklyRewards = sum
           }
-          // 5208 === 1 month
-          if (counter <= 5208) {
+          // 732 === 1 month (average between 30-31 days)
+          if (counter <= 732) {
             monthlyRewards = sum
           }
         }
