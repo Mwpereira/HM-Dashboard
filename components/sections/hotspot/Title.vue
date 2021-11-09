@@ -4,7 +4,7 @@
     <div class='is-flex is-justify-content-center is-align-items-center has-text-centered'>
       <div>
         <b-tooltip
-          label="Hotspot's Address" type='is-dark' position='is-bottom'>
+          label="Hotspot's address" type='is-dark' position='is-bottom'>
           <p class='copyText m-2' @click="copyText(miner.address, 'address')"><i
             class='fas fa-at m-1'></i>{{
               miner.address
@@ -27,12 +27,12 @@
           </a>
         </b-tooltip>
         <b-tooltip
-          label='Get Hotspot Link' type='is-dark' position='is-bottom'>
+          label='Get hotspot Link' type='is-dark' position='is-bottom'>
           <p class='link m-3' @click="copyText(`https://hmdashboard.mwpereira.ca${$nuxt.$route.fullPath}`, 'url')"><i
             class='fas fa-link'></i></p>
         </b-tooltip>
         <b-tooltip
-          label='Favourite Hotspot' type='is-dark' position='is-bottom'>
+          label='Favourite hotspot' type='is-dark' position='is-bottom'>
           <p class='favourite m-3' :style='{ color: favouriteColor}' @click='favouriteHotspot()'><i
             class='fas fa-star'></i></p>
         </b-tooltip>
