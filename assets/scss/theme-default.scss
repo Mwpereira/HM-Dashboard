@@ -23,6 +23,7 @@ $hr-height: 1px;
 $border: $base-color-light;
 
 /* NavBar: Bulma override */
+$navbar-burger-color:  #485fc7 !important;
 $navbar-item-color: $link;
 $navbar-item-hover-background-color: transparent;
 $navbar-item-active-color: $black-ter;
@@ -69,7 +70,7 @@ $dark-mode-model-card-background-color: $dark-mode-background-color;
 $dark-mode-card-header-button-color: $grey;
 $dark-mode-card-header-button-hover-color: $black-ter;
 $dark-mode-dropdown-background-color: #1E2033;
-$dark-mode-dropdown-hovered-background: #1D1F33;
+$dark-mode-dropdown-hovered-background: #1e2034;
 $dark-mode-footer-background-color: #202235;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,7 +141,7 @@ $toast-border-radius: 0em;
 
 @media screen and (max-width: 768px) {
   .toast {
-    margin: 1em 1em;
+    margin: 1em;
   }
 }
 

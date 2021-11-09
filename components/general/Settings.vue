@@ -1,5 +1,5 @@
 <template>
-  <form action=''>
+  <form>
     <div class='modal-card' style='width: auto'>
       <header class='modal-card-head'>
         <p class='modal-card-title'>Settings</p>
@@ -10,7 +10,7 @@
       </header>
       <section class='modal-card-body'>
         <div class="columns is-multiline">
-          <div class="column is-12">
+          <div class="column is-12 pt-4">
             <b-button class='settings-button is-fullwidth' @click="removeMinerHistory">Delete Miner History</b-button>
           </div>
           <div class="column is-12">
@@ -19,7 +19,7 @@
           <div class="column is-12">
             <b-button class='settings-button is-fullwidth' @click="removeRecentlyViewed">Delete Recently Viewed</b-button>
           </div>
-          <div class="column is-12">
+          <div class="column is-12 pb-4">
             <b-button class='settings-button is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
           </div>
         </div>
@@ -68,6 +68,11 @@ export default class Settings extends Vue {
 <style scoped>
 .modal-card {
   max-width: 300px;
+  border-radius: 6px;
+}
+
+.column.is-12{
+  padding: 10px;
 }
 
 @media screen and (max-width: 768px) {

@@ -18,7 +18,7 @@
       </div>
       <div class='column box m-4'>
         <b-tooltip
-          label='Current status of Hotspot miner' type='is-dark'>
+          label='Current status of miner' type='is-dark'>
           <p class='is-size-3 m-4'>
             {{
               (miner.status.online === 'online' && (miner.block - miner.last_change_block < 500)) ? 'Synced' : 'Not Synced'

@@ -25,7 +25,7 @@
              transform='matrix(3.261537572208972,0,0,3.261537572208972,-13.078514704315872,-49.859460111036185)'>
             <path clip-rule='evenodd'
                   d='M49.998 32.965l14.755 8.517v7.502h8.082l3.813-6.613h8.809l4.402 7.628-4.402 7.627h-8.809l-3.813-6.61h-8.082v7.5l-14.755 8.52-14.752-8.52v-7.5h-8.08l-3.815 6.61h-8.809L10.142 50l4.4-7.628h8.809l3.814 6.613h8.081v-7.502z'></path>
-          </g><!---->
+          </g>
         </svg>
       </b-navbar-item>
     </template>
@@ -42,7 +42,10 @@
       <b-navbar-item class='mr-4 navOptions' href="#location">
         Location
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' @click="cardModal">
+      <b-navbar-item class='mr-4 navOptions' @click="favouritesModal">
+        <i class="fas fa-layer-group"></i>
+      </b-navbar-item>
+      <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
         <i class='fas fa-cog'></i>
       </b-navbar-item>
       <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions' title='Dark Mode'
@@ -62,6 +65,7 @@
 import {Component, Vue} from 'nuxt-property-decorator'
 import Settings from '~/components/general/Settings.vue'
 import {Miners} from "~/interfaces/Miners";
+import Favourites from "~/components/general/Favourites.vue";
 
 @Component
 export default class NavBar extends Vue {
@@ -81,7 +85,11 @@ export default class NavBar extends Vue {
     this.$store.commit('darkModeToggle')
   }
 
-  private cardModal(): void {
+  private favouritesModal(): void {
+
+  }
+
+  private settingsModal(): void {
     this.$buefy.modal.open({
       parent: this,
       component: Settings,

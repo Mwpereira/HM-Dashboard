@@ -27,7 +27,12 @@
           </a>
         </b-tooltip>
         <b-tooltip
-          label='Favourite Hotspot' type='is-dark' position='is-bottom' class='groupA'>
+          label='Get Hotspot Link' type='is-dark' position='is-bottom'>
+          <p class='link m-3' @click="copyText(`https://hmdashboard.mwpereira.ca${$nuxt.$route.fullPath}`, 'url')"><i
+            class='fas fa-link'></i></p>
+        </b-tooltip>
+        <b-tooltip
+          label='Favourite Hotspot' type='is-dark' position='is-bottom'>
           <p class='favourite m-3' :style='{ color: favouriteColor}' @click='favouriteHotspot()'><i
             class='fas fa-star'></i></p>
         </b-tooltip>
@@ -76,16 +81,16 @@ h1 {
   font-size: 2.35rem;
 }
 
-.heliumExplorer {
-  color: #4a4a4a
+.heliumExplorer, .link {
+  color: #4a4a4a;
 }
 
-.is-dark-mode-active .heliumExplorer {
+.is-dark-mode-active .heliumExplorer, .is-dark-mode-active .link {
   color: #e5e5e5;
 }
 
 .heliumExplorer:hover {
-  color: #8b5de9;
+  color: #b569ce;
 }
 
 .copyText {
@@ -102,6 +107,11 @@ h1 {
 
 .favourite:hover {
   color: gold !important;
+  cursor: pointer;
+}
+
+.link:hover{
+  color: #7ac6d9 !important;
   cursor: pointer;
 }
 

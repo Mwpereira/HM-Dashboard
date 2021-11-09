@@ -46,10 +46,19 @@ Release Date: September 12th, 2021
 
 ### v3
 
-Release Date: TBA
+Release Date: November 26th, 2021
 
-- Receive feedback from community and users
-- TBA
+- Adding favourites page
+- Adding an accessible/searchable favourites list
+- Adding get hotspot url link button
+- Updating time formatting
+- Updating responsiveness
+- Updating styling
+- Updating handling errors
+
+### v4
+
+Release Date: TBA
 
 ## 🛠 Build Setup
 

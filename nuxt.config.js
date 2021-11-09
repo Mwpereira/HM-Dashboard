@@ -15,10 +15,10 @@ export default {
         name: 'keywords',
         content: 'HM Dashboard, HNT, HNT-Miner, HNT Coin, Helium Coin, Bobcat Miner, Nebra Miner, Crypto, Crypto Currency, mwpereira'
       },
-      { hid: 'og:title', name: 'og:title', content: 'HM Dashboard' },
-      { hid: 'og:description', name: 'og:description', content: 'Helium Miner Dashboard' },
-      { hid: 'og:image', name: 'og:image', content: '/site.png' },
-      { hid: 'og:site_name', name: 'og:site_name', content: 'HM Dashboard' },
+      { hid: 'og:title', property: 'og:title', content: 'HM Dashboard' },
+      { hid: 'og:description', property: 'og:description', content: 'Helium Miner Dashboard' },
+      { hid: 'og:image', property: 'og:image', content: '/site.png' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'HM Dashboard' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication', content: '#da532c' },
       { name: 'theme-color', content: '#ffffff' }
