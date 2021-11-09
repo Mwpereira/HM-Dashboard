@@ -53,7 +53,7 @@ import Location from "~/components/sections/hotspot/Location.vue";
     Witnesses
   }
 })
-export default class Hotspot extends Vue {
+export default class Favourites extends Vue {
   private minerName!: string
 
   get miner(): Miner {

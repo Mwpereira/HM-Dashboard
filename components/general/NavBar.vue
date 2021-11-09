@@ -65,7 +65,6 @@
 import {Component, Vue} from 'nuxt-property-decorator'
 import Settings from '~/components/general/Settings.vue'
 import {Miners} from "~/interfaces/Miners";
-import Favourites from "~/components/general/Favourites.vue";
 
 @Component
 export default class NavBar extends Vue {
