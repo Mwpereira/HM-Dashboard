@@ -110,7 +110,7 @@ h1 {
   cursor: pointer;
 }
 
-.link:hover{
+.link:hover {
   color: #7ac6d9 !important;
   cursor: pointer;
 }

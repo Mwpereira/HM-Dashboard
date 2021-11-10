@@ -179,6 +179,20 @@ html {
       }
     }
 
+    table {
+      color: $dark-mode-color;
+      background-color: transparent;
+    }
+
+    tr {
+      color: $dark-mode-color;
+      background-color: transparent !important;
+    }
+
+    th{
+      color: $dark-mode-color;
+    }
+
     section {
       &.section.is-title-bar, &.hero.is-hero-bar {
         border-color: $dark-mode-light-border-color;
@@ -206,6 +220,14 @@ html {
 
     .loading-background {
       background-color: rgba(34, 36, 54, 0.5)
+    }
+
+    @media screen and (max-width: 768px) {
+      tr {
+        box-shadow: none;
+        padding: 10px;
+        border-color: transparent;
+      }
     }
   }
 }

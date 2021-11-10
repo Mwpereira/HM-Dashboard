@@ -63,7 +63,7 @@ export default class Home extends Vue {
   }
 
   get filteredDataArray(): ({ type: string; items: string[]; }[] | { type: string; items: any; })[] {
-    if (this.userInput === '' && this.$store.getters.recentlyViewed.length === 0) {
+    if (this.userInput === '' && this.$store.getters.recentlyViewed.length === 0 && this.$store.getters.favourites.length === 0) {
       return [{
         type: 'Suggested Hotspots', items: hotspots.miners
       }]
@@ -82,14 +82,14 @@ export default class Home extends Vue {
 
       if (this.$store.getters.recentlyViewed.length > 0) {
         results.push({
-          type: 'Search Results', items: this.$store.getters.recentlyViewed.filter((option: any) => {
+          type: 'Search Results', items: this.$store.getters.recentlyViewed.slice().reverse().filter((option: any) => {
             return (
               option.toString().toLowerCase().includes(this.userInput.toLowerCase())
             )
           })
         })
       }
-      if (Object.keys(this.$store.getters.favourites).length === 0) {
+      if (Object.keys(this.$store.getters.recentlyViewed).length === 0) {
         results.push({
           type: 'Suggested Hotspots', items: hotspots.miners
         })

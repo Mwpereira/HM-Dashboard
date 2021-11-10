@@ -30,19 +30,22 @@
       </b-navbar-item>
     </template>
     <template #end>
-      <b-navbar-item class='mr-4 navOptions' href="#summary">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#summary">
         Summary
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' href="#rewards">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#rewards">
         Rewards
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' href="#witnesses">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#witnesses">
         Witnesses
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' href="#location">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#location">
         Location
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' @click="favouritesModal">
+      <b-navbar-item v-show="isWatchlistPage" class='mr-4 navOptions' @click="goToLastVisited">
+        <i class="fas fa-chevron-left"></i>
+      </b-navbar-item>
+      <b-navbar-item class='mr-4 navOptions' @click="favouritesPage">
         <i class="fas fa-layer-group"></i>
       </b-navbar-item>
       <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
@@ -72,6 +75,15 @@ export default class NavBar extends Vue {
     return this.$store.getters.isHomePage
   }
 
+  get isWatchlistPage(): boolean {
+    return this.$nuxt.$route.fullPath.includes('/watchlist')
+  }
+
+  async goToLastVisited(): Promise<void> {
+    console.log(this.$store.getters.lastVisited)
+    await this.$router.push(`/${this.$store.getters.lastVisited}`)
+  }
+
   get miners(): Miners {
     return this.$store.getters.miners
   }
@@ -84,8 +96,8 @@ export default class NavBar extends Vue {
     this.$store.commit('darkModeToggle')
   }
 
-  private favouritesModal(): void {
-
+  private async favouritesPage(): Promise<void> {
+    await this.$router.push(`/watchlist`)
   }
 
   private settingsModal(): void {

@@ -51,6 +51,7 @@ Release Date: November 26th, 2021
 - Adding favourites page
 - Adding an accessible/searchable favourites list
 - Adding get hotspot url link button
+- Fixing search results on homepage
 - Updating time formatting
 - Updating responsiveness
 - Updating styling

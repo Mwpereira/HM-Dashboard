@@ -62,7 +62,7 @@ export default class Hotspot extends Vue {
 
   get lastUpdated(): string {
     if (this.$store.getters.miners[this.minerName]) {
-      return moment(this.$store.getters.miners[this.minerName].last_updated * 1000).format('MMMM Do YYYY, h:mm:ss a');
+      return moment(this.$store.getters.miners[this.minerName].last_updated * 1000).format('MMM. Do YYYY, h:mm a');
     } else {
       return 'N/A'
     }

@@ -22,6 +22,7 @@ export const state = () => {
     favourites: {},
     isDarkModeActive: false,
     isHomePage: true,
+    lastVisited: '',
     miners: {},
     recentlyViewed: []
   }
@@ -85,6 +86,9 @@ export const mutations = {
   },
   removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
     state.recentlyViewed = []
+  },
+  setLastVisited(state: { lastVisited: string }, lastVisited: string){
+    state.lastVisited = lastVisited;
   },
   async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
     return await new Promise((resolve) => {
@@ -262,6 +266,7 @@ export const actions = {
   },
   async fetchMiner(ctx: any, minerName: string): Promise<Miner> {
     await ctx.dispatch('addMiner', minerName)
+    ctx.commit('setLastVisited', minerName);
     return await new Promise((resolve) => {
       resolve(ctx.getters.miners[minerName])
     })
@@ -276,6 +281,7 @@ export const getters = {
   favourites: (state: { favourites: Favourites; }) => state.favourites,
   isDarkModeActive: (state: { isDarkModeActive: boolean; }) => state.isDarkModeActive,
   isHomePage: (state: { isHomePage: boolean; }) => state.isHomePage,
+  lastVisited: (state: { lastVisited: string; }) => state.lastVisited,
   miners: (state: { miners: Miners; }) => state.miners,
   recentlyViewed: (state: { recentlyViewed: RecentlyViewed }) => state.recentlyViewed,
   rewards: (state: { rewards: Rewards; }) => state.rewards
