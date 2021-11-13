@@ -1,4 +1,4 @@
-import { kyOptions } from '~/constants/ky-constants'
+import {kyOptions} from '~/constants/ky-constants'
 
 const ky = kyOptions
 
@@ -22,6 +22,13 @@ export default class KyService {
 
   public static getRewards(address: string) {
     return ky(`hotspots/${address}/rewards/sum?min_time=-5208 hour&max_time=${new Date().toISOString()}&bucket=hour`)
+      .catch((error) => {
+        return error.response
+      })
+  }
+
+  public static getHotspotOwner(address: string) {
+    return ky(`hotspots/v1/accounts/${address}/`)
       .catch((error) => {
         return error.response
       })
