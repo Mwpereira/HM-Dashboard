@@ -1,6 +1,7 @@
 export default {
   ssr: false,
   target: 'static',
+  loading: false,
   head: {
     title: 'HM Dashboard',
     htmlAttrs: {

@@ -89,7 +89,7 @@ export default class Home extends Vue {
           })
         })
       }
-      if (Object.keys(this.$store.getters.recentlyViewed).length === 0) {
+      if (this.$store.getters.recentlyViewed.length === 0 || Object.keys(this.$store.getters.favourites).length === 0) {
         results.push({
           type: 'Suggested Hotspots', items: hotspots.miners
         })
