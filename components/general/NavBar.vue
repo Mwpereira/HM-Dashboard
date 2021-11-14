@@ -4,10 +4,10 @@
       <b-navbar-item id='logo' tag='router-link' :to="{ path: '/' }">
         <svg data-v-fde0c5aa='' xmlns='http://www.w3.org/2000/svg' width='300' height='50' viewBox='100 50 200 200'
              class='iconAbove'>
-          <defs data-v-fde0c5aa=''><!----></defs>
+          <defs data-v-fde0c5aa=''></defs>
           <rect data-v-fde0c5aa='' fill='transparent' x='0' y='0'
                 class='logo-background-square'></rect>
-          <defs data-v-fde0c5aa=''><!----></defs>
+          <defs data-v-fde0c5aa=''></defs>
           <g id='31dd9bcf-914e-452b-bbe2-c2313b0f78e3' data-v-fde0c5aa='' :fill="isDarkModeActive ? '#fff' : '#000000'"
              transform='matrix(5.212187288209586,0,0,5.212187288209586,99.25935884941275,164.57703880775094)'>
             <path
@@ -57,16 +57,19 @@
           <a
             class="navbar-item"
             role="button">
-            <i class="fas fa-layer-group mr-2"></i>
+            <i class="fas fa-layer-group mr-1"></i>
             <b-icon icon="menu-down"></b-icon>
           </a>
         </template>
-
-<!--        <b-dropdown-item custom aria-role="listitem" class="mb-2 mr-2">-->
-<!--          <b-input v-model="searchTerm" placeholder="hotspot name" expanded/>-->
-<!--        </b-dropdown-item>-->
-
-        <b-dropdown-item v-for="favourite of favourites" :key="favourite" aria-role="listitem">{{ favourite }}</b-dropdown-item>
+        <b-dropdown-item class="has-text-weight-bold" custom>
+          Favourite Hotspots
+        </b-dropdown-item>
+        <b-dropdown-item separator custom></b-dropdown-item>
+        <b-dropdown-item v-for="favourite of favourites" :key="favourite" aria-role="listitem">
+          <p @click="addMiner(favourite)">
+            {{ favourite }}
+          </p>
+        </b-dropdown-item>
       </b-dropdown>
       <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
         <i class='fas fa-cog'></i>
@@ -127,6 +130,13 @@ export default class NavBar extends Vue {
       customClass: 'custom-class custom-class-2',
       trapFocus: true
     })
+  }
+
+  private async addMiner(selected?: string): Promise<void> {
+    const miner = await this.$store.dispatch('addMiner', selected)
+    if (miner !== null) {
+      await this.$router.push(`/${miner}`)
+    }
   }
 }
 </script>

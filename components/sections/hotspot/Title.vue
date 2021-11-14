@@ -71,6 +71,7 @@ export default class Title extends Vue {
     } else {
       this.$store.commit('addFavourite', {minerName: this.minerName, informalName: this.miner.informal_name})
       BuefyService.warningToast(`Added Hotspot to Favourites`)
+      this.$store.commit('removeRecentlyViewed', this.miner.informal_name)
     }
   }
 }

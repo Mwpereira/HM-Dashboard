@@ -85,7 +85,18 @@ export const mutations = {
   removeMinerHistory(state: { miners: Miners }) {
     state.miners = {};
   },
-  removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
+  removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }, minerName: string) {
+    const recentlyViewed = state.recentlyViewed;
+    for (let i = 0; i < recentlyViewed.length; i++) {
+      if (recentlyViewed[i] === minerName) {
+        console.log(recentlyViewed[i])
+        console.log(minerName)
+        recentlyViewed.splice(i, 1);
+      }
+    }
+    state.recentlyViewed = [...recentlyViewed];
+  },
+  resetRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
     state.recentlyViewed = []
   },
   setLastVisited(state: { lastVisited: string }, lastVisited: string) {

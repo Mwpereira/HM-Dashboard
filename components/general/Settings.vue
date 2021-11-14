@@ -22,6 +22,18 @@
           <div class="column is-12 pb-4">
             <b-button class='settings-button is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
           </div>
+          <div class="column is-12 m-1 pb-4">
+            <p>Data is cached for 15 minutes, unless if Miner History is cleared.</p>
+          </div>
+          <div class="column is-4 pb-4">
+            <b-button class='coffee is-fullwidth' @click="removeAllData"><i class="fas fa-coffee"></i></b-button>
+          </div>
+          <div class="column is-4 pb-4 is-dark">
+            <b-button class='github is-fullwidth' @click="removeAllData"><i class="fab fa-github-alt"></i></b-button>
+          </div>
+          <div class="column is-4 pb-4">
+            <b-button class='chat is-fullwidth' @click="removeAllData"><i class="far fa-comments"></i></b-button>
+          </div>
         </div>
       </section>
     </div>
@@ -48,7 +60,7 @@ export default class Settings extends Vue {
     this.redirectToHomePage('removeMinerHistory');
   }
 
-  removeRecentlyViewed(): void {
+  resetRecentlyViewed(): void {
     this.redirectToHomePage('removeRecentlyViewed');
   }
 
@@ -73,6 +85,21 @@ export default class Settings extends Vue {
 
 .column.is-12{
   padding: 10px;
+}
+
+.coffee {
+  background-color: #ffbd16;
+  color: white;
+}
+
+.github {
+  background-color: #323232;
+  color: white;
+}
+
+.chat {
+  background-color: #2c65c2;
+  color: white;
 }
 
 @media screen and (max-width: 768px) {
