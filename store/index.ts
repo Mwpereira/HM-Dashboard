@@ -12,7 +12,7 @@ import {Favourites} from '~/interfaces/Favourites'
 import {RecentlyViewed} from '~/interfaces/RecentlyViewed'
 import {State} from "~/interfaces/State";
 import {Witnesses} from "~/interfaces/Witnesses";
-import { Owner } from '~/interfaces/Owner'
+import {Owner} from '~/interfaces/Owner'
 
 Vue.use(Vuex)
 
@@ -88,10 +88,10 @@ export const mutations = {
   removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
     state.recentlyViewed = []
   },
-  setLastVisited(state: { lastVisited: string }, lastVisited: string){
+  setLastVisited(state: { lastVisited: string }, lastVisited: string) {
     state.lastVisited = lastVisited;
   },
-  setOwnerData(state: { miners: Miners }, data: {minerName: string, ownerData: Owner }){
+  setOwnerData(state: { miners: Miners }, data: { minerName: string, ownerData: Owner }) {
     state.miners[data.minerName].ownerData = data.ownerData;
   },
   async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
@@ -138,8 +138,8 @@ export const actions = {
     return ctx.getters.miners[minerName] !== undefined
   },
   checkForOutdatedData(ctx: any, minerName: string): boolean {
-    // Data will refresh after one minute
-    return Math.round(new Date().getTime() / 1000) - (ctx.state.miners[minerName].last_updated || 0) > 60
+    // Data will refresh after 15 minutes
+    return Math.round(new Date().getTime() / 1000) - (ctx.state.miners[minerName].last_updated || 0) > 900
   },
   async getMinerData(ctx: any, userInput: string) {
     try {
@@ -199,7 +199,7 @@ export const actions = {
         response = await response.json()
 
         await ctx.commit('setOwnerData', {minerName: data.minerName, ownerData: response.data})
-      }  else {
+      } else {
         BuefyService.dangerToast(MessageConstants.ERROR_GETTING_OWNER)
       }
     } catch {

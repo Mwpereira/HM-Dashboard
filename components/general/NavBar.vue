@@ -45,9 +45,29 @@
       <b-navbar-item v-show="isWatchlistPage" class='mr-4 navOptions' @click="goToLastVisited">
         <i class="fas fa-chevron-left"></i>
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' @click="favouritesPage">
-        <i class="fas fa-layer-group"></i>
-      </b-navbar-item>
+      <b-dropdown
+        position="is-bottom-left"
+        append-to-body
+        aria-role="menu"
+        scrollable
+        max-height="200"
+        trap-focus
+      >
+        <template #trigger>
+          <a
+            class="navbar-item"
+            role="button">
+            <i class="fas fa-layer-group mr-2"></i>
+            <b-icon icon="menu-down"></b-icon>
+          </a>
+        </template>
+
+<!--        <b-dropdown-item custom aria-role="listitem" class="mb-2 mr-2">-->
+<!--          <b-input v-model="searchTerm" placeholder="hotspot name" expanded/>-->
+<!--        </b-dropdown-item>-->
+
+        <b-dropdown-item v-for="favourite of favourites" :key="favourite" aria-role="listitem">{{ favourite }}</b-dropdown-item>
+      </b-dropdown>
       <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
         <i class='fas fa-cog'></i>
       </b-navbar-item>
@@ -80,7 +100,6 @@ export default class NavBar extends Vue {
   }
 
   async goToLastVisited(): Promise<void> {
-    console.log(this.$store.getters.lastVisited)
     await this.$router.push(`/${this.$store.getters.lastVisited}`)
   }
 
@@ -92,12 +111,12 @@ export default class NavBar extends Vue {
     return this.$store.getters.isDarkModeActive
   }
 
-  private darkModeToggle(): void {
-    this.$store.commit('darkModeToggle')
+  get favourites(): any[] {
+    return Object.values(this.$store.getters.favourites).sort();
   }
 
-  private async favouritesPage(): Promise<void> {
-    await this.$router.push(`/watchlist`)
+  private darkModeToggle(): void {
+    this.$store.commit('darkModeToggle')
   }
 
   private settingsModal(): void {
