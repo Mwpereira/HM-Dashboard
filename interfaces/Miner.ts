@@ -1,5 +1,6 @@
 import {Rewards} from "~/interfaces/Rewards";
 import {Witnesses} from "~/interfaces/Witnesses";
+import { Owner } from '~/interfaces/Owner'
 
 export interface Miner {
   'address': string
@@ -29,6 +30,7 @@ export interface Miner {
   'name': string,
   'nonce': number,
   'owner': string,
+  'ownerData': Owner,
   'payer': string,
   'rewards'?: Rewards,
   'status': {

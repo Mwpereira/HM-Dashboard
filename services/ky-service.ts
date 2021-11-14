@@ -28,7 +28,7 @@ export default class KyService {
   }
 
   public static getHotspotOwner(address: string) {
-    return ky(`hotspots/v1/accounts/${address}/`)
+    return ky(`accounts/${address}/`)
       .catch((error) => {
         return error.response
       })

@@ -12,6 +12,7 @@ import {Favourites} from '~/interfaces/Favourites'
 import {RecentlyViewed} from '~/interfaces/RecentlyViewed'
 import {State} from "~/interfaces/State";
 import {Witnesses} from "~/interfaces/Witnesses";
+import { Owner } from '~/interfaces/Owner'
 
 Vue.use(Vuex)
 
@@ -90,6 +91,9 @@ export const mutations = {
   setLastVisited(state: { lastVisited: string }, lastVisited: string){
     state.lastVisited = lastVisited;
   },
+  setOwnerData(state: { miners: Miners }, data: {minerName: string, ownerData: Owner }){
+    state.miners[data.minerName].ownerData = data.ownerData;
+  },
   async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
     return await new Promise((resolve) => {
       resolve(state.miners[data.minerName].rewards = data.rewards)
@@ -162,6 +166,7 @@ export const actions = {
           await ctx.commit('addRecentlyViewed', miner.informal_name)
           await ctx.dispatch('getRewards', {minerName: miner.name, minerAddress: miner.address})
           await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address})
+          await ctx.dispatch('getOwnerData', {minerName: miner.name, minerOwnerAddress: miner.owner})
 
           BuefyService.stopLoading()
 
@@ -181,6 +186,21 @@ export const actions = {
       BuefyService.stopLoading()
       BuefyService.dangerToast(MessageConstants.ERROR_ADDING_MINER)
       return null
+    }
+  },
+  async getOwnerData(ctx: any, data: { minerName: string, minerOwnerAddress: string }) {
+    try {
+      let response = await KyService.getHotspotOwner(data.minerOwnerAddress)
+
+      if (successResponse(response)) {
+        response = await response.json()
+
+        await ctx.commit('setOwnerData', {minerName: data.minerName, ownerData: response.data})
+      }  else {
+        BuefyService.dangerToast(MessageConstants.ERROR_GETTING_OWNER)
+      }
+    } catch {
+      BuefyService.dangerToast(MessageConstants.ERROR_GETTING_OWNER)
     }
   },
   async getRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
@@ -283,6 +303,5 @@ export const getters = {
   isHomePage: (state: { isHomePage: boolean; }) => state.isHomePage,
   lastVisited: (state: { lastVisited: string; }) => state.lastVisited,
   miners: (state: { miners: Miners; }) => state.miners,
-  recentlyViewed: (state: { recentlyViewed: RecentlyViewed }) => state.recentlyViewed,
-  rewards: (state: { rewards: Rewards; }) => state.rewards
+  recentlyViewed: (state: { recentlyViewed: RecentlyViewed }) => state.recentlyViewed
 }
