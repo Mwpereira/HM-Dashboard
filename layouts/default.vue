@@ -31,6 +31,13 @@ html, body {
   scroll-padding: 12vh;
 }
 
+
+@media screen and (max-width: 1400px) {
+  html, body {
+    scroll-padding: 14vh;
+  }
+}
+
 @media screen and (max-width: 768px) {
   html, body {
     scroll-padding: 18vh;

@@ -1,6 +1,7 @@
 <template>
   <div id="rewards">
-    <p class='title mb-6 my-6'>Rewards</p>
+    <p class='title my-6'>Rewards</p>
+    <p class='title is-size-4 mt-5 mb-6'>Miner</p>
     <div class='columns is-centered has-text-centered is-multiline is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
@@ -27,19 +28,19 @@
         </b-tooltip>
       </div>
     </div>
-    <p class='title mb-6 my-6'>Owner</p>
+    <p class='title is-size-4 mt-5 mb-6'>Owner</p>
     <div class='columns is-centered has-text-centered is-multiline is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
           label="Owner's wallet balance" type='is-dark'>
-          <p class='is-size-3 m-4'>{{ ownerData ? `${ownerData.balance} HNT` : '0.0 HNT' }}</p>
+          <p class='is-size-3 m-4'>{{ ownerData ? `${(ownerData.balance/100000000).toFixed(2)} HNT` : '0.0 HNT' }}</p>
           <p><i class='fas fa-wallet my-4 mr-4' style='color: rgb(112,4,245);'></i>Balance</p>
         </b-tooltip>
       </div>
       <div class='column box m-4'>
         <b-tooltip
           label="Owner's staked balance" type='is-dark'>
-          <p class='is-size-3 m-4'>{{ ownerData ? `${ownerData.staked_balance} HNT` : '0.0 HNT' }}</p>
+          <p class='is-size-3 m-4'>{{ ownerData ? `${(ownerData.staked_balance/100000000).toFixed(2)} HNT` : '0.0 HNT' }}</p>
           <p><i class='fas fa-chart-pie my-4 mr-4' style='color: rgb(200,0,255);'></i>Staked Balance</p>
         </b-tooltip>
       </div>
