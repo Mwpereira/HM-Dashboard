@@ -28,7 +28,7 @@
         </b-tooltip>
       </div>
     </div>
-    <p class='title is-size-4 mt-5 mb-6'>Owner</p>
+    <p class='title is-size-4 mt-6 mb-6'>Owner</p>
     <div class='columns is-centered has-text-centered is-multiline is-size-5'>
       <div class='column box m-4'>
         <b-tooltip

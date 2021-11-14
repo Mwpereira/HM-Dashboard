@@ -14,7 +14,7 @@
           aria-page-label="Page"
           aria-current-label="Current page">
 
-          <b-table-column field="status" label="Status" sortable v-slot="props">
+          <b-table-column v-slot="props" field="status" label="Status" sortable>
             <i v-if="props.row.status.online === 'online'" class="fas fa-circle" style="color: limegreen"></i>
             <i v-else class="fas fa-circle" style="color: red"></i>
           </b-table-column>

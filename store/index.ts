@@ -151,6 +151,9 @@ export const actions = {
         response = await response.json()
         const miner: Miner = response.data[0]
         if (miner) {
+          // Displays correct toast
+          ctx.dispatch('checkForMiner', userInput) ? BuefyService.successToast(MessageConstants.WARNING_FETCHING_MINER) : BuefyService.successToast(MessageConstants.SUCCESS_ADDING_MINER)
+
           const informalName = miner.name.replaceAll('-', ' ').split(' ')
           for (let i = 0; i < 3; i++) {
             informalName[i] = informalName[i].charAt(0).toUpperCase() + informalName[i].slice(1)
@@ -158,12 +161,10 @@ export const actions = {
           miner.informal_name = informalName.join(' ')
           miner.last_updated = Math.round(new Date().getTime() / 1000)
 
-          // Displays correct toast
-          ctx.dispatch('checkForMiner', userInput) ? BuefyService.successToast(MessageConstants.WARNING_FETCHING_MINER) : BuefyService.successToast(MessageConstants.SUCCESS_ADDING_MINER)
-
           // Add Miner to state
           await ctx.commit('addMiner', miner)
           await ctx.commit('addRecentlyViewed', miner.informal_name)
+
           await ctx.dispatch('getRewards', {minerName: miner.name, minerAddress: miner.address})
           await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address})
           await ctx.dispatch('getOwnerData', {minerName: miner.name, minerOwnerAddress: miner.owner})
@@ -190,6 +191,8 @@ export const actions = {
   },
   async getOwnerData(ctx: any, data: { minerName: string, minerOwnerAddress: string }) {
     try {
+      BuefyService.warningToast(MessageConstants.WARNING_FETCHING_OWNER)
+
       let response = await KyService.getHotspotOwner(data.minerOwnerAddress)
 
       if (successResponse(response)) {
@@ -205,6 +208,8 @@ export const actions = {
   },
   async getRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
     try {
+      BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS)
+
       let response = await KyService.getRewards(data.minerAddress)
 
       if (successResponse(response)) {
@@ -252,6 +257,8 @@ export const actions = {
   },
   async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string }) {
     try {
+      BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES)
+
       let response = await KyService.getWitnesses(data.minerAddress)
 
       if (successResponse(response)) {
