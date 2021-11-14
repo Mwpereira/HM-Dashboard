@@ -17,22 +17,26 @@
             <b-button class='settings-button is-fullwidth' @click="removeFavourites">Delete Favourites</b-button>
           </div>
           <div class="column is-12">
-            <b-button class='settings-button is-fullwidth' @click="removeRecentlyViewed">Delete Recently Viewed</b-button>
+            <b-button class='settings-button is-fullwidth' @click="removeRecentlyViewed">Delete Recently Viewed
+            </b-button>
           </div>
           <div class="column is-12 pb-4">
             <b-button class='settings-button is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
           </div>
-          <div class="column is-12 m-1 pb-4">
-            <p>Data is cached for 15 minutes, unless if Miner History is cleared.</p>
+          <div class="column is-4 is-4-mobile pb-4">
+            <a href="https://ko-fi.com/michaelpereira" target="_blank" rel="noopener">
+              <b-button class='coffee is-fullwidth'><i class="fas fa-coffee"></i></b-button>
+            </a>
           </div>
-          <div class="column is-4 pb-4">
-            <b-button class='coffee is-fullwidth' @click="removeAllData"><i class="fas fa-coffee"></i></b-button>
+          <div class="column is-4 is-4-mobile pb-4 is-dark">
+            <a href="https://github.com/Mwpereira/HM-Dashboard" target="_blank" rel="noopener">
+              <b-button class='github is-fullwidth'><i class="fab fa-github-alt"></i></b-button>
+            </a>
           </div>
-          <div class="column is-4 pb-4 is-dark">
-            <b-button class='github is-fullwidth' @click="removeAllData"><i class="fab fa-github-alt"></i></b-button>
-          </div>
-          <div class="column is-4 pb-4">
-            <b-button class='chat is-fullwidth' @click="removeAllData"><i class="far fa-comments"></i></b-button>
+          <div class="column is-4 is-4-mobile pb-4">
+            <a href="https://mwpereira.ca/#contact" target="_blank" rel="noopener">
+              <b-button class='chat is-fullwidth'><i class="far fa-comments"></i></b-button>
+            </a>
           </div>
         </div>
       </section>
@@ -83,23 +87,41 @@ export default class Settings extends Vue {
   border-radius: 6px;
 }
 
-.column.is-12{
+.column.is-12 {
   padding: 10px;
 }
 
 .coffee {
-  background-color: #ffbd16;
-  color: white;
+  background-color: #ffbd16 !important;
 }
 
 .github {
-  background-color: #323232;
-  color: white;
+  background-color: #323232 !important;
 }
 
 .chat {
-  background-color: #2c65c2;
+  background-color: #2c65c2 !important;
+}
+
+.coffee, .github, .chat {
+  border-color: transparent !important;
   color: white;
+}
+
+.coffee:hover, .github:hover, .chat:hover {
+  color: white !important;
+}
+
+.coffee:hover {
+  background-color: #fbc43c !important;
+}
+
+.github:hover {
+  background-color: #3d3d3d !important;
+}
+
+.chat:hover {
+  background-color: #497edf !important;
 }
 
 @media screen and (max-width: 768px) {
