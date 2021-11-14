@@ -48,7 +48,8 @@ Release Date: September 12th, 2021
 
 Release Date: November 26th, 2021
 
-- Adding favourites page
+- Adding watchlist page
+- Splitting Rewards section into Miner & Owner
 - Adding an accessible/searchable favourites list
 - Adding get hotspot url link button
 - Fixing search results on homepage
