@@ -65,10 +65,9 @@
           Favourite Hotspots
         </b-dropdown-item>
         <b-dropdown-item separator custom></b-dropdown-item>
-        <b-dropdown-item v-for="favourite of favourites" :key="favourite" aria-role="listitem">
-          <p @click="addMiner(favourite)">
-            {{ favourite }}
-          </p>
+        <b-dropdown-item v-for="favourite of favourites" :key="favourite" aria-role="listitem"
+                         @click="addMiner(favourite)">
+          {{ favourite }}
         </b-dropdown-item>
       </b-dropdown>
       <b-navbar-item class='mr-4 navOptions' @click="settingsModal">

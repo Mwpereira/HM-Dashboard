@@ -55,25 +55,25 @@ import MessageConstants from "~/constants/message-constants";
 @Component
 export default class Settings extends Vue {
   removeAllData(): void {
-    this.redirectToHomePage('removeAllData');
+    this.redirectToHomePage('removeAllData', true);
   }
 
   removeFavourites(): void {
-    this.redirectToHomePage('removeFavourites');
+    this.redirectToHomePage('removeFavourites', false);
   }
 
   removeMinerHistory(): void {
-    this.redirectToHomePage('removeMinerHistory');
+    this.redirectToHomePage('removeMinerHistory', true);
   }
 
   resetRecentlyViewed(): void {
-    this.redirectToHomePage('resetRecentlyViewed');
+    this.redirectToHomePage('resetRecentlyViewed', false);
   }
 
-  redirectToHomePage(action: string): void {
+  redirectToHomePage(action: string, redirect: boolean): void {
     try {
       this.$store.commit(action)
-      this.$router.push('/');
+      if (redirect) this.$router.push('/');
       BuefyService.successToast(MessageConstants.SUCCESS_DELETING_CACHE);
       this.$emit('close')
     } catch {

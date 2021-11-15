@@ -33,26 +33,36 @@ export const mutations = {
   addFavourite(state: { favourites: Favourites }, data: { minerName: string, informalName: string }) {
     state.favourites = {...state.favourites, [`${data.minerName}`]: data.informalName}
   },
-  addRecentlyViewed(state: { recentlyViewed: RecentlyViewed }, minerName: string) {
+  addRecentlyViewed(state: { favourites: Favourites, recentlyViewed: RecentlyViewed }, minerName: string) {
     let minerExists = false
     let minerIndex = 0
 
-    state.recentlyViewed.forEach((viewedMiner: string, index: number) => {
-      if (minerName === viewedMiner) {
-        minerExists = true
-        minerIndex = index
+    let favourited = false;
+
+    Object.values(state.favourites).forEach(favourite => {
+      if (favourite === minerName) {
+        favourited = true;
       }
     })
 
-    if (!minerExists) {
-      // Limit array to a length of 3
-      if (state.recentlyViewed.length === 3) {
-        state.recentlyViewed.pop()
+    if (!favourited) {
+      state.recentlyViewed.forEach((viewedMiner: string, index: number) => {
+        if (minerName === viewedMiner) {
+          minerExists = true
+          minerIndex = index
+        }
+      })
+
+      if (!minerExists) {
+        // Limit array to a length of 3
+        if (state.recentlyViewed.length === 3) {
+          state.recentlyViewed.pop()
+        }
+        state.recentlyViewed.push(minerName)
+      } else {
+        state.recentlyViewed.splice(minerIndex, 1)
+        state.recentlyViewed.push(minerName)
       }
-      state.recentlyViewed.push(minerName)
-    } else {
-      state.recentlyViewed.splice(minerIndex, 1)
-      state.recentlyViewed.push(minerName)
     }
   },
   async addMiner(state: { miners: Miners }, miner: Miner) {
@@ -89,8 +99,6 @@ export const mutations = {
     const recentlyViewed = state.recentlyViewed;
     for (let i = 0; i < recentlyViewed.length; i++) {
       if (recentlyViewed[i] === minerName) {
-        console.log(recentlyViewed[i])
-        console.log(minerName)
         recentlyViewed.splice(i, 1);
       }
     }
