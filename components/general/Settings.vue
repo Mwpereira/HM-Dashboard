@@ -24,18 +24,18 @@
             <b-button class='settings-button is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
           </div>
         </div>
-        <div class="columns">
-          <div class="column is-4 is-4-mobile pb-4">
+        <div class="columns is-mobile">
+          <div class="column is-4 pb-4">
             <a href="https://ko-fi.com/michaelpereira" target="_blank" rel="noopener">
               <b-button class='coffee is-fullwidth'><i class="fas fa-coffee"></i></b-button>
             </a>
           </div>
-          <div class="column is-4 is-4-mobile pb-4 is-dark">
+          <div class="column is-4 pb-4 is-dark">
             <a href="https://github.com/Mwpereira/HM-Dashboard" target="_blank" rel="noopener">
               <b-button class='github is-fullwidth'><i class="fab fa-github-alt"></i></b-button>
             </a>
           </div>
-          <div class="column is-4 is-4-mobile pb-4">
+          <div class="column is-4 pb-4">
             <a href="https://mwpereira.ca/#contact" target="_blank" rel="noopener">
               <b-button class='chat is-fullwidth'><i class="far fa-comments"></i></b-button>
             </a>
