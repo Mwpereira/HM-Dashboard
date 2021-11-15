@@ -17,12 +17,14 @@
             <b-button class='settings-button is-fullwidth' @click="removeFavourites">Delete Favourites</b-button>
           </div>
           <div class="column is-12">
-            <b-button class='settings-button is-fullwidth' @click="removeRecentlyViewed">Delete Recently Viewed
+            <b-button class='settings-button is-fullwidth' @click="resetRecentlyViewed">Delete Recently Viewed
             </b-button>
           </div>
           <div class="column is-12 pb-4">
             <b-button class='settings-button is-fullwidth' @click="removeAllData">Delete All Cache</b-button>
           </div>
+        </div>
+        <div class="columns">
           <div class="column is-4 is-4-mobile pb-4">
             <a href="https://ko-fi.com/michaelpereira" target="_blank" rel="noopener">
               <b-button class='coffee is-fullwidth'><i class="fas fa-coffee"></i></b-button>
@@ -65,7 +67,7 @@ export default class Settings extends Vue {
   }
 
   resetRecentlyViewed(): void {
-    this.redirectToHomePage('removeRecentlyViewed');
+    this.redirectToHomePage('resetRecentlyViewed');
   }
 
   redirectToHomePage(action: string): void {
