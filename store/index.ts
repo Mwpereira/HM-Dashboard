@@ -157,8 +157,8 @@ export const actions = {
     return ctx.getters.miners[minerName] !== undefined
   },
   checkForOutdatedData(ctx: any, minerName: string): boolean {
-    // Data will refresh after 15 minutes
-    return Math.round(new Date().getTime() / 1000) - (ctx.state.miners[minerName].last_updated || 0) > 900
+    // Data will refresh after 1 minute
+    return Math.round(new Date().getTime() / 1000) - (ctx.state.miners[minerName].last_updated || 0) > 60
   },
   async getMinerData(ctx: any, userInput: string) {
     try {
@@ -210,7 +210,7 @@ export const actions = {
   },
   async getOwnerData(ctx: any, data: { minerName: string, minerOwnerAddress: string }) {
     try {
-      BuefyService.warningToast(MessageConstants.WARNING_FETCHING_OWNER)
+      // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_OWNER)
 
       let response = await KyService.getHotspotOwner(data.minerOwnerAddress)
 
@@ -227,7 +227,7 @@ export const actions = {
   },
   async getRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
     try {
-      BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS)
+      // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS)
 
       let response = await KyService.getRewards(data.minerAddress)
 
@@ -276,7 +276,7 @@ export const actions = {
   },
   async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string }) {
     try {
-      BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES)
+      // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES)
 
       let response = await KyService.getWitnesses(data.minerAddress)
 
