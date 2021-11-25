@@ -90,6 +90,9 @@ Thank you everyone for providing feedback and using HMDashboard!
 
 Release Date: TBA
 
+- Automatic refresh of data
+- Allow user to select currency shown for HNT price
+
 ## 🛠 Build Setup
 
 ```bash
