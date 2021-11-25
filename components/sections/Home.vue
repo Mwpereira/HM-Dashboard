@@ -109,7 +109,8 @@ export default class Home extends Vue {
   private async addMiner(selected?: string): Promise<void> {
     this.userInput = (typeof selected === 'object') ? this.userInput : selected || ''
     if (this.userInput !== '') {
-      if ((this.userInput.match(/(\s|-)/g) || []).length === 2) {
+      const matches = (this.userInput.match(/(\s|-)/g) || []).length;
+      if (matches === 2 || matches === 3) {
         const miner = await this.$store.dispatch('addMiner', this.userInput.trim())
         if (miner !== null
         ) {

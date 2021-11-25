@@ -83,7 +83,7 @@
         </div>
       </a>
       <b-tooltip
-        label="Data provided by CoinGecko" type='is-dark' position="is-left" id="hntPrice" class="columns column is-vcentered">
+        id="hntPrice" label="Data provided by CoinGecko" type='is-dark' position="is-left" class="columns column is-vcentered">
       <a href="https://www.coingecko.com/en/coins/helium" target="_blank" rel="noopener" transparent>
         <b-navbar-item>
           HNT: ${{ hntPrice }}
