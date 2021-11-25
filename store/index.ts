@@ -157,7 +157,7 @@ export const actions = {
     return ctx.getters.miners[minerName] !== undefined
   },
   checkForOutdatedData(ctx: any, minerName: string): boolean {
-    // Data will refresh after 1 minute
+    // Data will refresh after 1 minute on page reload
     return Math.round(new Date().getTime() / 1000) - (ctx.state.miners[minerName].last_updated || 0) > 60
   },
   async getMinerData(ctx: any, userInput: string) {
@@ -178,15 +178,15 @@ export const actions = {
             informalName[i] = informalName[i].charAt(0).toUpperCase() + informalName[i].slice(1)
           }
           miner.informal_name = informalName.join(' ')
-          miner.last_updated = Math.round(new Date().getTime() / 1000)
+          const time = Math.round(new Date().getTime() / 1000)
+          miner.last_updated = time
 
           // Add Miner to state
           await ctx.commit('addMiner', miner)
           await ctx.commit('addRecentlyViewed', miner.informal_name)
 
-          await ctx.dispatch('getRewards', {minerName: miner.name, minerAddress: miner.address})
-          await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address})
-          await ctx.dispatch('getOwnerData', {minerName: miner.name, minerOwnerAddress: miner.owner})
+          await ctx.dispatch('getRewards', {minerName: miner.name, minerAddress: miner.address, minerOwnerAddress: miner.owner, time})
+          await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address, time})
 
           BuefyService.stopLoading()
 
@@ -208,7 +208,7 @@ export const actions = {
       return null
     }
   },
-  async getOwnerData(ctx: any, data: { minerName: string, minerOwnerAddress: string }) {
+  async getOwnerData(ctx: any, data: { minerName: string, minerOwnerAddress: string, time: number }) {
     try {
       // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_OWNER)
 
@@ -217,7 +217,12 @@ export const actions = {
       if (successResponse(response)) {
         response = await response.json()
 
-        await ctx.commit('setOwnerData', {minerName: data.minerName, ownerData: response.data})
+        const owner: Owner = {
+          ...response.data,
+          last_updated: data.time
+        }
+
+        await ctx.commit('setOwnerData', {minerName: data.minerName, ownerData: owner})
       } else {
         BuefyService.dangerToast(MessageConstants.ERROR_GETTING_OWNER)
       }
@@ -225,7 +230,7 @@ export const actions = {
       BuefyService.dangerToast(MessageConstants.ERROR_GETTING_OWNER)
     }
   },
-  async getRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
+  async getRewards(ctx: any, data: { minerName: string, minerAddress: string, minerOwnerAddress: string, time: number }) {
     try {
       // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS)
 
@@ -263,10 +268,13 @@ export const actions = {
           dailyRewards: dailyRewards.toFixed(2),
           weeklyRewards: weeklyRewards.toFixed(2),
           monthlyRewards: monthlyRewards.toFixed(2),
-          data: response.data
+          data: response.data,
+          last_updated: data.time
         }
 
         await ctx.commit('setRewards', {minerName: data.minerName, rewards})
+
+        await ctx.dispatch('getOwnerData', {minerName: data.minerName, minerOwnerAddress: data.minerOwnerAddress, time: data.time})
       } else {
         BuefyService.dangerToast(MessageConstants.ERROR_GETTING_REWARDS)
       }
@@ -274,7 +282,7 @@ export const actions = {
       BuefyService.dangerToast(MessageConstants.ERROR_HELIUM)
     }
   },
-  async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string }) {
+  async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string, time: number }) {
     try {
       // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES)
 
@@ -294,7 +302,8 @@ export const actions = {
         const witnesses = {
           count: dataArr.length,
           avgRewardScale: sum.toFixed(2),
-          data: response.data
+          data: response.data,
+          last_updated: data.time
         }
 
         await ctx.commit('setWitnesses', {minerName: data.minerName, witnesses})

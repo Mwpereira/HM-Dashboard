@@ -141,7 +141,7 @@ $toast-border-radius: 0em;
 
 @media screen and (max-width: 768px) {
   .toast {
-    margin: 1em;
+    margin: 1em !important;
   }
 }
 
@@ -175,6 +175,12 @@ $toast-border-radius: 0em;
 
 #hm {
   color: rgba(26, 92, 255, 0.7)
+}
+
+.is-danger .tooltip-content {
+  color: #ff4757 !important;
+  border-radius: 0em !important;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%) !important;
 }
 
 // Import Bulma and Buefy styles

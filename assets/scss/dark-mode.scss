@@ -19,6 +19,10 @@ html {
       border-color: $dark-mode-color;
     }
 
+    .is-danger .tooltip-content {
+      color: $dark-mode-color !important;
+    }
+
     .card {
       background-color: $dark-mode-background-color;
       box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%), 0 0 0 1px rgb(10 10 10 / 2%);

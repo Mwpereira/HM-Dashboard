@@ -30,7 +30,7 @@ export interface Miner {
   'name': string,
   'nonce': number,
   'owner': string,
-  'ownerData': Owner,
+  'ownerData'?: Owner,
   'payer': string,
   'rewards'?: Rewards,
   'status': {
@@ -38,5 +38,5 @@ export interface Miner {
     'online': string
   },
   'timestamp_added': string
-  'witnesses': Witnesses
+  'witnesses'?: Witnesses
 }
