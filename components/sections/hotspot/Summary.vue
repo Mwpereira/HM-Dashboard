@@ -60,10 +60,13 @@ import {Rewards} from "~/interfaces/Rewards";
 @Component
 export default class Summary extends Vue {
   @Prop() private minerName!: string
-  @Prop() private miner!: Miner
+
+  get miner(): Miner {
+    return this.$store.getters.miners[this.minerName]
+  }
 
   get maker(): string {
-    return (<any>Makers)[this.miner.payer]
+    return (<any>Makers)[this.$store.getters.miners[this.minerName].payer]
   }
 
   get minerStatusColor(): string {
@@ -71,7 +74,7 @@ export default class Summary extends Vue {
   }
 
   get rewards(): Rewards | undefined {
-    return this.miner.rewards
+    return this.$store.getters.miners[this.minerName].rewards
   }
 }
 </script>

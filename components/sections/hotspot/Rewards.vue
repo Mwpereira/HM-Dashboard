@@ -77,7 +77,6 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "nuxt-property-decorator";
-import {Miner} from "~/interfaces/Miner";
 import {Rewards} from "~/interfaces/Rewards";
 import {Owner} from '~/interfaces/Owner'
 import Notice from "~/components/general/Notice.vue";
@@ -90,14 +89,22 @@ import MessageConstants from "~/constants/message-constants";
 })
 export default class RewardsSection extends Vue {
   @Prop() private minerName!: string
-  @Prop() private miner!: Miner
 
   private isLoading = false;
 
-  public loadingComp() {
+  public async loadingComp() {
     this.isLoading = true;
 
     BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS)
+
+    const miner = this.$store.getters.miners[this.minerName];
+
+    await this.$store.dispatch('getRewards', {
+      minerName: miner.name,
+      minerAddress: miner.address,
+      minerOwnerAddress: miner.owner,
+      time: GeneralService.getTime()
+    })
 
     this.isLoading = false;
   }
@@ -107,17 +114,17 @@ export default class RewardsSection extends Vue {
   }
 
   get ownerData(): Owner | undefined {
-    return this.miner.ownerData
+    return this.$store.getters.miners[this.minerName].ownerData
   }
 
   get rewards(): Rewards | undefined {
-    return this.miner.rewards
+    return this.$store.getters.miners[this.minerName].rewards
   }
 }
 </script>
 
-<style>
-/*.loading-background, .loading-overlay {*/
-/*  z-index: 1 !important;*/
-/*}*/
+<style scoped>
+.loading-background, .loading-overlay {
+  z-index: 1 !important;
+}
 </style>

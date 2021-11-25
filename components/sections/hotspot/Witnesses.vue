@@ -46,10 +46,18 @@ export default class Witnesses extends Vue {
 
   private isLoading = false;
 
-  public loadingComp() {
+  public async loadingComp() {
     this.isLoading = true;
 
     BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES)
+
+    const miner = this.$store.getters.miners[this.minerName];
+
+    await this.$store.dispatch('getWitnesses', {
+      minerName: miner.name,
+      minerAddress: miner.address,
+      time: GeneralService.getTime()
+    })
 
     this.isLoading = false;
   }
@@ -59,14 +67,14 @@ export default class Witnesses extends Vue {
   }
 
   get witnesses() {
-    return this.miner.witnesses
+    return this.$store.getters.miners[this.minerName].witnesses
   }
 }
 </script>
 
 
-<style>
-/*.loading-background, .loading-overlay {*/
-/*  z-index: 1 !important;*/
-/*}*/
+<style scoped>
+.loading-background, .loading-overlay {
+  z-index: 1 !important;
+}
 </style>

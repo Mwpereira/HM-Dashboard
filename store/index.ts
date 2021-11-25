@@ -13,6 +13,7 @@ import {RecentlyViewed} from '~/interfaces/RecentlyViewed'
 import {State} from "~/interfaces/State";
 import {Witnesses} from "~/interfaces/Witnesses";
 import {Owner} from '~/interfaces/Owner'
+import GeneralService from "~/services/general-service";
 
 Vue.use(Vuex)
 
@@ -110,17 +111,31 @@ export const mutations = {
   setLastVisited(state: { lastVisited: string }, lastVisited: string) {
     state.lastVisited = lastVisited;
   },
-  setOwnerData(state: { miners: Miners }, data: { minerName: string, ownerData: Owner }) {
-    state.miners[data.minerName].ownerData = data.ownerData;
+  async setOwnerData(state: { miners: Miners }, data: { minerName: string, ownerData: Owner }) {
+    state.miners[data.minerName].ownerData = data.ownerData
+    return await new Promise((resolve) => {
+      resolve(state.miners = {
+        ...state.miners,
+        [data.minerName]: state.miners[data.minerName]
+      })
+    })
   },
   async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
+    state.miners[data.minerName].rewards = data.rewards
     return await new Promise((resolve) => {
-      resolve(state.miners[data.minerName].rewards = data.rewards)
+      resolve(state.miners = {
+        ...state.miners,
+        [data.minerName]: state.miners[data.minerName]
+      })
     })
   },
   async setWitnesses(state: { miners: Miners }, data: { minerName: string, witnesses: Witnesses }) {
+    state.miners[data.minerName].witnesses = data.witnesses
     return await new Promise((resolve) => {
-      resolve(state.miners[data.minerName].witnesses! = data.witnesses)
+      resolve(state.miners = {
+        ...state.miners,
+        [data.minerName]: state.miners[data.minerName]
+      })
     })
   },
   setPage(state: { isHomePage: boolean }, isHomePage: boolean) {
@@ -158,7 +173,7 @@ export const actions = {
   },
   checkForOutdatedData(ctx: any, minerName: string): boolean {
     // Data will refresh after 1 minute on page reload
-    return Math.round(new Date().getTime() / 1000) - (ctx.state.miners[minerName].last_updated || 0) > 60
+    return GeneralService.checkForOutdatedData(ctx.state.miners[minerName].last_updated || 0)
   },
   async getMinerData(ctx: any, userInput: string) {
     try {
@@ -178,14 +193,19 @@ export const actions = {
             informalName[i] = informalName[i].charAt(0).toUpperCase() + informalName[i].slice(1)
           }
           miner.informal_name = informalName.join(' ')
-          const time = Math.round(new Date().getTime() / 1000)
+          const time = GeneralService.getTime()
           miner.last_updated = time
 
           // Add Miner to state
           await ctx.commit('addMiner', miner)
           await ctx.commit('addRecentlyViewed', miner.informal_name)
 
-          await ctx.dispatch('getRewards', {minerName: miner.name, minerAddress: miner.address, minerOwnerAddress: miner.owner, time})
+          await ctx.dispatch('getRewards', {
+            minerName: miner.name,
+            minerAddress: miner.address,
+            minerOwnerAddress: miner.owner,
+            time
+          })
           await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address, time})
 
           BuefyService.stopLoading()
@@ -264,6 +284,8 @@ export const actions = {
           }
         }
 
+        console.log(dailyRewards.toFixed(2))
+
         const rewards: Rewards = {
           dailyRewards: dailyRewards.toFixed(2),
           weeklyRewards: weeklyRewards.toFixed(2),
@@ -274,7 +296,11 @@ export const actions = {
 
         await ctx.commit('setRewards', {minerName: data.minerName, rewards})
 
-        await ctx.dispatch('getOwnerData', {minerName: data.minerName, minerOwnerAddress: data.minerOwnerAddress, time: data.time})
+        await ctx.dispatch('getOwnerData', {
+          minerName: data.minerName,
+          minerOwnerAddress: data.minerOwnerAddress,
+          time: data.time
+        })
       } else {
         BuefyService.dangerToast(MessageConstants.ERROR_GETTING_REWARDS)
       }

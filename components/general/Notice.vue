@@ -1,12 +1,12 @@
 <template>
   <div>
     <b-tooltip
-      label="Out of date information. The Helium API servers did not respond successfully" type='is-danger'>
+      label="Out of date information" type='is-danger'>
       <i class="fas fa-exclamation-circle ml-5 mr-5 mt-3" style="color: orange"></i>
     </b-tooltip>
     <b-tooltip
       label="Retry loading data" type='is-dark'>
-      <i class="fas fa-redo" id="refresh" @click="loadingComp"></i>
+      <i id="refresh" class="fas fa-redo" @click="loadingComp"></i>
     </b-tooltip>
   </div>
 </template>

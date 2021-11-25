@@ -49,7 +49,10 @@ import BuefyService from "~/services/buefy-service";
 @Component
 export default class Title extends Vue {
   @Prop() private minerName!: string
-  @Prop() private miner!: Miner
+
+  get miner(): Miner {
+    return this.$store.getters.miners[this.minerName]
+  }
 
   get favouriteColor(): string {
     return this.$store.getters.favourites[this.minerName] !== undefined ? 'gold' : '#e6e6e6'

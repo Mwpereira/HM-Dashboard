@@ -2,11 +2,11 @@
   <div class='hero is-fullheight'>
     <div class='hero-head section mt-6 pt-6'>
       <div class='hero-section'>
-        <Title :miner-name='minerName' :miner="miner"/>
-        <Summary :miner-name='minerName' :miner="miner"/>
-        <Rewards :miner-name='minerName' :miner="miner"/>
-        <Witnesses :miner-name='minerName' :miner="miner"/>
-        <Location :miner-name='minerName' :miner="miner"/>
+        <Title :miner-name='minerName' />
+        <Summary :miner-name='minerName' />
+        <Rewards :miner-name='minerName'/>
+        <Witnesses :miner-name='minerName'/>
+        <Location :miner-name='minerName'/>
       </div>
       <p class='has-text-left my-6 py-6'>Last Updated: {{ lastUpdated }}</p>
     </div>

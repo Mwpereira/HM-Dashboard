@@ -36,10 +36,13 @@ import {Miner} from "~/interfaces/Miner";
 @Component
 export default class Rewards extends Vue {
   @Prop() private minerName!: string
-  @Prop() private miner!: Miner
 
   get geocode(): object {
     return this.miner.geocode
+  }
+
+  get miner(): Miner {
+    return this.$store.getters.miners[this.minerName];
   }
 }
 </script>
