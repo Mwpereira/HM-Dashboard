@@ -72,6 +72,7 @@ Add Location section
 
 Release Date: November 26th, 2021
 
+- Adding HNT price within the nav bar
 - Adding retry to failing Helium APIs
 - Adding favourites list within the nav bar
 - Splitting Rewards section into Miner & Owner
