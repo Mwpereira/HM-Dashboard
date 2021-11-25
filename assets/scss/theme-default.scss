@@ -6,9 +6,6 @@
 $size-base: 1rem;
 $default-padding: $size-base * 1.5;
 
-/* Default font */
-$family-sans-serif: 'Noto Sans JP', sans-serif;
-
 /* Base color */
 $base-color: #ffffff;
 $base-color-light: #f1f2f2;
@@ -173,14 +170,14 @@ $toast-border-radius: 0em;
   color: $dark-mode-color !important;
 }
 
-#hm {
-  color: rgba(26, 92, 255, 0.7)
-}
-
 .is-danger .tooltip-content {
   background-color: rgb(219, 56, 70) !important;
   opacity: 1;
   box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%) !important;
+}
+
+#hm {
+  color: rgba(26, 92, 255, 0.7)
 }
 
 // Import Bulma and Buefy styles
