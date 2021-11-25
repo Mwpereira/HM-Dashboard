@@ -70,7 +70,7 @@ Add Location section
 
 ### v3
 
-Release Date: November 26th, 2021
+Release Date: November 25th, 2021
 
 - Adding HNT price within the nav bar
 - Adding retry to failing Helium APIs
@@ -92,6 +92,7 @@ Release Date: TBA
 
 - Automatic refresh of data
 - Allow user to select currency shown for HNT price
+- Adding unit and e2e testing
 
 ## 🛠 Build Setup
 
