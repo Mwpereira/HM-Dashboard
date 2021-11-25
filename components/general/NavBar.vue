@@ -83,10 +83,12 @@
         </div>
       </a>
       <b-tooltip
-        label="Data provided by CoinGecko" type='is-dark' position="is-left" class="columns column is-vcentered">
-      <p>
-        HNT: ${{ hntPrice }}
-      </p>
+        label="Data provided by CoinGecko" type='is-dark' position="is-left" id="hntPrice" class="columns column is-vcentered">
+      <a href="https://www.coingecko.com/en/coins/helium" target="_blank" rel="noopener" transparent>
+        <b-navbar-item>
+          HNT: ${{ hntPrice }}
+        </b-navbar-item>
+      </a>
       </b-tooltip>
     </template>
   </b-navbar>
@@ -163,6 +165,10 @@ export default class NavBar extends Vue {
 </script>
 
 <style scoped>
+#hntPrice {
+  cursor: pointer !important;
+}
+
 .navbar {
   padding: 1rem 2rem 1rem 2rem;
   position: fixed;
