@@ -4,10 +4,10 @@
       <b-navbar-item id='logo' tag='router-link' :to="{ path: '/' }">
         <svg data-v-fde0c5aa='' xmlns='http://www.w3.org/2000/svg' width='300' height='50' viewBox='100 50 200 200'
              class='iconAbove'>
-          <defs data-v-fde0c5aa=''><!----></defs>
+          <defs data-v-fde0c5aa=''></defs>
           <rect data-v-fde0c5aa='' fill='transparent' x='0' y='0'
                 class='logo-background-square'></rect>
-          <defs data-v-fde0c5aa=''><!----></defs>
+          <defs data-v-fde0c5aa=''></defs>
           <g id='31dd9bcf-914e-452b-bbe2-c2313b0f78e3' data-v-fde0c5aa='' :fill="isDarkModeActive ? '#fff' : '#000000'"
              transform='matrix(5.212187288209586,0,0,5.212187288209586,99.25935884941275,164.57703880775094)'>
             <path
@@ -25,27 +25,55 @@
              transform='matrix(3.261537572208972,0,0,3.261537572208972,-13.078514704315872,-49.859460111036185)'>
             <path clip-rule='evenodd'
                   d='M49.998 32.965l14.755 8.517v7.502h8.082l3.813-6.613h8.809l4.402 7.628-4.402 7.627h-8.809l-3.813-6.61h-8.082v7.5l-14.755 8.52-14.752-8.52v-7.5h-8.08l-3.815 6.61h-8.809L10.142 50l4.4-7.628h8.809l3.814 6.613h8.081v-7.502z'></path>
-          </g><!---->
+          </g>
         </svg>
       </b-navbar-item>
     </template>
     <template #end>
-      <b-navbar-item class='mr-4 navOptions' href="#summary">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#summary">
         Summary
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' href="#rewards">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#rewards">
         Rewards
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' href="#witnesses">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#witnesses">
         Witnesses
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' href="#location">
+      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#location">
         Location
       </b-navbar-item>
-      <b-navbar-item class='mr-4 navOptions' @click="cardModal">
+      <b-navbar-item v-show="isWatchlistPage" class='mr-4 navOptions' @click="goToLastVisited">
+        <i class="fas fa-chevron-left"></i>
+      </b-navbar-item>
+      <b-dropdown
+        position="is-bottom-left"
+        append-to-body
+        aria-role="menu"
+        scrollable
+        max-height="200"
+        trap-focus
+      >
+        <template #trigger>
+          <a
+            class="navbar-item"
+            role="button">
+            <i class="fas fa-layer-group mr-1"></i>
+            <b-icon icon="menu-down"></b-icon>
+          </a>
+        </template>
+        <b-dropdown-item class="has-text-weight-bold" custom>
+          Favourite Hotspots
+        </b-dropdown-item>
+        <b-dropdown-item separator custom></b-dropdown-item>
+        <b-dropdown-item v-for="favourite of favourites" :key="favourite" aria-role="listitem"
+                         @click="addMiner(favourite)">
+          {{ favourite }}
+        </b-dropdown-item>
+      </b-dropdown>
+      <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
         <i class='fas fa-cog'></i>
       </b-navbar-item>
-      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions' title='Dark Mode'
+      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions mr-4' title='Dark Mode'
          @click='darkModeToggle'>
         <div v-if='!isDarkModeActive'>
           <i class='far fa-moon'></i>
@@ -54,6 +82,14 @@
           <i class='fas fa-sun'></i>
         </div>
       </a>
+      <b-tooltip
+        id="hntPrice" label="Data provided by CoinGecko" type='is-dark' position="is-left" class="columns column is-vcentered">
+      <a href="https://www.coingecko.com/en/coins/helium" target="_blank" rel="noopener" transparent>
+        <b-navbar-item>
+          HNT: ${{ hntPrice }}
+        </b-navbar-item>
+      </a>
+      </b-tooltip>
     </template>
   </b-navbar>
 </template>
@@ -62,11 +98,23 @@
 import {Component, Vue} from 'nuxt-property-decorator'
 import Settings from '~/components/general/Settings.vue'
 import {Miners} from "~/interfaces/Miners";
+import KyService from "~/services/ky-service";
+import {successResponse} from "~/utils/response-utils";
 
 @Component
 export default class NavBar extends Vue {
+  private hntPrice: string = 'N/A';
+
   get isHomePage(): boolean {
     return this.$store.getters.isHomePage
+  }
+
+  get isWatchlistPage(): boolean {
+    return this.$nuxt.$route.fullPath.includes('/watchlist')
+  }
+
+  async goToLastVisited(): Promise<void> {
+    await this.$router.push(`/${this.$store.getters.lastVisited}`)
   }
 
   get miners(): Miners {
@@ -77,11 +125,27 @@ export default class NavBar extends Vue {
     return this.$store.getters.isDarkModeActive
   }
 
+  get favourites(): any[] {
+    return Object.values(this.$store.getters.favourites).sort();
+  }
+
+  async mounted() {
+    let response = await KyService.getHNTPrice()
+
+    if (successResponse(response)) {
+      response = await response.json()
+
+      const price = response.market_data.current_price.usd;
+
+      this.hntPrice = parseFloat(price).toFixed(2);
+    }
+  }
+
   private darkModeToggle(): void {
     this.$store.commit('darkModeToggle')
   }
 
-  private cardModal(): void {
+  private settingsModal(): void {
     this.$buefy.modal.open({
       parent: this,
       component: Settings,
@@ -90,10 +154,21 @@ export default class NavBar extends Vue {
       trapFocus: true
     })
   }
+
+  private async addMiner(selected?: string): Promise<void> {
+    const miner = await this.$store.dispatch('addMiner', selected)
+    if (miner !== null) {
+      await this.$router.push(`/${miner}`)
+    }
+  }
 }
 </script>
 
 <style scoped>
+#hntPrice {
+  cursor: pointer !important;
+}
+
 .navbar {
   padding: 1rem 2rem 1rem 2rem;
   position: fixed;

@@ -12,6 +12,8 @@ import {Favourites} from '~/interfaces/Favourites'
 import {RecentlyViewed} from '~/interfaces/RecentlyViewed'
 import {State} from "~/interfaces/State";
 import {Witnesses} from "~/interfaces/Witnesses";
+import {Owner} from '~/interfaces/Owner'
+import GeneralService from "~/services/general-service";
 
 Vue.use(Vuex)
 
@@ -22,6 +24,7 @@ export const state = () => {
     favourites: {},
     isDarkModeActive: false,
     isHomePage: true,
+    lastVisited: '',
     miners: {},
     recentlyViewed: []
   }
@@ -31,26 +34,36 @@ export const mutations = {
   addFavourite(state: { favourites: Favourites }, data: { minerName: string, informalName: string }) {
     state.favourites = {...state.favourites, [`${data.minerName}`]: data.informalName}
   },
-  addRecentlyViewed(state: { recentlyViewed: RecentlyViewed }, minerName: string) {
+  addRecentlyViewed(state: { favourites: Favourites, recentlyViewed: RecentlyViewed }, minerName: string) {
     let minerExists = false
     let minerIndex = 0
 
-    state.recentlyViewed.forEach((viewedMiner: string, index: number) => {
-      if (minerName === viewedMiner) {
-        minerExists = true
-        minerIndex = index
+    let favourited = false;
+
+    Object.values(state.favourites).forEach(favourite => {
+      if (favourite === minerName) {
+        favourited = true;
       }
     })
 
-    if (!minerExists) {
-      // Limit array to a length of 3
-      if (state.recentlyViewed.length === 3) {
-        state.recentlyViewed.pop()
+    if (!favourited) {
+      state.recentlyViewed.forEach((viewedMiner: string, index: number) => {
+        if (minerName === viewedMiner) {
+          minerExists = true
+          minerIndex = index
+        }
+      })
+
+      if (!minerExists) {
+        // Limit array to a length of 3
+        if (state.recentlyViewed.length === 3) {
+          state.recentlyViewed.pop()
+        }
+        state.recentlyViewed.push(minerName)
+      } else {
+        state.recentlyViewed.splice(minerIndex, 1)
+        state.recentlyViewed.push(minerName)
       }
-      state.recentlyViewed.push(minerName)
-    } else {
-      state.recentlyViewed.splice(minerIndex, 1)
-      state.recentlyViewed.push(minerName)
     }
   },
   async addMiner(state: { miners: Miners }, miner: Miner) {
@@ -83,17 +96,46 @@ export const mutations = {
   removeMinerHistory(state: { miners: Miners }) {
     state.miners = {};
   },
-  removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
+  removeRecentlyViewed(state: { recentlyViewed: RecentlyViewed }, minerName: string) {
+    const recentlyViewed = state.recentlyViewed;
+    for (let i = 0; i < recentlyViewed.length; i++) {
+      if (recentlyViewed[i] === minerName) {
+        recentlyViewed.splice(i, 1);
+      }
+    }
+    state.recentlyViewed = [...recentlyViewed];
+  },
+  resetRecentlyViewed(state: { recentlyViewed: RecentlyViewed }) {
     state.recentlyViewed = []
   },
-  async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
+  setLastVisited(state: { lastVisited: string }, lastVisited: string) {
+    state.lastVisited = lastVisited;
+  },
+  async setOwnerData(state: { miners: Miners }, data: { minerName: string, ownerData: Owner }) {
+    state.miners[data.minerName].ownerData = data.ownerData
     return await new Promise((resolve) => {
-      resolve(state.miners[data.minerName].rewards = data.rewards)
+      resolve(state.miners = {
+        ...state.miners,
+        [data.minerName]: state.miners[data.minerName]
+      })
+    })
+  },
+  async setRewards(state: { miners: Miners }, data: { minerName: string, rewards: Rewards }) {
+    state.miners[data.minerName].rewards = data.rewards
+    return await new Promise((resolve) => {
+      resolve(state.miners = {
+        ...state.miners,
+        [data.minerName]: state.miners[data.minerName]
+      })
     })
   },
   async setWitnesses(state: { miners: Miners }, data: { minerName: string, witnesses: Witnesses }) {
+    state.miners[data.minerName].witnesses = data.witnesses
     return await new Promise((resolve) => {
-      resolve(state.miners[data.minerName].witnesses! = data.witnesses)
+      resolve(state.miners = {
+        ...state.miners,
+        [data.minerName]: state.miners[data.minerName]
+      })
     })
   },
   setPage(state: { isHomePage: boolean }, isHomePage: boolean) {
@@ -130,8 +172,8 @@ export const actions = {
     return ctx.getters.miners[minerName] !== undefined
   },
   checkForOutdatedData(ctx: any, minerName: string): boolean {
-    // Data will refresh after one minute
-    return Math.round(new Date().getTime() / 1000) - (ctx.state.miners[minerName].last_updated || 0) > 60
+    // Data will refresh after 1 minute on page reload
+    return GeneralService.checkForOutdatedData(ctx.state.miners[minerName].last_updated || 0)
   },
   async getMinerData(ctx: any, userInput: string) {
     try {
@@ -143,21 +185,28 @@ export const actions = {
         response = await response.json()
         const miner: Miner = response.data[0]
         if (miner) {
+          // Displays correct toast
+          ctx.dispatch('checkForMiner', userInput) ? BuefyService.successToast(MessageConstants.WARNING_FETCHING_MINER) : BuefyService.successToast(MessageConstants.SUCCESS_ADDING_MINER)
+
           const informalName = miner.name.replaceAll('-', ' ').split(' ')
           for (let i = 0; i < 3; i++) {
             informalName[i] = informalName[i].charAt(0).toUpperCase() + informalName[i].slice(1)
           }
           miner.informal_name = informalName.join(' ')
-          miner.last_updated = Math.round(new Date().getTime() / 1000)
-
-          // Displays correct toast
-          ctx.dispatch('checkForMiner', userInput) ? BuefyService.successToast(MessageConstants.WARNING_FETCHING_MINER) : BuefyService.successToast(MessageConstants.SUCCESS_ADDING_MINER)
+          const time = GeneralService.getTime()
+          miner.last_updated = time
 
           // Add Miner to state
           await ctx.commit('addMiner', miner)
           await ctx.commit('addRecentlyViewed', miner.informal_name)
-          await ctx.dispatch('getRewards', {minerName: miner.name, minerAddress: miner.address})
-          await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address})
+
+          await ctx.dispatch('getRewards', {
+            minerName: miner.name,
+            minerAddress: miner.address,
+            minerOwnerAddress: miner.owner,
+            time
+          })
+          await ctx.dispatch('getWitnesses', {minerName: miner.name, minerAddress: miner.address, time})
 
           BuefyService.stopLoading()
 
@@ -179,8 +228,32 @@ export const actions = {
       return null
     }
   },
-  async getRewards(ctx: any, data: { minerName: string, minerAddress: string }) {
+  async getOwnerData(ctx: any, data: { minerName: string, minerOwnerAddress: string, time: number }) {
     try {
+      // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_OWNER)
+
+      let response = await KyService.getHotspotOwner(data.minerOwnerAddress)
+
+      if (successResponse(response)) {
+        response = await response.json()
+
+        const owner: Owner = {
+          ...response.data,
+          last_updated: data.time
+        }
+
+        await ctx.commit('setOwnerData', {minerName: data.minerName, ownerData: owner})
+      } else {
+        BuefyService.dangerToast(MessageConstants.ERROR_GETTING_OWNER)
+      }
+    } catch {
+      BuefyService.dangerToast(MessageConstants.ERROR_GETTING_OWNER)
+    }
+  },
+  async getRewards(ctx: any, data: { minerName: string, minerAddress: string, minerOwnerAddress: string, time: number }) {
+    try {
+      // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS)
+
       let response = await KyService.getRewards(data.minerAddress)
 
       if (successResponse(response)) {
@@ -211,14 +284,23 @@ export const actions = {
           }
         }
 
+        console.log(dailyRewards.toFixed(2))
+
         const rewards: Rewards = {
           dailyRewards: dailyRewards.toFixed(2),
           weeklyRewards: weeklyRewards.toFixed(2),
           monthlyRewards: monthlyRewards.toFixed(2),
-          data: response.data
+          data: response.data,
+          last_updated: data.time
         }
 
         await ctx.commit('setRewards', {minerName: data.minerName, rewards})
+
+        await ctx.dispatch('getOwnerData', {
+          minerName: data.minerName,
+          minerOwnerAddress: data.minerOwnerAddress,
+          time: data.time
+        })
       } else {
         BuefyService.dangerToast(MessageConstants.ERROR_GETTING_REWARDS)
       }
@@ -226,8 +308,10 @@ export const actions = {
       BuefyService.dangerToast(MessageConstants.ERROR_HELIUM)
     }
   },
-  async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string }) {
+  async getWitnesses(ctx: any, data: { minerName: string, minerAddress: string, time: number }) {
     try {
+      // BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES)
+
       let response = await KyService.getWitnesses(data.minerAddress)
 
       if (successResponse(response)) {
@@ -244,7 +328,8 @@ export const actions = {
         const witnesses = {
           count: dataArr.length,
           avgRewardScale: sum.toFixed(2),
-          data: response.data
+          data: response.data,
+          last_updated: data.time
         }
 
         await ctx.commit('setWitnesses', {minerName: data.minerName, witnesses})
@@ -262,6 +347,7 @@ export const actions = {
   },
   async fetchMiner(ctx: any, minerName: string): Promise<Miner> {
     await ctx.dispatch('addMiner', minerName)
+    ctx.commit('setLastVisited', minerName);
     return await new Promise((resolve) => {
       resolve(ctx.getters.miners[minerName])
     })
@@ -276,7 +362,7 @@ export const getters = {
   favourites: (state: { favourites: Favourites; }) => state.favourites,
   isDarkModeActive: (state: { isDarkModeActive: boolean; }) => state.isDarkModeActive,
   isHomePage: (state: { isHomePage: boolean; }) => state.isHomePage,
+  lastVisited: (state: { lastVisited: string; }) => state.lastVisited,
   miners: (state: { miners: Miners; }) => state.miners,
-  recentlyViewed: (state: { recentlyViewed: RecentlyViewed }) => state.recentlyViewed,
-  rewards: (state: { rewards: Rewards; }) => state.rewards
+  recentlyViewed: (state: { recentlyViewed: RecentlyViewed }) => state.recentlyViewed
 }

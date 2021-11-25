@@ -4,7 +4,7 @@
     <div class='is-flex is-justify-content-center is-align-items-center has-text-centered'>
       <div>
         <b-tooltip
-          label="Hotspot's Address" type='is-dark' position='is-bottom'>
+          label="Hotspot's address" type='is-dark' position='is-bottom'>
           <p class='copyText m-2' @click="copyText(miner.address, 'address')"><i
             class='fas fa-at m-1'></i>{{
               miner.address
@@ -27,7 +27,12 @@
           </a>
         </b-tooltip>
         <b-tooltip
-          label='Favourite Hotspot' type='is-dark' position='is-bottom' class='groupA'>
+          label='Get hotspot Link' type='is-dark' position='is-bottom'>
+          <p class='link m-3' @click="copyText(`https://hmdashboard.mwpereira.ca${$nuxt.$route.fullPath}`, 'url')"><i
+            class='fas fa-link'></i></p>
+        </b-tooltip>
+        <b-tooltip
+          label='Favourite hotspot' type='is-dark' position='is-bottom'>
           <p class='favourite m-3' :style='{ color: favouriteColor}' @click='favouriteHotspot()'><i
             class='fas fa-star'></i></p>
         </b-tooltip>
@@ -44,7 +49,10 @@ import BuefyService from "~/services/buefy-service";
 @Component
 export default class Title extends Vue {
   @Prop() private minerName!: string
-  @Prop() private miner!: Miner
+
+  get miner(): Miner {
+    return this.$store.getters.miners[this.minerName]
+  }
 
   get favouriteColor(): string {
     return this.$store.getters.favourites[this.minerName] !== undefined ? 'gold' : '#e6e6e6'
@@ -66,6 +74,7 @@ export default class Title extends Vue {
     } else {
       this.$store.commit('addFavourite', {minerName: this.minerName, informalName: this.miner.informal_name})
       BuefyService.warningToast(`Added Hotspot to Favourites`)
+      this.$store.commit('removeRecentlyViewed', this.miner.informal_name)
     }
   }
 }
@@ -76,16 +85,16 @@ h1 {
   font-size: 2.35rem;
 }
 
-.heliumExplorer {
-  color: #4a4a4a
+.heliumExplorer, .link {
+  color: #4a4a4a;
 }
 
-.is-dark-mode-active .heliumExplorer {
+.is-dark-mode-active .heliumExplorer, .is-dark-mode-active .link {
   color: #e5e5e5;
 }
 
 .heliumExplorer:hover {
-  color: #8b5de9;
+  color: #b569ce;
 }
 
 .copyText {
@@ -102,6 +111,11 @@ h1 {
 
 .favourite:hover {
   color: gold !important;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #7ac6d9 !important;
   cursor: pointer;
 }
 

@@ -28,7 +28,13 @@ export default class Default extends Vue {
 <style>
 html, body {
   overflow-x: hidden;
-  scroll-padding: 12vh;
+  scroll-padding: 14vh;
+}
+
+@media screen and (max-width: 1500px) {
+  html, body {
+    scroll-padding: 16vh;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -36,24 +42,28 @@ html, body {
     scroll-padding: 18vh;
   }
 
-  .toast.is-success {
-    background-color: rgb(70, 201, 58) !important;
-  }
-
-  .toast.is-warning {
-    background-color: rgb(255, 186, 0) !important;
-  }
-
   .toast div {
     color: white !important;
   }
 
+  .toast.is-success {
+    background-color: rgb(70, 201, 58) !important;
+    opacity: 1;
+  }
+
+  .toast.is-warning {
+    background-color: rgb(255, 186, 0) !important;
+    opacity: 1;
+  }
+
   .toast.is-danger {
     background-color: rgb(255, 71, 87) !important;
+    opacity: 1;
   }
 
   .toast.is-info {
     background-color: rgb(59, 222, 200) !important;
+    opacity: 1;
   }
 }
 </style>

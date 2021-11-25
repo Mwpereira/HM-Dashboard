@@ -3,4 +3,5 @@ export interface Rewards {
   weeklyRewards: string,
   monthlyRewards: string,
   data: object,
+  'last_updated': number,
 }

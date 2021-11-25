@@ -6,6 +6,8 @@ import {RecentlyViewed} from "~/interfaces/RecentlyViewed";
 export interface State {
   favourites: Favourites,
   isDarkModeActive: boolean;
+  isHomePage: boolean;
+  lastVisited: string;
   miner: Miner,
   miners: Miners,
   recentlyViewed: RecentlyViewed,

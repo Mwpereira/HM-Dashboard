@@ -63,9 +63,9 @@ export default class Home extends Vue {
   }
 
   get filteredDataArray(): ({ type: string; items: string[]; }[] | { type: string; items: any; })[] {
-    if (this.userInput === '' && this.$store.getters.recentlyViewed.length === 0) {
+    if (this.userInput === '' && this.$store.getters.recentlyViewed.length === 0 && this.$store.getters.favourites.length === 0) {
       return [{
-        type: 'Suggested Hotspots', items: hotspots.miners
+        type: 'Suggested Hotspots', items: hotspots.miners.sort()
       }]
     }
     if (this.userInput === '') {
@@ -76,32 +76,32 @@ export default class Home extends Vue {
             return (
               option.toString().toLowerCase().includes(this.userInput.toLowerCase()) >= 0
             )
-          })
+          }).sort()
         })
       }
 
       if (this.$store.getters.recentlyViewed.length > 0) {
         results.push({
-          type: 'Search Results', items: this.$store.getters.recentlyViewed.filter((option: any) => {
+          type: 'Search Results', items: this.$store.getters.recentlyViewed.slice().reverse().filter((option: any) => {
             return (
               option.toString().toLowerCase().includes(this.userInput.toLowerCase())
             )
-          })
+          }).sort()
         })
       }
-      if (Object.keys(this.$store.getters.favourites).length === 0) {
+      if (this.$store.getters.recentlyViewed.length === 0 || Object.keys(this.$store.getters.favourites).length === 0) {
         results.push({
-          type: 'Suggested Hotspots', items: hotspots.miners
+          type: 'Suggested Hotspots', items: hotspots.miners.sort()
         })
       }
-      return results
+      return results.sort()
     } else {
       return [{
         type: 'Search Results', items: this.$store.getters.recentlyViewed.filter((option: any) => {
           return (
             option.toString().toLowerCase().includes(this.userInput.toLowerCase())
           )
-        })
+        }).sort()
       }]
     }
   }
@@ -109,7 +109,8 @@ export default class Home extends Vue {
   private async addMiner(selected?: string): Promise<void> {
     this.userInput = (typeof selected === 'object') ? this.userInput : selected || ''
     if (this.userInput !== '') {
-      if ((this.userInput.match(/(\s|-)/g) || []).length === 2) {
+      const matches = (this.userInput.match(/(\s|-)/g) || []).length;
+      if (matches === 2 || matches === 3) {
         const miner = await this.$store.dispatch('addMiner', this.userInput.trim())
         if (miner !== null
         ) {

@@ -19,6 +19,10 @@ html {
       border-color: $dark-mode-color;
     }
 
+    .is-danger .tooltip-content {
+      color: $dark-mode-color !important;
+    }
+
     .card {
       background-color: $dark-mode-background-color;
       box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%), 0 0 0 1px rgb(10 10 10 / 2%);
@@ -151,7 +155,7 @@ html {
       color: $dark-mode-color;
     }
 
-    .dropdown-item.is-hovered {
+    a.dropdown-item:hover {
       background-color: $dark-mode-dropdown-hovered-background;
       color: $dark-mode-color;
     }
@@ -177,6 +181,20 @@ html {
           color: $grey-light;
         }
       }
+    }
+
+    table {
+      color: $dark-mode-color;
+      background-color: transparent;
+    }
+
+    tr {
+      color: $dark-mode-color;
+      background-color: transparent !important;
+    }
+
+    th{
+      color: $dark-mode-color;
     }
 
     section {
@@ -206,6 +224,14 @@ html {
 
     .loading-background {
       background-color: rgba(34, 36, 54, 0.5)
+    }
+
+    @media screen and (max-width: 768px) {
+      tr {
+        box-shadow: none;
+        padding: 10px;
+        border-color: transparent;
+      }
     }
   }
 }

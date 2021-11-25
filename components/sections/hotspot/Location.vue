@@ -1,6 +1,6 @@
 <template>
   <div id="location">
-    <p class='title mb-6 my-6'>Location</p>
+    <p class='title my-6'>Location</p>
     <div class='columns is-centered has-text-centered is-multiline is-size-5'>
       <div class='column box m-4'>
         <b-tooltip
@@ -36,10 +36,13 @@ import {Miner} from "~/interfaces/Miner";
 @Component
 export default class Rewards extends Vue {
   @Prop() private minerName!: string
-  @Prop() private miner!: Miner
 
   get geocode(): object {
     return this.miner.geocode
+  }
+
+  get miner(): Miner {
+    return this.$store.getters.miners[this.minerName];
   }
 }
 </script>

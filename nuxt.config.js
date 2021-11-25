@@ -1,6 +1,7 @@
 export default {
   ssr: false,
   target: 'static',
+  loading: false,
   head: {
     title: 'HM Dashboard',
     htmlAttrs: {
@@ -15,10 +16,10 @@ export default {
         name: 'keywords',
         content: 'HM Dashboard, HNT, HNT-Miner, HNT Coin, Helium Coin, Bobcat Miner, Nebra Miner, Crypto, Crypto Currency, mwpereira'
       },
-      { hid: 'og:title', name: 'og:title', content: 'HM Dashboard' },
-      { hid: 'og:description', name: 'og:description', content: 'Helium Miner Dashboard' },
-      { hid: 'og:image', name: 'og:image', content: '/site.png' },
-      { hid: 'og:site_name', name: 'og:site_name', content: 'HM Dashboard' },
+      { hid: 'og:title', property: 'og:title', content: 'HM Dashboard' },
+      { hid: 'og:description', property: 'og:description', content: 'Helium Miner Dashboard' },
+      { hid: 'og:image', property: 'og:image', content: '/site.png' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'HM Dashboard' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication', content: '#da532c' },
       { name: 'theme-color', content: '#ffffff' }
@@ -31,7 +32,6 @@ export default {
       { rel: 'mask-icon', href: '/icons/safari-pinned-tab.svg', content: '#5bbad5' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap' },
       { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.15.3/css/all.css' }
     ]
   },
@@ -61,6 +61,7 @@ export default {
   build: {},
   generate: { fallback: true },
   env: {
-    heliumAPI: process.env.HELIUM_API || 'https://api.helium.io/v1/'
+    coinGeckoAPI: process.env.coinGeckoAPI || 'https://api.coingecko.com/api/v3/coins/helium',
+    heliumAPI: process.env.HELIUM_API || 'https://helium-api.stakejoy.com/v1/'
   }
 }

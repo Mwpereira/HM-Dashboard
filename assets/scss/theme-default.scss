@@ -6,9 +6,6 @@
 $size-base: 1rem;
 $default-padding: $size-base * 1.5;
 
-/* Default font */
-$family-sans-serif: 'Noto Sans JP', sans-serif;
-
 /* Base color */
 $base-color: #ffffff;
 $base-color-light: #f1f2f2;
@@ -23,6 +20,7 @@ $hr-height: 1px;
 $border: $base-color-light;
 
 /* NavBar: Bulma override */
+$navbar-burger-color:  #485fc7 !important;
 $navbar-item-color: $link;
 $navbar-item-hover-background-color: transparent;
 $navbar-item-active-color: $black-ter;
@@ -69,7 +67,7 @@ $dark-mode-model-card-background-color: $dark-mode-background-color;
 $dark-mode-card-header-button-color: $grey;
 $dark-mode-card-header-button-hover-color: $black-ter;
 $dark-mode-dropdown-background-color: #1E2033;
-$dark-mode-dropdown-hovered-background: #1D1F33;
+$dark-mode-dropdown-hovered-background: #1e2034;
 $dark-mode-footer-background-color: #202235;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,7 +138,7 @@ $toast-border-radius: 0em;
 
 @media screen and (max-width: 768px) {
   .toast {
-    margin: 1em 1em;
+    margin: 1em !important;
   }
 }
 
@@ -170,6 +168,12 @@ $toast-border-radius: 0em;
   background-color: rgb(252, 93, 105) !important;
   border-color: rgb(252, 93, 105)!important;
   color: $dark-mode-color !important;
+}
+
+.is-danger .tooltip-content {
+  background-color: rgb(219, 56, 70) !important;
+  opacity: 1;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 12%), 0 0 6px rgb(0 0 0 / 4%) !important;
 }
 
 #hm {

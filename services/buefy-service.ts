@@ -7,7 +7,7 @@ import { BLoadingComponent } from 'buefy/types/components'
 export default class BuefyService {
   private static loadingComponent: BLoadingComponent
   private static toastComponent = buefy.ToastProgrammatic
-  private static readonly duration = 2500
+  private static readonly duration = 3000
   private static readonly position = 'is-bottom-right'
   private static readonly queue = false
 

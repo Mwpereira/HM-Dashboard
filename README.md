@@ -29,27 +29,70 @@ can think of, feel free to open a pull request or create an issue 🙂
 
 ### v1
 
+<details>
+<summary>
 Release Date: September 9th, 2021
-
-- Initial release with Miner summary
-- Receive feedback from community and users
+</summary>
+<ul>
+<li>
+Initial release with Miner summary
+</li>
+<li>
+Receive feedback from community and users
+</li>
+</ul>
+</details>
 
 ### v2
 
+<details>
+<summary>
 Release Date: September 12th, 2021
-
-- Fix any bugs/errors
-- Add Settings
-- Add Witnesses section
-- Add Rewards section
-- Add Location section
+</summary>
+<ul>
+<li>
+Fix any bugs/errors
+</li>
+<li>
+Add Settings
+</li>
+<li>
+Add Witnesses section
+</li>
+<li>
+Add Rewards section
+</li>
+<li>
+Add Location section
+</li>
+</ul>
+</details>
 
 ### v3
 
+Release Date: November 25th, 2021
+
+- Adding HNT price within the nav bar
+- Adding retry to failing Helium APIs
+- Adding favourites list within the nav bar
+- Splitting Rewards section into Miner & Owner
+- Adding an accessible/searchable favourites list
+- Adding get hotspot url link button
+- Fixing search results on homepage
+- Updating time formatting
+- Updating responsiveness
+- Updating styling
+- Updating handling errors
+
+Thank you everyone for providing feedback and using HMDashboard!
+
+### v4
+
 Release Date: TBA
 
-- Receive feedback from community and users
-- TBA
+- Automatic refresh of data
+- Allow user to select currency shown for HNT price
+- Adding unit and e2e testing
 
 ## 🛠 Build Setup
 
