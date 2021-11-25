@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-tooltip
-      label="Out of date information" type='is-danger'>
+      label="Out of date information. The Helium API servers did not respond successfully" type='is-danger' multilined>
       <i class="fas fa-exclamation-circle ml-5 mr-5 mt-3" style="color: orange"></i>
     </b-tooltip>
     <b-tooltip
@@ -27,7 +27,7 @@ export default class Notice extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 #refresh {
   cursor: pointer;
 }

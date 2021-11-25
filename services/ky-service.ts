@@ -1,6 +1,7 @@
-import {kyOptions} from '~/constants/ky-constants'
+import {kyCCIO_Options, kyOptions} from '~/constants/ky-constants'
 
 const ky = kyOptions
+const kyCCIO = kyCCIO_Options
 
 /**
  * Calling Helium APIs using Ky http
@@ -29,6 +30,13 @@ export default class KyService {
 
   public static getHotspotOwner(address: string) {
     return ky(`accounts/${address}/`)
+      .catch((error) => {
+        return error.response
+      })
+  }
+
+  public static getHNTPrice() {
+    return kyCCIO('')
       .catch((error) => {
         return error.response
       })

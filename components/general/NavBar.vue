@@ -73,7 +73,7 @@
       <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
         <i class='fas fa-cog'></i>
       </b-navbar-item>
-      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions' title='Dark Mode'
+      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions mr-4' title='Dark Mode'
          @click='darkModeToggle'>
         <div v-if='!isDarkModeActive'>
           <i class='far fa-moon'></i>
@@ -82,6 +82,12 @@
           <i class='fas fa-sun'></i>
         </div>
       </a>
+      <b-tooltip
+        label="Data provided by CoinGecko" type='is-dark' position="is-left" class="columns column is-vcentered">
+      <p>
+        HNT: ${{ hntPrice }}
+      </p>
+      </b-tooltip>
     </template>
   </b-navbar>
 </template>
@@ -90,9 +96,13 @@
 import {Component, Vue} from 'nuxt-property-decorator'
 import Settings from '~/components/general/Settings.vue'
 import {Miners} from "~/interfaces/Miners";
+import KyService from "~/services/ky-service";
+import {successResponse} from "~/utils/response-utils";
 
 @Component
 export default class NavBar extends Vue {
+  private hntPrice: string = 'N/A';
+
   get isHomePage(): boolean {
     return this.$store.getters.isHomePage
   }
@@ -115,6 +125,18 @@ export default class NavBar extends Vue {
 
   get favourites(): any[] {
     return Object.values(this.$store.getters.favourites).sort();
+  }
+
+  async mounted() {
+    let response = await KyService.getHNTPrice()
+
+    if (successResponse(response)) {
+      response = await response.json()
+
+      const price = response.market_data.current_price.usd;
+
+      this.hntPrice = parseFloat(price).toFixed(2);
+    }
   }
 
   private darkModeToggle(): void {

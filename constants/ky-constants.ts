@@ -6,3 +6,7 @@ import ky from 'ky';
 export const kyOptions = ky.extend({
   prefixUrl: process.env.heliumAPI,
 });
+
+export const kyCCIO_Options = ky.extend({
+  prefixUrl: process.env.coinGeckoAPI,
+});
