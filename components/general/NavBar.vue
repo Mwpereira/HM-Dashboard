@@ -106,7 +106,7 @@ import {successResponse} from "~/utils/response-utils";
 @Component
 export default class NavBar extends Vue {
   private hntPrice: string = 'N/A'
-  private polling: NodeJS.Timer | undefined
+  private polling!: NodeJS.Timer
 
   get isHomePage(): boolean {
     return this.$store.getters.isHomePage

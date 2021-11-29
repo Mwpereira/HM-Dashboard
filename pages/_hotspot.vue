@@ -55,7 +55,7 @@ import Location from "~/components/sections/hotspot/Location.vue";
 })
 export default class Hotspot extends Vue {
   private minerName!: string
-  private polling: NodeJS.Timer | undefined
+  private polling!: NodeJS.Timer
 
   get miner(): Miner {
     return this.$store.getters.miners[this.minerName]
