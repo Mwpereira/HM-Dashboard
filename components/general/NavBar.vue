@@ -61,7 +61,7 @@
             <b-icon icon="menu-down"></b-icon>
           </a>
         </template>
-        <b-dropdown-item class="has-text-weight-bold" custom>
+        <b-dropdown-item class="has-text-weight-medium" id="favouriteTitle" custom>
           Favourite Hotspots
         </b-dropdown-item>
         <b-dropdown-item separator custom></b-dropdown-item>
@@ -73,7 +73,8 @@
       <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
         <i class='fas fa-cog'></i>
       </b-navbar-item>
-      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions mr-4' title='Dark Mode'
+      <a id='darkModeToggle' class='navbar-item has-divider is-desktop-icon-only is-size-6 navOptions mr-4'
+         title='Dark Mode'
          @click='darkModeToggle'>
         <div v-if='!isDarkModeActive'>
           <i class='far fa-moon'></i>
@@ -83,12 +84,13 @@
         </div>
       </a>
       <b-tooltip
-        id="hntPrice" label="Data provided by CoinGecko" type='is-dark' position="is-left" class="columns column is-vcentered">
-      <a href="https://www.coingecko.com/en/coins/helium" target="_blank" rel="noopener" transparent>
-        <b-navbar-item>
-          HNT: ${{ hntPrice }}
-        </b-navbar-item>
-      </a>
+        id="hntPrice" label="Data provided by CoinGecko" type='is-dark' position="is-left"
+        class="columns column is-vcentered">
+        <a href="https://www.coingecko.com/en/coins/helium" target="_blank" rel="noopener" transparent>
+          <b-navbar-item class="has-text-weight-medium">
+            HNT: ${{ hntPrice }}
+          </b-navbar-item>
+        </a>
       </b-tooltip>
     </template>
   </b-navbar>
@@ -103,7 +105,8 @@ import {successResponse} from "~/utils/response-utils";
 
 @Component
 export default class NavBar extends Vue {
-  private hntPrice: string = 'N/A';
+  private hntPrice: string = 'N/A'
+  private polling!: NodeJS.Timer
 
   get isHomePage(): boolean {
     return this.$store.getters.isHomePage
@@ -130,6 +133,24 @@ export default class NavBar extends Vue {
   }
 
   async mounted() {
+    await this.getHNTPrice();
+  }
+
+  private pollData() {
+    this.polling = setInterval(() => {
+      this.getHNTPrice()
+    }, 300000)
+  }
+
+  beforeDestroy() {
+    clearInterval(this.polling)
+  }
+
+  created() {
+    this.pollData()
+  }
+
+  async getHNTPrice() {
     let response = await KyService.getHNTPrice()
 
     if (successResponse(response)) {
@@ -167,6 +188,10 @@ export default class NavBar extends Vue {
 <style scoped>
 #hntPrice {
   cursor: pointer !important;
+}
+
+#favouriteTitle {
+  font-size: 16px;
 }
 
 .navbar {
