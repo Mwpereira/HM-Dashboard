@@ -30,9 +30,6 @@
       </b-navbar-item>
     </template>
     <template #end>
-      <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#summary">
-        Summary
-      </b-navbar-item>
       <b-navbar-item v-show="!isWatchlistPage" class='mr-4 navOptions' href="#rewards">
         Rewards
       </b-navbar-item>
@@ -69,6 +66,9 @@
                          @click="addMiner(favourite)">
           {{ favourite }}
         </b-dropdown-item>
+        <b-dropdown-item class="has-text-weight-medium" v-if="favourites.length === 0" custom>
+          No Favourites
+        </b-dropdown-item>
       </b-dropdown>
       <b-navbar-item class='mr-4 navOptions' @click="settingsModal">
         <i class='fas fa-cog'></i>
@@ -84,7 +84,7 @@
         </div>
       </a>
       <b-tooltip
-        id="hntPrice" label="Data provided by CoinGecko" type='is-dark' position="is-left"
+        id="hntPrice" label="Provided by CoinGecko" type='is-dark' position="is-bottom"
         class="columns column is-vcentered">
         <a href="https://www.coingecko.com/en/coins/helium" target="_blank" rel="noopener" transparent>
           <b-navbar-item class="has-text-weight-medium">
