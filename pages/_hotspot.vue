@@ -2,8 +2,8 @@
   <div class='hero is-fullheight'>
     <div class='hero-head section mt-6 pt-6'>
       <div class='hero-section'>
-        <Title :miner-name='minerName' />
-        <Summary :miner-name='minerName' />
+        <Title :miner-name='minerName'/>
+        <Summary :miner-name='minerName'/>
         <Rewards :miner-name='minerName'/>
         <Witnesses :miner-name='minerName'/>
         <Location :miner-name='minerName'/>
@@ -55,6 +55,7 @@ import Location from "~/components/sections/hotspot/Location.vue";
 })
 export default class Hotspot extends Vue {
   private minerName!: string
+  private polling: NodeJS.Timer | undefined
 
   get miner(): Miner {
     return this.$store.getters.miners[this.minerName]
@@ -66,6 +67,20 @@ export default class Hotspot extends Vue {
     } else {
       return 'N/A'
     }
+  }
+
+  pollData() {
+    this.polling = setInterval(() => {
+      this.$store.dispatch('getMinerData', {userInput: this.minerName, showLoading: false})
+    }, 300000)
+  }
+
+  beforeDestroy() {
+    clearInterval(this.polling)
+  }
+
+  created() {
+    this.pollData()
   }
 }
 </script>

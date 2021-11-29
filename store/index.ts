@@ -158,14 +158,14 @@ export const actions = {
 
     if (await ctx.dispatch('checkForMiner', userInput)) {
       if (await ctx.dispatch('checkForOutdatedData', userInput)) {
-        return await ctx.dispatch('getMinerData', userInput)
+        return await ctx.dispatch('getMinerData', {userInput, showLoading: true})
       } else {
         BuefyService.warningToast(MessageConstants.WARNING_LOADING_MINER)
 
         return userInput
       }
     } else {
-      return await ctx.dispatch('getMinerData', userInput)
+      return await ctx.dispatch('getMinerData', {userInput, showLoading: true})
     }
   },
   checkForMiner(ctx: any, minerName: string): boolean {
@@ -175,18 +175,22 @@ export const actions = {
     // Data will refresh after 1 minute on page reload
     return GeneralService.checkForOutdatedData(ctx.state.miners[minerName].last_updated || 0)
   },
-  async getMinerData(ctx: any, userInput: string) {
+  async getMinerData(ctx: any, data: { userInput: string, showLoading?: boolean }) {
     try {
-      BuefyService.startLoading()
+      if (data.showLoading) {
+        BuefyService.startLoading()
+      }
 
-      let response = await KyService.getHotspotFromName(userInput)
+      let response = await KyService.getHotspotFromName(data.userInput)
 
       if (successResponse(response)) {
         response = await response.json()
         const miner: Miner = response.data[0]
         if (miner) {
           // Displays correct toast
-          ctx.dispatch('checkForMiner', userInput) ? BuefyService.successToast(MessageConstants.WARNING_FETCHING_MINER) : BuefyService.successToast(MessageConstants.SUCCESS_ADDING_MINER)
+          if (data.showLoading) {
+            ctx.dispatch('checkForMiner', data.userInput) ? BuefyService.successToast(MessageConstants.WARNING_FETCHING_MINER) : BuefyService.successToast(MessageConstants.SUCCESS_ADDING_MINER)
+          }
 
           const informalName = miner.name.replaceAll('-', ' ').split(' ')
           for (let i = 0; i < 3; i++) {
@@ -283,8 +287,6 @@ export const actions = {
             monthlyRewards = sum
           }
         }
-
-        console.log(dailyRewards.toFixed(2))
 
         const rewards: Rewards = {
           dailyRewards: dailyRewards.toFixed(2),
