@@ -8,7 +8,8 @@ html {
 
     .box {
       background-color: $dark-mode-background-color;
-      box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%), 0 0 0 1px rgb(10 10 10 / 2%);
+      box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%),
+        0 0 0 1px rgb(10 10 10 / 2%);
     }
 
     p {
@@ -25,7 +26,8 @@ html {
 
     .card {
       background-color: $dark-mode-background-color;
-      box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%), 0 0 0 1px rgb(10 10 10 / 2%);
+      box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 35%),
+        0 0 0 1px rgb(10 10 10 / 2%);
     }
 
     .button {
@@ -51,7 +53,6 @@ html {
       }
     }
 
-
     button.is-dark {
       background-color: white;
       font-weight: bold;
@@ -67,7 +68,9 @@ html {
       color: $grey-lighter;
     }
 
-    .input, .textarea, .select select {
+    .input,
+    .textarea,
+    .select select {
       color: $dark-mode-color;
       background-color: transparent;
 
@@ -104,7 +107,6 @@ html {
       border-color: $dark-mode-light-border-color;
     }
 
-
     nav.navbar {
       background-color: $dark-mode-navbar-background-color;
 
@@ -133,7 +135,9 @@ html {
       }
     }
 
-    .modal-card, .modal-card-head, .modal-card-body {
+    .modal-card,
+    .modal-card-head,
+    .modal-card-body {
       background-color: $dark-mode-model-card-background-color;
     }
 
@@ -150,12 +154,14 @@ html {
       }
     }
 
-    .dropdown-menu, .dropdown-content, .dropdown-item {
+    .dropdown-menu,
+    .dropdown-content,
+    .dropdown-item {
       background-color: $dark-mode-background-color;
       color: $dark-mode-color;
     }
 
-    a.dropdown-item:hover {
+    .dropdown-item.is-hovered {
       background-color: $dark-mode-dropdown-hovered-background;
       color: $dark-mode-color;
     }
@@ -193,12 +199,13 @@ html {
       background-color: transparent !important;
     }
 
-    th{
+    th {
       color: $dark-mode-color;
     }
 
     section {
-      &.section.is-title-bar, &.hero.is-hero-bar {
+      &.section.is-title-bar,
+      &.hero.is-hero-bar {
         border-color: $dark-mode-light-border-color;
       }
 
@@ -223,7 +230,7 @@ html {
     }
 
     .loading-background {
-      background-color: rgba(34, 36, 54, 0.5)
+      background-color: rgba(34, 36, 54, 0.5);
     }
 
     @media screen and (max-width: 768px) {
