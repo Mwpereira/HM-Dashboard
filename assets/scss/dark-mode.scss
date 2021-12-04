@@ -161,7 +161,7 @@ html {
       color: $dark-mode-color;
     }
 
-    .dropdown-item.is-hovered {
+    a.dropdown-item:hover, .dropdown-item.is-hovered {
       background-color: $dark-mode-dropdown-hovered-background;
       color: $dark-mode-color;
     }
