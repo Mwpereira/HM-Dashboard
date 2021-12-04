@@ -1,23 +1,25 @@
 <template>
-  <div id='home' class='hero'>
-    <div class='hero-head section mt-6 pt-6'>
-      <div class='hero-section'>
-        <h1 class='title has-text-centered mb-6'><span id='hm'>HM</span> Dashboard</h1>
-        <div class='columns is-centered'>
-          <form class='form column' @submit.prevent='addMiner()'>
+  <div id="home" class="hero">
+    <div class="hero-head section mt-6 pt-6">
+      <div class="hero-section">
+        <h1 class="title has-text-centered mb-6">
+          <span id="hm">HM</span> Dashboard
+        </h1>
+        <div class="columns is-centered">
+          <form class="form column" @submit.prevent="addMiner()">
             <b-field>
               <b-autocomplete
-                v-model='userInput'
-                :data='filteredDataArray'
-                size='is-large'
-                icon='search'
-                icon-pack='fas'
-                placeholder='Hotspot Name'
-                group-field='type'
-                group-options='items'
-                :open-on-focus='true'
-                @keydown.native.enter='addMiner'
-                @select="option => addMiner(option)"
+                v-model="userInput"
+                :data="filteredDataArray"
+                size="is-large"
+                icon="search"
+                icon-pack="fas"
+                placeholder="Hotspot Name"
+                group-field="type"
+                group-options="items"
+                :open-on-focus="true"
+                @submit="addMiner"
+                @select="(option) => addMiner(option)"
               >
                 <template></template>
                 <template #empty>No hotspots found</template>
@@ -25,19 +27,35 @@
             </b-field>
           </form>
         </div>
-        <div class='mt-6 has-text-centered'>
-          <p>Minimalistic and modern user interface to display your HNT miner's data.</p>
-          <p class='mt-5 mb-6'>Developed & published for the HNT mining community by <a class='has-text-weight-bold'
-                                                                                        href='https://mwpereira.ca/'
-                                                                                        rel='noopener'
-                                                                                        target='_blank'>Michael
-            Pereira</a>.</p>
-          <p class='my-6 is-size-3'>
-            <a href='https://github.com/mwpereira/HM-Dashboard' rel='noopener' target='_blank'>
-              <i class='fab fa-github-alt m-2'></i>
+        <div class="mt-6 has-text-centered">
+          <p>
+            Minimalistic and modern user interface to display your HNT miner's
+            data.
+          </p>
+          <p class="mt-5 mb-6">
+            Developed & published for the HNT mining community by
+            <a
+              class="has-text-weight-bold"
+              href="https://mwpereira.ca/"
+              rel="noopener"
+              target="_blank"
+              >Michael Pereira</a
+            >.
+          </p>
+          <p class="my-6 is-size-3">
+            <a
+              href="https://github.com/mwpereira/HM-Dashboard"
+              rel="noopener"
+              target="_blank"
+            >
+              <i class="fab fa-github-alt m-2"></i>
             </a>
-            <a href='https://explorer.helium.com/' rel='noopener' target='_blank'>
-              <i class='fas fa-globe m-2'></i>
+            <a
+              href="https://explorer.helium.com/"
+              rel="noopener"
+              target="_blank"
+            >
+              <i class="fas fa-globe m-2"></i>
             </a>
           </p>
         </div>
@@ -46,12 +64,11 @@
   </div>
 </template>
 
-
-<script lang='ts'>
-import {Component, Vue} from 'nuxt-property-decorator'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 import hotspots from '@/assets/json/hotspots.json'
-import BuefyService from "~/services/buefy-service";
-import MessageConstants from "~/constants/message-constants";
+import BuefyService from '~/services/buefy-service'
+import MessageConstants from '~/constants/message-constants'
 
 @Component
 export default class Home extends Vue {
@@ -62,62 +79,97 @@ export default class Home extends Vue {
     document.title = `HM Dashboard`
   }
 
-  get filteredDataArray(): ({ type: string; items: string[]; }[] | { type: string; items: any; })[] {
-    if (this.userInput === '' && this.$store.getters.recentlyViewed.length === 0 && this.$store.getters.favourites.length === 0) {
-      return [{
-        type: 'Suggested Hotspots', items: hotspots.miners.sort()
-      }]
+  get filteredDataArray(): (
+    | { type: string; items: string[] }[]
+    | { type: string; items: any }
+  )[] {
+    if (
+      this.userInput === '' &&
+      this.$store.getters.recentlyViewed.length === 0 &&
+      this.$store.getters.favourites.length === 0
+    ) {
+      return [
+        {
+          type: 'Suggested Hotspots',
+          items: hotspots.miners.sort(),
+        },
+      ]
     }
     if (this.userInput === '') {
       const results = []
       if (Object.keys(this.$store.getters.favourites).length > 0) {
         results.push({
-          type: 'Favourites', items: Object.values(this.$store.getters.favourites).filter((option: any) => {
-            return (
-              option.toString().toLowerCase().includes(this.userInput.toLowerCase()) >= 0
-            )
-          }).sort()
+          type: 'Favourites',
+          items: Object.values(this.$store.getters.favourites)
+            .filter((option: any) => {
+              return (
+                option
+                  .toString()
+                  .toLowerCase()
+                  .includes(this.userInput.toLowerCase()) >= 0
+              )
+            })
+            .sort(),
         })
       }
 
       if (this.$store.getters.recentlyViewed.length > 0) {
         results.push({
-          type: 'Search Results', items: this.$store.getters.recentlyViewed.slice().reverse().filter((option: any) => {
-            return (
-              option.toString().toLowerCase().includes(this.userInput.toLowerCase())
-            )
-          }).sort()
+          type: 'Search Results',
+          items: this.$store.getters.recentlyViewed
+            .slice()
+            .reverse()
+            .filter((option: any) => {
+              return option
+                .toString()
+                .toLowerCase()
+                .includes(this.userInput.toLowerCase())
+            })
+            .sort(),
         })
       }
-      if (this.$store.getters.recentlyViewed.length === 0 || Object.keys(this.$store.getters.favourites).length === 0) {
+      if (
+        this.$store.getters.recentlyViewed.length === 0 ||
+        Object.keys(this.$store.getters.favourites).length === 0
+      ) {
         results.push({
-          type: 'Suggested Hotspots', items: hotspots.miners.sort()
+          type: 'Suggested Hotspots',
+          items: hotspots.miners.sort(),
         })
       }
       return results.sort()
     } else {
-      return [{
-        type: 'Search Results', items: this.$store.getters.recentlyViewed.filter((option: any) => {
-          return (
-            option.toString().toLowerCase().includes(this.userInput.toLowerCase())
-          )
-        }).sort()
-      }]
+      return [
+        {
+          type: 'Search Results',
+          items: this.$store.getters.recentlyViewed
+            .filter((option: any) => {
+              return option
+                .toString()
+                .toLowerCase()
+                .includes(this.userInput.toLowerCase())
+            })
+            .sort(),
+        },
+      ]
     }
   }
 
   private async addMiner(selected?: string): Promise<void> {
-    this.userInput = (typeof selected === 'object') ? this.userInput : selected || ''
+    this.userInput =
+      typeof selected === 'object' ? this.userInput : selected || ''
     if (this.userInput !== '') {
-      const matches = (this.userInput.match(/(\s|-)/g) || []).length;
+      const matches = (this.userInput.match(/(\s|-)/g) || []).length
       if (matches === 2 || matches === 3) {
-        const miner = await this.$store.dispatch('addMiner', this.userInput.trim())
-        if (miner !== null
-        ) {
+        const miner = await this.$store.dispatch(
+          'addMiner',
+          this.userInput.trim()
+        )
+        if (miner !== null) {
           await this.$router.push(`/${miner}`)
         }
       } else {
-        BuefyService.dangerToast(MessageConstants.ERROR_INCORRECT_SYNTAX);
+        BuefyService.dangerToast(MessageConstants.ERROR_INCORRECT_SYNTAX)
       }
     }
   }
