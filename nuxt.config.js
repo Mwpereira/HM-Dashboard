@@ -60,6 +60,9 @@ export default {
   },
   build: {},
   generate: { fallback: true },
+  server: {
+    port: 8080
+  },
   env: {
     coinGeckoAPI: process.env.coinGeckoAPI || 'https://api.coingecko.com/api/v3/coins/helium',
     heliumAPI: process.env.HELIUM_API || 'https://helium-api.stakejoy.com/v1/'

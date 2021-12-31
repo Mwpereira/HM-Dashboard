@@ -19,6 +19,7 @@
                 group-options="items"
                 :open-on-focus="true"
                 @submit="addMiner"
+                @keydown.native.enter='addMiner'
                 @select="(option) => addMiner(option)"
               >
                 <template></template>
