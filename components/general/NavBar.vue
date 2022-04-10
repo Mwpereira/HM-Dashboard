@@ -167,6 +167,7 @@ export default class NavBar extends Vue {
   }
 
   private settingsModal(): void {
+    // @ts-ignore
     this.$buefy.modal.open({
       parent: this,
       component: Settings,
