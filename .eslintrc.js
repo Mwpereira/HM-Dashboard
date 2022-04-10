@@ -11,9 +11,9 @@ module.exports = {
   ],
   plugins: [
   ],
-  // add your custom rules here
   rules: {
-    // "@typescript-eslint/no-unsafe-argument": "off",
+    'camelcase': 'off',
+    'vue/no-parsing-error': 'off'
   },
   parserOptions: {
     parser: "@typescript-eslint/parser",

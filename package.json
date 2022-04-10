@@ -9,7 +9,8 @@
     "generate": "nuxt generate",
     "lint:ts": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
     "lint:ts:fix": "npm run lint:ts -- --fix",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@nuxtjs/google-gtag": "^1.0.4",
@@ -34,6 +35,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",
+    "husky": "^7.0.4",
     "prettier": "^2.3.2",
     "sass": "^1.38.0",
     "sass-loader": "10.2.0"

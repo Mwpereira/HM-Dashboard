@@ -58,7 +58,7 @@
             <b-icon icon="menu-down"></b-icon>
           </a>
         </template>
-        <b-dropdown-item class="has-text-weight-medium" id="favouriteTitle" custom>
+        <b-dropdown-item id="favouriteTitle" class="has-text-weight-medium" custom>
           Favourite Hotspots
         </b-dropdown-item>
         <b-dropdown-item separator custom></b-dropdown-item>
@@ -66,7 +66,7 @@
                          @click="addMiner(favourite)">
           {{ favourite }}
         </b-dropdown-item>
-        <b-dropdown-item class="has-text-weight-medium" v-if="favourites.length === 0" custom>
+        <b-dropdown-item v-if="favourites.length === 0" class="has-text-weight-medium" custom>
           No Favourites
         </b-dropdown-item>
       </b-dropdown>
