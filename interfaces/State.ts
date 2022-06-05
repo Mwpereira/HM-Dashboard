@@ -1,7 +1,7 @@
-import {Miner} from "~/interfaces/Miner";
-import {Miners} from "~/interfaces/Miners";
-import {Favourites} from "~/interfaces/Favourites";
-import {RecentlyViewed} from "~/interfaces/RecentlyViewed";
+import {Miner} from '~/interfaces/Miner';
+import {Miners} from '~/interfaces/Miners';
+import {Favourites} from '~/interfaces/Favourites';
+import {RecentlyViewed} from '~/interfaces/RecentlyViewed';
 
 export interface State {
   favourites: Favourites,

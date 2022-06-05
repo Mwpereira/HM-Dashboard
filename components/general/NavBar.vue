@@ -97,11 +97,11 @@
 </template>
 
 <script lang='ts'>
-import {Component, Vue} from 'nuxt-property-decorator'
-import Settings from '~/components/general/Settings.vue'
-import {Miners} from "~/interfaces/Miners";
-import KyService from "~/services/ky-service";
-import {successResponse} from "~/utils/response-utils";
+import {Component, Vue} from 'nuxt-property-decorator';
+import Settings from '~/components/general/Settings.vue';
+import {Miners} from '~/interfaces/Miners';
+import KyService from '~/services/ky-service';
+import {successResponse} from '~/utils/response-utils';
 
 @Component
 export default class NavBar extends Vue {
@@ -109,79 +109,79 @@ export default class NavBar extends Vue {
   private polling!: NodeJS.Timer
 
   get isHomePage(): boolean {
-    return this.$store.getters.isHomePage
+  	return this.$store.getters.isHomePage;
   }
 
   get isWatchlistPage(): boolean {
-    return this.$nuxt.$route.fullPath.includes('/watchlist')
+  	return this.$nuxt.$route.fullPath.includes('/watchlist');
   }
 
   async goToLastVisited(): Promise<void> {
-    await this.$router.push(`/${this.$store.getters.lastVisited}`)
+  	await this.$router.push(`/${this.$store.getters.lastVisited}`);
   }
 
   get miners(): Miners {
-    return this.$store.getters.miners
+  	return this.$store.getters.miners;
   }
 
   get isDarkModeActive(): boolean {
-    return this.$store.getters.isDarkModeActive
+  	return this.$store.getters.isDarkModeActive;
   }
 
   get favourites(): any[] {
-    return Object.values(this.$store.getters.favourites).sort();
+  	return Object.values(this.$store.getters.favourites).sort();
   }
 
   async mounted() {
-    await this.getHNTPrice();
+  	await this.getHNTPrice();
   }
 
   private pollData() {
-    this.polling = setInterval(() => {
-      this.getHNTPrice()
-    }, 300000)
+  	this.polling = setInterval(() => {
+  		this.getHNTPrice();
+  	}, 300000);
   }
 
   beforeDestroy() {
-    clearInterval(this.polling)
+  	clearInterval(this.polling);
   }
 
   created() {
-    this.pollData()
+  	this.pollData();
   }
 
   async getHNTPrice() {
-    let response = await KyService.getHNTPrice()
+  	let response = await KyService.getHNTPrice();
 
-    if (successResponse(response)) {
-      response = await response.json()
+  	if (successResponse(response)) {
+  		response = await response.json();
 
-      const price = response.market_data.current_price.usd;
+  		const price = response.market_data.current_price.usd;
 
-      this.hntPrice = parseFloat(price).toFixed(2);
-    }
+  		this.hntPrice = parseFloat(price).toFixed(2);
+  	}
   }
 
   private darkModeToggle(): void {
-    this.$store.commit('darkModeToggle')
+  	this.$store.commit('darkModeToggle');
   }
 
   private settingsModal(): void {
-    // @ts-ignore
-    this.$buefy.modal.open({
-      parent: this,
-      component: Settings,
-      hasModalCard: true,
-      customClass: 'custom-class custom-class-2',
-      trapFocus: true
-    })
+  	// @ts-ignore
+  	this.$buefy.modal.open({
+  		component: Settings,
+  		customClass: 'custom-class custom-class-2',
+  		hasModalCard: true,
+  		parent: this,
+  		trapFocus: true
+  	});
   }
 
   private async addMiner(selected?: string): Promise<void> {
-    const miner = await this.$store.dispatch('addMiner', selected)
-    if (miner !== null) {
-      await this.$router.push(`/${miner}`)
-    }
+  	const miner = await this.$store.dispatch('addMiner', selected);
+  	if (miner !== null) {
+  		await this.$router.push(`/${miner}`);
+  	}
   }
 }
 </script>

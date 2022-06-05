@@ -5,13 +5,13 @@
 </template>
 
 <script lang='ts'>
-import {Component, Vue} from "nuxt-property-decorator";
-import Home from '~/components/sections/Home.vue'
+import {Component, Vue} from 'nuxt-property-decorator';
+import Home from '~/components/sections/Home.vue';
 
 @Component({
-  components: {
-    Home
-  }
+	components: {
+		Home
+	}
 })
 export default class Index extends Vue {
 }

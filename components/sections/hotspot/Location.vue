@@ -30,19 +30,19 @@
 
 
 <script lang="ts">
-import {Component, Prop, Vue} from "nuxt-property-decorator";
-import {Miner} from "~/interfaces/Miner";
+import {Component, Prop, Vue} from 'nuxt-property-decorator';
+import {Miner} from '~/interfaces/Miner';
 
 @Component
 export default class Rewards extends Vue {
   @Prop() private minerName!: string
 
   get geocode(): object {
-    return this.miner.geocode
+  	return this.miner.geocode;
   }
 
   get miner(): Miner {
-    return this.$store.getters.miners[this.minerName];
+  	return this.$store.getters.miners[this.minerName];
   }
 }
 </script>

@@ -10,12 +10,12 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator';
 
 @Component
 export default class Footer extends Vue {
-  get isHomePage(): boolean {
-    return this.$store.getters.isHomePage
-  }
+	get isHomePage(): boolean {
+		return this.$store.getters.isHomePage;
+	}
 }
 </script>

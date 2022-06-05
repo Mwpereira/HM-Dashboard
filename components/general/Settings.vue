@@ -48,38 +48,38 @@
 
 
 <script lang='ts'>
-import {Component, Vue} from 'nuxt-property-decorator'
-import BuefyService from "~/services/buefy-service";
-import MessageConstants from "~/constants/message-constants";
+import {Component, Vue} from 'nuxt-property-decorator';
+import BuefyService from '~/services/buefy-service';
+import MessageConstants from '~/constants/message-constants';
 
 @Component
 export default class Settings extends Vue {
-  removeAllData(): void {
-    this.redirectToHomePage('removeAllData', true);
-  }
+	removeAllData(): void {
+		this.redirectToHomePage('removeAllData', true);
+	}
 
-  removeFavourites(): void {
-    this.redirectToHomePage('removeFavourites', false);
-  }
+	removeFavourites(): void {
+		this.redirectToHomePage('removeFavourites', false);
+	}
 
-  removeMinerHistory(): void {
-    this.redirectToHomePage('removeMinerHistory', true);
-  }
+	removeMinerHistory(): void {
+		this.redirectToHomePage('removeMinerHistory', true);
+	}
 
-  resetRecentlyViewed(): void {
-    this.redirectToHomePage('resetRecentlyViewed', false);
-  }
+	resetRecentlyViewed(): void {
+		this.redirectToHomePage('resetRecentlyViewed', false);
+	}
 
-  redirectToHomePage(action: string, redirect: boolean): void {
-    try {
-      this.$store.commit(action)
-      if (redirect) this.$router.push('/');
-      BuefyService.successToast(MessageConstants.SUCCESS_DELETING_CACHE);
-      this.$emit('close')
-    } catch {
-      BuefyService.successToast(MessageConstants.ERROR_DELETING_CACHE);
-    }
-  }
+	redirectToHomePage(action: string, redirect: boolean): void {
+		try {
+			this.$store.commit(action);
+			if (redirect) this.$router.push('/');
+			BuefyService.successToast(MessageConstants.SUCCESS_DELETING_CACHE);
+			this.$emit('close');
+		} catch {
+			BuefyService.successToast(MessageConstants.ERROR_DELETING_CACHE);
+		}
+	}
 }
 </script>
 

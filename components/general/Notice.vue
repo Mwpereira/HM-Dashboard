@@ -12,7 +12,7 @@
 </template>
 
 <script lang='ts'>
-import {Component, Emit, Prop, Vue} from 'nuxt-property-decorator'
+import {Component, Emit, Prop, Vue} from 'nuxt-property-decorator';
 
 @Component({})
 export default class Notice extends Vue {
@@ -22,7 +22,7 @@ export default class Notice extends Vue {
 
   @Emit()
   loadingComp() {
-    return this.isLoading;
+  	return this.isLoading;
   }
 }
 </script>

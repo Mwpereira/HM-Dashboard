@@ -30,15 +30,15 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from "nuxt-property-decorator";
-import {Miner} from "~/interfaces/Miner";
-import Notice from "~/components/general/Notice.vue";
-import GeneralService from "~/services/general-service";
-import MessageConstants from "~/constants/message-constants";
-import BuefyService from "~/services/buefy-service";
+import {Component, Prop, Vue} from 'nuxt-property-decorator';
+import {Miner} from '~/interfaces/Miner';
+import Notice from '~/components/general/Notice.vue';
+import GeneralService from '~/services/general-service';
+import MessageConstants from '~/constants/message-constants';
+import BuefyService from '~/services/buefy-service';
 
 @Component({
-  components: {Notice}
+	components: {Notice}
 })
 export default class Witnesses extends Vue {
   @Prop() private minerName!: string
@@ -47,27 +47,27 @@ export default class Witnesses extends Vue {
   private isLoading = false;
 
   public async loadingComp() {
-    this.isLoading = true;
+  	this.isLoading = true;
 
-    BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES)
+  	BuefyService.warningToast(MessageConstants.WARNING_FETCHING_WITNESSES);
 
-    const miner = this.$store.getters.miners[this.minerName];
+  	const miner = this.$store.getters.miners[this.minerName];
 
-    await this.$store.dispatch('getWitnesses', {
-      minerName: miner.name,
-      minerAddress: miner.address,
-      time: GeneralService.getTime()
-    })
+  	await this.$store.dispatch('getWitnesses', {
+  		minerAddress: miner.address,
+  		minerName: miner.name,
+  		time: GeneralService.getTime()
+  	});
 
-    this.isLoading = false;
+  	this.isLoading = false;
   }
 
   public checkForOutdatedData(time: number) {
-    return GeneralService.checkForOutdatedData(time);
+  	return GeneralService.checkForOutdatedData(time);
   }
 
   get witnesses() {
-    return this.$store.getters.miners[this.minerName].witnesses
+  	return this.$store.getters.miners[this.minerName].witnesses;
   }
 }
 </script>

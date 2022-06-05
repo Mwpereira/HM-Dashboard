@@ -11,15 +11,15 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
-import Footer from '~/components/general/Footer.vue'
-import NavBar from '~/components/general/NavBar.vue'
+import { Component, Vue } from 'nuxt-property-decorator';
+import Footer from '~/components/general/Footer.vue';
+import NavBar from '~/components/general/NavBar.vue';
 
 @Component({
-  components: {
-    NavBar,
-    Footer
-  }
+	components: {
+		Footer,
+		NavBar,
+	}
 })
 export default class Default extends Vue {
 }

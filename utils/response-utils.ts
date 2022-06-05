@@ -1,3 +1,3 @@
 export const successResponse = (response: any) => {
-    return response.status === 200;
-}
+	return response.status === 200;
+};

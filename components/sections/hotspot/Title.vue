@@ -42,40 +42,40 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from "nuxt-property-decorator";
-import {Miner} from "~/interfaces/Miner";
-import BuefyService from "~/services/buefy-service";
+import {Component, Prop, Vue} from 'nuxt-property-decorator';
+import {Miner} from '~/interfaces/Miner';
+import BuefyService from '~/services/buefy-service';
 
 @Component
 export default class Title extends Vue {
   @Prop() private minerName!: string
 
   get miner(): Miner {
-    return this.$store.getters.miners[this.minerName]
+  	return this.$store.getters.miners[this.minerName];
   }
 
   get favouriteColor(): string {
-    return this.$store.getters.favourites[this.minerName] !== undefined ? 'gold' : '#e6e6e6'
+  	return this.$store.getters.favourites[this.minerName] !== undefined ? 'gold' : '#e6e6e6';
   }
 
   get favourite(): boolean {
-    return this.$store.getters.favourites[this.minerName] !== undefined
+  	return this.$store.getters.favourites[this.minerName] !== undefined;
   }
 
   private copyText(value: string, key: string): void {
-    navigator.clipboard.writeText(value)
-    BuefyService.infoToast(`Copied ${key} to clipboard`)
+  	navigator.clipboard.writeText(value);
+  	BuefyService.infoToast(`Copied ${key} to clipboard`);
   }
 
   private favouriteHotspot(): void {
-    if (this.favourite) {
-      this.$store.commit('removeFavourite', this.minerName)
-      BuefyService.warningToast(`Removed Hotspot from Favourites`)
-    } else {
-      this.$store.commit('addFavourite', {minerName: this.minerName, informalName: this.miner.informal_name})
-      BuefyService.warningToast(`Added Hotspot to Favourites`)
-      this.$store.commit('removeRecentlyViewed', this.miner.informal_name)
-    }
+  	if (this.favourite) {
+  		this.$store.commit('removeFavourite', this.minerName);
+  		BuefyService.warningToast('Removed Hotspot from Favourites');
+  	} else {
+  		this.$store.commit('addFavourite', {informalName: this.miner.informal_name, minerName: this.minerName});
+  		BuefyService.warningToast('Added Hotspot to Favourites');
+  		this.$store.commit('removeRecentlyViewed', this.miner.informal_name);
+  	}
   }
 }
 </script>

@@ -76,16 +76,16 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from "nuxt-property-decorator";
-import {Rewards} from "~/interfaces/Rewards";
-import {Owner} from '~/interfaces/Owner'
-import Notice from "~/components/general/Notice.vue";
-import GeneralService from "~/services/general-service";
-import BuefyService from "~/services/buefy-service";
-import MessageConstants from "~/constants/message-constants";
+import {Component, Prop, Vue} from 'nuxt-property-decorator';
+import {Rewards} from '~/interfaces/Rewards';
+import {Owner} from '~/interfaces/Owner';
+import Notice from '~/components/general/Notice.vue';
+import GeneralService from '~/services/general-service';
+import BuefyService from '~/services/buefy-service';
+import MessageConstants from '~/constants/message-constants';
 
 @Component({
-  components: {Notice}
+	components: {Notice}
 })
 export default class RewardsSection extends Vue {
   @Prop() private minerName!: string
@@ -93,32 +93,32 @@ export default class RewardsSection extends Vue {
   private isLoading = false;
 
   public async loadingComp() {
-    this.isLoading = true;
+  	this.isLoading = true;
 
-    BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS)
+  	BuefyService.warningToast(MessageConstants.WARNING_FETCHING_REWARDS);
 
-    const miner = this.$store.getters.miners[this.minerName];
+  	const miner = this.$store.getters.miners[this.minerName];
 
-    await this.$store.dispatch('getRewards', {
-      minerName: miner.name,
-      minerAddress: miner.address,
-      minerOwnerAddress: miner.owner,
-      time: GeneralService.getTime()
-    })
+  	await this.$store.dispatch('getRewards', {
+  		minerAddress: miner.address,
+  		minerName: miner.name,
+  		minerOwnerAddress: miner.owner,
+  		time: GeneralService.getTime()
+  	});
 
-    this.isLoading = false;
+  	this.isLoading = false;
   }
 
   public checkForOutdatedData(time: number) {
-    return GeneralService.checkForOutdatedData(time);
+  	return GeneralService.checkForOutdatedData(time);
   }
 
   get ownerData(): Owner | undefined {
-    return this.$store.getters.miners[this.minerName].ownerData
+  	return this.$store.getters.miners[this.minerName].ownerData;
   }
 
   get rewards(): Rewards | undefined {
-    return this.$store.getters.miners[this.minerName].rewards
+  	return this.$store.getters.miners[this.minerName].rewards;
   }
 }
 </script>

@@ -66,113 +66,112 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
-import hotspots from '@/assets/json/hotspots.json'
-import BuefyService from '~/services/buefy-service'
-import MessageConstants from '~/constants/message-constants'
+import { Component, Vue } from 'nuxt-property-decorator';
+import hotspots from '@/assets/json/hotspots.json';
+import BuefyService from '~/services/buefy-service';
+import MessageConstants from '~/constants/message-constants';
 
 @Component
 export default class Home extends Vue {
   private userInput = ''
 
   mounted(): void {
-    this.$store.dispatch('startup', true)
-    document.title = `HM Dashboard`
+  	this.$store.dispatch('startup', true);
+  	document.title = 'HM Dashboard';
   }
 
   get filteredDataArray(): (
     | { type: string; items: string[] }[]
     | { type: string; items: any }
   )[] {
-    if (
-      this.userInput === '' &&
+  	if (
+  		this.userInput === '' &&
       this.$store.getters.recentlyViewed.length === 0 &&
       this.$store.getters.favourites.length === 0
-    ) {
-      return [
-        {
-          type: 'Suggested Hotspots',
-          items: hotspots.miners.sort(),
-        },
-      ]
-    }
-    if (this.userInput === '') {
-      const results = []
-      if (Object.keys(this.$store.getters.favourites).length > 0) {
-        results.push({
-          type: 'Favourites',
-          items: Object.values(this.$store.getters.favourites)
-            .filter((option: any) => {
-              return (
-                option
-                  .toString()
-                  .toLowerCase()
-                  .includes(this.userInput.toLowerCase()) >= 0
-              )
-            })
-            .sort(),
-        })
-      }
+  	) {
+  		return [
+  			{
+  				items: hotspots.miners.sort(),
+  				type: 'Suggested Hotspots',
+  			},
+  		];
+  	}
+  	if (this.userInput === '') {
+  		const results = [];
+  		if (Object.keys(this.$store.getters.favourites).length > 0) {
+  			results.push({
+  				items: Object.values(this.$store.getters.favourites)
+  					.filter((option: any) => {
+  						return (
+  							option
+  								.toString()
+  								.toLowerCase()
+  								.includes(this.userInput.toLowerCase()) >= 0
+  						);
+  					})
+  					.sort(),
+  				type: 'Favourites',
+  			});
+  		}
 
-      if (this.$store.getters.recentlyViewed.length > 0) {
-        results.push({
-          type: 'Search Results',
-          items: this.$store.getters.recentlyViewed
-            .slice()
-            .reverse()
-            .filter((option: any) => {
-              return option
-                .toString()
-                .toLowerCase()
-                .includes(this.userInput.toLowerCase())
-            })
-            .sort(),
-        })
-      }
-      if (
-        this.$store.getters.recentlyViewed.length === 0 ||
+  		if (this.$store.getters.recentlyViewed.length > 0) {
+  			results.push({
+  				items: this.$store.getters.recentlyViewed
+  					.slice()
+  					.reverse()
+  					.filter((option: any) => {
+  						return option
+  							.toString()
+  							.toLowerCase()
+  							.includes(this.userInput.toLowerCase());
+  					})
+  					.sort(),
+  				type: 'Search Results',
+  			});
+  		}
+  		if (
+  			this.$store.getters.recentlyViewed.length === 0 ||
         Object.keys(this.$store.getters.favourites).length === 0
-      ) {
-        results.push({
-          type: 'Suggested Hotspots',
-          items: hotspots.miners.sort(),
-        })
-      }
-      return results.sort()
-    } else {
-      return [
-        {
-          type: 'Search Results',
-          items: this.$store.getters.recentlyViewed
-            .filter((option: any) => {
-              return option
-                .toString()
-                .toLowerCase()
-                .includes(this.userInput.toLowerCase())
-            })
-            .sort(),
-        },
-      ]
-    }
+  		) {
+  			results.push({
+  				items: hotspots.miners.sort(),
+  				type: 'Suggested Hotspots',
+  			});
+  		}
+  		return results.sort();
+  	} else {
+  		return [
+  			{
+  				items: this.$store.getters.recentlyViewed
+  					.filter((option: any) => {
+  						return option
+  							.toString()
+  							.toLowerCase()
+  							.includes(this.userInput.toLowerCase());
+  					}).sort(),
+  				type: 'Search Results',
+  			},
+  		];
+  	}
   }
 
   private async addMiner(selected?: string): Promise<void> {
-    this.userInput =
-      typeof selected === 'object' ? this.userInput : selected || ''
-    if (this.userInput !== '') {
-      const matches = (this.userInput.match(/(\s|-)/g) || []).length
-      if (matches === 2 || matches === 3) {
-        const miner = await this.$store.dispatch(
-          'addMiner',
-          this.userInput.trim()
-        )
-        if (miner !== null) {
-          await this.$router.push(`/${miner}`)
-        }
-      } else {
-        BuefyService.dangerToast(MessageConstants.ERROR_INCORRECT_SYNTAX)
-      }
-    }
+  	this.userInput =
+      typeof selected === 'object' ? this.userInput : selected || '';
+  	if (this.userInput !== '') {
+  		const matches = (this.userInput.match(/(\s|-)/g) || []).length;
+  		if (matches === 2 || matches === 3) {
+  			const miner = await this.$store.dispatch(
+  				'addMiner',
+  				this.userInput.trim()
+  			);
+  			if (miner !== null) {
+  				await this.$router.push(`/${miner}`);
+  			}
+  		} else {
+  			BuefyService.dangerToast(MessageConstants.ERROR_INCORRECT_SYNTAX);
+  		}
+  	}
   }
 }
 </script>

@@ -10,11 +10,11 @@ export default class MessageConstants {
   /**
    * WARNING MESSAGES
    */
-  public static readonly WARNING_LOADING_MINER = "Loading Hotspot's data"
-  public static readonly WARNING_FETCHING_MINER = "Fetching Hotspot's data"
-  public static readonly WARNING_FETCHING_REWARDS = "Fetching Hotspot's rewards"
-  public static readonly WARNING_FETCHING_WITNESSES = "Fetching Hotspot's witnesses"
-  public static readonly WARNING_FETCHING_OWNER = "Fetching Hotspot's owner"
+  public static readonly WARNING_LOADING_MINER = 'Loading Hotspot\'s data'
+  public static readonly WARNING_FETCHING_MINER = 'Fetching Hotspot\'s data'
+  public static readonly WARNING_FETCHING_REWARDS = 'Fetching Hotspot\'s rewards'
+  public static readonly WARNING_FETCHING_WITNESSES = 'Fetching Hotspot\'s witnesses'
+  public static readonly WARNING_FETCHING_OWNER = 'Fetching Hotspot\'s owner'
   /**
    * ERROR MESSAGES
    */

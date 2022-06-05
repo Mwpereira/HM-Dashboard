@@ -1,4 +1,4 @@
-import {Miner} from "~/interfaces/Miner";
+import {Miner} from '~/interfaces/Miner';
 
 export interface Witnesses {
   count: Number,
